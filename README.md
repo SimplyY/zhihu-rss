@@ -1,16 +1,17 @@
 # zhihu_pyqt
 
-
 知乎的extra关注功能开发
 
 拟用pyqt做成客户端，先做成命令行版。
 都是针对某一个关注者，点击进入单个关注者的页面。
 
-爬虫方面全部使用7sDream的[zhihu-py3](https://github.com/7sDream/zhihu-py3), 非常感谢
 
-功能：
+## 功能：
 - [ ] 罗列extra关注的人。
 - [ ] 特别关注回答，显示单个关注者的所有最近回答、文章，可指定是否提醒。
 - [ ] 特别关注动态，显示单个关注者的所有最近所有动态。
 - [ ] 注提醒，对关注者新的回答或文章进行推送notifications。
 
+## 感谢：
+
+爬虫方面全部使用7sDream的[zhihu-py3](https://github.com/7sDream/zhihu-py3), 非常感谢
