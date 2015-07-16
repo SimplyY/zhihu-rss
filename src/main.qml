@@ -10,17 +10,26 @@ Rectangle {
 
     Button {
         objectName: "sign_button"
-        x: 868
+        x: 697
         y: 20
         text: qsTr("Button")
+        z: 2
     }
 
     WebView{
+        width: 100
+        height: 200
+        anchors.rightMargin: -100
+        anchors.bottomMargin: 0
+        anchors.leftMargin: 400
+        anchors.topMargin: 80
         objectName: "web_view"
-        x: 526
-        y: 76
-        width: 418
-        height: 462
+        anchors.fill: parent
+        opacity: 1
+        flickDeceleration: 1800
+        z: 1
+        scale: 1
+        maximumFlickVelocity: 2000
 
     }
 }
