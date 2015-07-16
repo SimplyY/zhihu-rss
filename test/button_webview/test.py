@@ -24,16 +24,14 @@ def get_answer(root_item):
     web_view.loadHtml(new_html)
 
 
-def set_view(viewer):
-    root_item = viewer.rootObject()
-
-    button = root_item.findChild(QObject, 'button')
-    button.clicked.connect(lambda: get_answer(root_item))
+def set_view(root_view):
+    button = root_view.findChild(QObject, 'button')
+    button.clicked.connect(lambda: get_answer(root_view))
 
 
 if __name__ == '__main__':
     my_app = MyApp(qml='test.qml')
 
-    set_view(my_app.viewer)
+    set_view(my_app.root_view)
 
     MyApp.show(my_app)
