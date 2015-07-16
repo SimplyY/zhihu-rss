@@ -3,8 +3,8 @@ import QtQuick.Controls 1.3
 
 Rectangle {
     id: rectangle1
-    width: 500
-    height: 200
+    width: 450
+    height: 220
     color: "#ffffff"
     border.width: 3
     border.color: "#c7c7c7"
@@ -12,8 +12,8 @@ Rectangle {
     TextInput {
         objectName: "email_input"
         id: email_input
-        x: 183
-        y: 30
+        x: 175
+        y: 33
         width: 273
         height: 20
         color: "#2e2e2e"
@@ -28,8 +28,8 @@ Rectangle {
 
     Text {
         id: text1
-        x: 129
-        y: 30
+        x: 134
+        y: 33
         text: qsTr("邮箱")
         font.pixelSize: 14
     }
@@ -37,10 +37,10 @@ Rectangle {
     Text {
         id: text2
         x: 40
-        y: 30
+        y: 32
         width: 71
-        height: 26
-        text: qsTr("知乎小号")
+        height: 20
+        text: qsTr("知乎小号:")
         font.bold: false
         wrapMode: Text.WordWrap
         textFormat: Text.PlainText
@@ -49,8 +49,8 @@ Rectangle {
 
     Text {
         id: text3
-        x: 129
-        y: 71
+        x: 134
+        y: 69
         text: qsTr("密码")
         font.family: "Times New Roman"
         font.pixelSize: 14
@@ -59,8 +59,8 @@ Rectangle {
     TextInput {
         objectName: "password_input"
         id: password_input
-        x: 183
-        y: 68
+        x: 175
+        y: 69
         width: 273
         height: 20
         text: qsTr("")
@@ -75,10 +75,10 @@ Rectangle {
     Text {
         id: text4
         x: 40
-        y: 114
+        y: 116
         width: 71
-        height: 23
-        text: qsTr("知乎大号")
+        height: 17
+        text: qsTr("知乎帐号:")
         font.bold: false
         font.pixelSize: 16
         textFormat: Text.PlainText
@@ -88,7 +88,7 @@ Rectangle {
     Text {
         id: text5
         x: 40
-        y: 160
+        y: 163
         width: 222
         height: 15
         text: qsTr("注：小号用来爬虫，防止大号被封号")
@@ -99,8 +99,8 @@ Rectangle {
 
     Text {
         id: text6
-        x: 129
-        y: 114
+        x: 134
+        y: 117
         text: qsTr("主页")
         font.pixelSize: 14
     }
@@ -108,11 +108,11 @@ Rectangle {
     TextInput {
         objectName: "url_input"
         id: url_input
-        x: 183
-        y: 114
+        x: 175
+        y: 117
         width: 273
         height: 20
-        text: qsTr("eg:http://www.zhihu.com/people/cai-tong")
+        text: qsTr("http://www.zhihu.com/people/yuwei-80")
         opacity: 1
         visible: true
         passwordCharacter: "•"
@@ -126,8 +126,8 @@ Rectangle {
     Button {
         objectName: "button"
         id: button
-        x: 395
-        y: 155
+        x: 342
+        y: 158
         text: qsTr("确认")
         activeFocusOnPress: true
         isDefault: true

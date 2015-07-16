@@ -13,7 +13,7 @@ from PyQt5.QtQuick import QQuickView
 #
 # def set_view(root_view):
 #     button = root_view.findChild(QObject, 'button')
-#     button.clicked.connect(lambda: get_answer(root_view))
+#     button.clicked.connect(lambda: load_answer(root_view))
 #
 # if __name__ == '__main__':
 #     my_app = MyApp(qml='test.qml')

@@ -1,11 +1,13 @@
 __author__ = 'yuwei'
 
 import os
+
 from PyQt5.QtCore import QObject
+import zhihu
 
-
-from MyApp import MyApp, MyView
-
+from .util.MyApp import MyView
+from .util import MyApp
+from .util.web_view import load_answer
 
 MAIN_QML_NAME = 'main.qml'
 SIGN_QML_NAME = 'sign.qml'
@@ -14,13 +16,32 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 MAIN_QML_DIR = os.path.join(BASE_DIR, MAIN_QML_NAME)
 
 
+def get_answers(url, url_input):
+    try:
+        answers = zhihu.Author(url).answers
+    except Exception as e:
+        url_input.remove(0, 100)
+        url_input.insert(0, str(e))
+        return None
+    return answers
+
+
+
 def record_sign_info(root, sign_dialog):
     email = root.findChild(QObject, 'email_input').getText(0, 100)
     password = root.findChild(QObject, 'password_input').getText(0, 100)
-    url = root.findChild(QObject, 'url_input').getText(0, 100)
+    url_input = root.findChild(QObject, 'url_input')
+    url = url_input.getText(0, 100)
+
+    answers = get_answers(url, url_input)
+    answer = next(answers)
+
+    load_answer()
 
     print(email, password, url)
-    sign_dialog.close()
+
+    if answers:
+        sign_dialog.close()
 
 
 def show_sign_dialog():

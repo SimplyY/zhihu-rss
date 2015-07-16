@@ -15,5 +15,12 @@ Rectangle {
         text: qsTr("Button")
     }
 
+    WebView{
+        objectName: "web_view"
+        x: 526
+        y: 76
+        width: 418
+        height: 462
 
+    }
 }
