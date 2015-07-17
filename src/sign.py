@@ -17,13 +17,12 @@ def get_answers(url, url_input):
 
 def record_sign_info(my_app, root, sign_dialog):
     email_input = find_view(root, 'email_input')
-    email = email_input.getText(0, 100)
-    
     password_input = find_view(root, 'password_input')
-    password = password_input.getText(0, 100)
-
     url_input = find_view(root, 'url_input')
-    url = url_input.getText(0, 100)
+
+    email = email_input.property("text")
+    password = password_input.property("text")
+    url = url_input.property("text")
 
     answers = get_answers(url, url_input)
     answer = next(answers)

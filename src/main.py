@@ -20,8 +20,8 @@ ADD_QML_DIR = os.path.join(BASE_DIR, 'src', 'qml', ADD_QML_NAME)
 def set_views(root_view):
 
     set_button(root_view, 'sign_button', lambda: sign.show_sign_dialog(my_app, SIGN_QML_DIR))
-    set_button(root_view, 'home_button', lambda: add.show_add_dialog(my_app, ADD_QML_DIR))
-    set_button(root_view, 'add_button')
+    set_button(root_view, 'home_button')
+    set_button(root_view, 'add_button', lambda: add.show_add_dialog(my_app, ADD_QML_DIR))
     set_button(root_view, 'remind_button')
 
     my_app.web_view = root_view.findChild(QObject, 'web_view')
