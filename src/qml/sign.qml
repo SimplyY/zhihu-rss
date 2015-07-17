@@ -6,7 +6,7 @@ Rectangle {
     width: 450
     height: 220
     color: "#ffffff"
-    border.width: 3
+    border.width: 0
     border.color: "#c7c7c7"
 
     TextInput {
