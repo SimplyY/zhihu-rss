@@ -45,6 +45,7 @@ class MyView(QQuickView):
         self.setResizeMode(QQuickView.SizeRootObjectToView)
         self.setSource(QUrl(qml))
         self.root = self.rootObject()
+        self.show()
 
 
 def find_view(parent_view, object_name):

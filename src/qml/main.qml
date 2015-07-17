@@ -62,14 +62,16 @@ ApplicationWindow {
 
 
 
-    RowLayout {
-        id: rowLayout1
+    Rectangle {
+        id: rectangle0
 
         anchors.left: parent.left
+        anchors.right: parent.right
 
         y: 52
-        width: 900
+
         height: 598
+        border.width: 2
 
         Rectangle {
             id: rectangle1
