@@ -71,6 +71,7 @@ ApplicationWindow {
         y: 52
 
         height: 598
+        border.color: "#b0aeb0"
         border.width: 2
 
         Rectangle {
@@ -250,6 +251,7 @@ ApplicationWindow {
 
             anchors.left: rectangle2.right
             anchors.top: parent.top
+            anchors.topMargin: 1
             anchors.right: parent.right
             anchors.bottom: parent.bottom
 
