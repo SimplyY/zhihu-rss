@@ -2,6 +2,27 @@ __author__ = 'yuwei'
 
 
 from src.util.my_pyqt import MyView, set_button, find_view
+from src.util import my_json
+
+
+# 增加noticer
+def set_noticers(new_data, notice_method, is_remind):
+
+
+# TODO 返回新的关注者datas
+# def get_new_noticers_datas(new_data, old_datas):
+#
+#     url = new_data[0]
+#     if new_data not in old_datas:
+#         if url not in [data[0] for data in old_datas]: # 禁止添加重复的urls
+#             new_data.append((new_data, None))
+#         else:
+#             pass
+#
+#
+#     return datas
+
+
 
 def record_add_info(root, sign_dialog):
     url_input = find_view(root, 'url_input')
@@ -13,7 +34,9 @@ def record_add_info(root, sign_dialog):
     is_remind = is_remind_spin.property("value")
 
     sign_dialog.close()
-    print(url, notice_method, is_remind)
+
+    new_data = [url, notice_method, is_remind, None]
+    set_noticers(new_data, notice_method, is_remind)
 
 
 def show_add_dialog(my_app, qml):
