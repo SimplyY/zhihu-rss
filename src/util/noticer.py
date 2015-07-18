@@ -1,11 +1,11 @@
 __author__ = 'yuwei'
 
 import json
-
-json_file = 'noticers.json'
+from src.main import NOTICERS_DIR
 
 
 class Noticer:
+
     def __init__(self, url, notice_method, is_remind, latest_answer_title):
         self.url = url
         self.notice_method = notice_method
@@ -30,28 +30,34 @@ class Noticer:
     def get_noticers_in_json():
         noticers = []
         try:
-            with open(json_file, mode='r') as f:
+            with open(NOTICERS_DIR, mode='r') as f:
                 file = f.readlines()
                 if not file:
                     return noticers
 
                 data = json.loads(file[0])
-
                 noticers = [Noticer.init_noticer(noticer_data) for noticer_data in data]
 
         except IOError:
-            assert "can't find json_file"
+            assert "can't find NOTICERS_FILE"
 
         return noticers
 
     @staticmethod
     def write_noticers_in_json(noticer, noticers):
         if noticers:
-            noticers.append(noticer)
+            for index, the_noticer in enumerate(noticers):
+                if noticer.url == the_noticer.url:
+                    del noticers[index]
+                    noticers.append(noticer)
+                    break
+                else:
+                    noticers.append(noticer)
         else:
             noticers = [noticer]
 
         json_data = json.dumps([noticer.list for noticer in noticers])
 
-        with open(json_file, mode='w') as f:
+        with open(NOTICERS_DIR, mode='w') as f:
             f.write(json_data)
+

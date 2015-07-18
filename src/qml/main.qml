@@ -7,14 +7,14 @@ import QtQuick.Layouts 1.0
 
 ApplicationWindow {
     id: test
-    width: 900
-    height: 650
+    width: 980
+    height: 600
 
 
     Button {
         objectName: "home_button"
-        x: 317
-        y: 12
+        x: 375
+        y: 18
         width: 80
         height: 28
         text: qsTr("主页")
@@ -24,8 +24,8 @@ ApplicationWindow {
     Button {
         objectName: "add_button"
 
-        x: 392
-        y: 12
+        x: 450
+        y: 18
         width: 80
         height: 28
         text: qsTr("添加")
@@ -37,8 +37,8 @@ ApplicationWindow {
     Button {
         objectName: "remind_button"
 
-        x: 467
-        y: 12
+        x: 525
+        y: 18
         width: 80
         height: 28
         text: qsTr("提醒")
@@ -67,18 +67,22 @@ ApplicationWindow {
 
         anchors.left: parent.left
         anchors.right: parent.right
+        anchors.top: parent.top
+        anchors.bottom: parent.bottom
 
-        y: 52
+        anchors.topMargin: 52
 
-        height: 598
+
         border.color: "#b0aeb0"
         border.width: 2
 
         Rectangle {
             id: rectangle1
             anchors.left: parent.left
-            width: 210
-            height: 598
+            anchors.top: parent.top
+            anchors.bottom: parent.bottom
+            width: 190
+
             color: "#ffffff"
             antialiasing: true
             border.color: "#b0aeb0"
@@ -93,23 +97,10 @@ ApplicationWindow {
                 model: ListModel {
                     ListElement {
                         name: "Grey"
-                        colorCode: "grey"
+
                     }
 
-                    ListElement {
-                        name: "Red"
-                        colorCode: "red"
-                    }
 
-                    ListElement {
-                        name: "Blue"
-                        colorCode: "blue"
-                    }
-
-                    ListElement {
-                        name: "Green"
-                        colorCode: "green"
-                    }
                 }
                 delegate: Item {
                     x: 5
@@ -121,7 +112,7 @@ ApplicationWindow {
                         Rectangle {
                             width: 40
                             height: 40
-                            color: colorCode
+
                         }
 
                         Text {
@@ -138,27 +129,15 @@ ApplicationWindow {
                 x: 8
                 y: 298
                 width: 110
-                height: 160
+                anchors.top: listView2.bottom
+                anchors.bottom: parent.bottom
                 model: ListModel {
                     ListElement {
                         name: "Grey"
-                        colorCode: "grey"
+
                     }
 
-                    ListElement {
-                        name: "Red"
-                        colorCode: "red"
-                    }
 
-                    ListElement {
-                        name: "Blue"
-                        colorCode: "blue"
-                    }
-
-                    ListElement {
-                        name: "Green"
-                        colorCode: "green"
-                    }
                 }
                 delegate: Item {
                     x: 5
@@ -170,7 +149,7 @@ ApplicationWindow {
                         Rectangle {
                             width: 40
                             height: 40
-                            color: colorCode
+
                         }
 
                         Text {
@@ -189,9 +168,10 @@ ApplicationWindow {
         Rectangle {
             id: rectangle2
 
+            anchors.top: parent.top
             anchors.left: rectangle1.right
-            width: 210
-            height: 598
+            width: 190
+            anchors.bottom: parent.bottom
             color: "#ffffff"
             antialiasing: true
             border.color: "#b0aeb0"
@@ -200,29 +180,18 @@ ApplicationWindow {
             ListView {
                 id: listView1
                 x: 0
-                y: 0
-                width: 210
-                height: 598
+                y: 3
+                anchors.top: parent.top
+                anchors.bottom: parent.bottom
+                anchors.topMargin: 4
+                width: 190
+                height: 593
                 model: ListModel {
                     ListElement {
                         name: "Grey"
-                        colorCode: "grey"
+
                     }
 
-                    ListElement {
-                        name: "Red"
-                        colorCode: "red"
-                    }
-
-                    ListElement {
-                        name: "Blue"
-                        colorCode: "blue"
-                    }
-
-                    ListElement {
-                        name: "Green"
-                        colorCode: "green"
-                    }
                 }
                 delegate: Item {
                     x: 5
@@ -234,7 +203,7 @@ ApplicationWindow {
                         Rectangle {
                             width: 40
                             height: 40
-                            color: colorCode
+
                         }
 
                         Text {
