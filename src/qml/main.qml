@@ -7,14 +7,14 @@ import QtQuick.Layouts 1.0
 
 ApplicationWindow {
     id: test
-    width: 980
+    width: 1020
     height: 600
 
 
     Button {
         objectName: "home_button"
-        x: 375
-        y: 18
+        x: 395
+        y: 5
         width: 80
         height: 28
         text: qsTr("主页")
@@ -24,8 +24,8 @@ ApplicationWindow {
     Button {
         objectName: "add_button"
 
-        x: 450
-        y: 18
+        x: 470
+        y: 5
         width: 80
         height: 28
         text: qsTr("添加")
@@ -37,8 +37,8 @@ ApplicationWindow {
     Button {
         objectName: "remind_button"
 
-        x: 525
-        y: 18
+        x: 545
+        y: 5
         width: 80
         height: 28
         text: qsTr("提醒")
@@ -50,8 +50,8 @@ ApplicationWindow {
     Button {
         objectName: "sign_button"
 
-        x: 839
-        y: 14
+        x: 937
+        y: 5
         text: qsTr("登陆")
         z: 2
 
@@ -70,7 +70,7 @@ ApplicationWindow {
         anchors.top: parent.top
         anchors.bottom: parent.bottom
 
-        anchors.topMargin: 52
+        anchors.topMargin: 38
 
 
         border.color: "#b0aeb0"
@@ -81,42 +81,35 @@ ApplicationWindow {
             anchors.left: parent.left
             anchors.top: parent.top
             anchors.bottom: parent.bottom
-            width: 190
+            width: 180
 
-            color: "#ffffff"
+            color: "#f6f6f6"
             antialiasing: true
             border.color: "#b0aeb0"
             border.width: 1
 
             ListView {
-                id: listView2
+                id: listViewNoticers0
                 x: 8
                 y: 8
-                width: 110
-                height: 160
-                model: ListModel {
-                    ListElement {
-                        name: "Grey"
+                width: 170
+                height: 250
+                boundsBehavior: Flickable.StopAtBounds
+                orientation: ListView.Horizontal
 
-                    }
+                model: listViewNoticers0Model
 
-
-                }
                 delegate: Item {
                     x: 5
                     width: 80
                     height: 40
+
                     Row {
                         id: row2
                         spacing: 10
-                        Rectangle {
-                            width: 40
-                            height: 40
-
-                        }
 
                         Text {
-                            text: name
+                            text: model.name
                             font.bold: true
                             anchors.verticalCenter: parent.verticalCenter
                         }
@@ -125,11 +118,11 @@ ApplicationWindow {
             }
 
             ListView {
-                id: listView3
+                id: listViewNoticers1
                 x: 8
                 y: 298
-                width: 110
-                anchors.top: listView2.bottom
+                anchors.right: listViewNoticers0.right
+                anchors.top: listViewNoticers0.bottom
                 anchors.bottom: parent.bottom
                 model: ListModel {
                     ListElement {
@@ -178,12 +171,12 @@ ApplicationWindow {
             border.width: 1
 
             ListView {
-                id: listView1
+                id: listViewAnswers
                 x: 0
                 y: 3
                 anchors.top: parent.top
                 anchors.bottom: parent.bottom
-                anchors.topMargin: 4
+                anchors.topMargin: 10
                 width: 190
                 height: 593
                 model: ListModel {

@@ -1,10 +1,9 @@
+from src.const import CSS_GITHUB_PATH
 
+CSS = '<link href="' + CSS_GITHUB_PATH + '" rel="stylesheet"></link>'
 def load_css(html):
-    css = '<link href="https://raw.githubusercontent.com/SimplyY/save/master/github-markdown.css" ' \
-          'rel="stylesheet"></link>'
-
     index = html.find('</head>')
-    new_html = html[:index] + css + html[index:]
+    new_html = html[:index] + CSS + html[index:]
     return new_html
 
 

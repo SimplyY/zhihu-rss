@@ -1,37 +1,28 @@
 __author__ = 'yuwei'
 
-import os
 
 from PyQt5.QtCore import QObject
-from src.util.my_pyqt import MyApp, set_button
 
-from src import sign, add
+from src.util.my_pyqt import MyApp, ErrorDialog, set_button
 
-MAIN_QML_NAME = 'main.qml'
-SIGN_QML_NAME = 'sign.qml'
-ADD_QML_NAME = 'add.qml'
-NOTICERS_FILE = 'noticers.json'
+from src.const import MAIN_QML_DIR, SIGN_QML_DIR, ADD_QML_DIR
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-MAIN_QML_DIR = os.path.join(BASE_DIR, 'src', 'qml', MAIN_QML_NAME)
-SIGN_QML_DIR = os.path.join(BASE_DIR, 'src', 'qml', SIGN_QML_NAME)
-ADD_QML_DIR = os.path.join(BASE_DIR, 'src', 'qml', ADD_QML_NAME)
-NOTICERS_DIR = os.path.join(BASE_DIR, 'src', 'json', NOTICERS_FILE)
+def set_views(root_content):
+    from src.control import add, sign
 
-def set_views(root_view):
+    set_button(root_content, 'sign_button', lambda: sign.show_sign_dialog(my_app, SIGN_QML_DIR))
+    set_button(root_content, 'home_button')
+    set_button(root_content, 'add_button', lambda: add.show_add_dialog(my_app, ADD_QML_DIR, error_dialog))
+    set_button(root_content, 'remind_button')
 
-    set_button(root_view, 'sign_button', lambda: sign.show_sign_dialog(my_app, SIGN_QML_DIR))
-    set_button(root_view, 'home_button')
-    set_button(root_view, 'add_button', lambda: add.show_add_dialog(my_app, ADD_QML_DIR))
-    set_button(root_view, 'remind_button')
+    my_app.web_view = root_content.findChild(QObject, 'web_view')
 
-    my_app.web_view = root_view.findChild(QObject, 'web_view')
 
 
 if __name__ == '__main__':
-    print(MAIN_QML_DIR)
     my_app = MyApp(qml=MAIN_QML_DIR)
 
+    error_dialog = ErrorDialog()
     set_views(my_app.root_view)
 
     MyApp.show(my_app)

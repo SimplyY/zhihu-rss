@@ -1,12 +1,20 @@
 __author__ = 'yuwei'
 
 import json
-from src.main import NOTICERS_DIR
+import zhihu
+from src.util.error import UrlError
+from src.const import NOTICERS_JSON_DIR
 
 
 class Noticer:
-
     def __init__(self, url, notice_method, is_remind, latest_answer_title):
+        try:
+            self.name = zhihu.Author(url).name
+        except AttributeError:
+            # TODO:create dialog
+            raise UrlError
+        return
+
         self.url = url
         self.notice_method = notice_method
         self.is_remind = is_remind
@@ -27,10 +35,15 @@ class Noticer:
         Noticer.write_noticers_in_json(noticer, noticers)
 
     @staticmethod
+    def get_noticers(index):
+        noticers = Noticer.get_noticers_in_json()
+        return [noticer for noticer in noticers if noticer.notice_method == index]
+
+    @staticmethod
     def get_noticers_in_json():
         noticers = []
         try:
-            with open(NOTICERS_DIR, mode='r') as f:
+            with open(NOTICERS_JSON_DIR, mode='r') as f:
                 file = f.readlines()
                 if not file:
                     return noticers
@@ -57,7 +70,7 @@ class Noticer:
             noticers = [noticer]
 
         json_data = json.dumps([noticer.list for noticer in noticers])
-
-        with open(NOTICERS_DIR, mode='w') as f:
+        with open(NOTICERS_JSON_DIR, mode='w') as f:
             f.write(json_data)
+
 

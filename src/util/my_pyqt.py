@@ -44,8 +44,7 @@ class MyView(QQuickView):
         super().__init__()
         self.setResizeMode(QQuickView.SizeRootObjectToView)
         self.setSource(QUrl(qml))
-        self.root = self.rootObject()
-        self.show()
+        self.root_content = self.rootObject()
 
 
 def find_view(parent_view, object_name):
@@ -56,3 +55,14 @@ def set_button(parent_view, object_name, function=None):
     button = find_view(parent_view, object_name)
     if function:
         button.clicked.connect(function)
+
+
+class ErrorDialog(MyView):
+    def __init__(self):
+        from src.const import ERROR_QML_DIR
+        super().__init__(ERROR_QML_DIR)
+
+    def set_error_info(self, error_info):
+        text = find_view(self.root_content, 'errorInfoText')
+        text.setProperty('text', error_info)
+

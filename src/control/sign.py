@@ -20,6 +20,7 @@ def record_sign_info(my_app, root, sign_dialog):
     password_input = find_view(root, 'password_input')
     url_input = find_view(root, 'url_input')
 
+    # TODO: set email and password
     email = email_input.property("text")
     password = password_input.property("text")
     url = url_input.property("text")
@@ -35,9 +36,10 @@ def record_sign_info(my_app, root, sign_dialog):
 
 def show_sign_dialog(my_app, qml):
     sign_dialog = MyView(qml)
+    sign_dialog.show()
 
-    set_button(sign_dialog.root, 'button',
-               lambda: record_sign_info(my_app, sign_dialog.root, sign_dialog))
+    set_button(sign_dialog.root_content, 'button',
+               lambda: record_sign_info(my_app, sign_dialog.root_content, sign_dialog))
 
 
 
