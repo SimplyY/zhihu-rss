@@ -1,10 +1,12 @@
 __author__ = 'yuwei'
 
 import sys
+
 from PyQt5.QtCore import QUrl, QObject
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtQuick import QQuickView
 from PyQt5.QtQml import QQmlApplicationEngine
+
 
 # 在MyApp抽象了pyqt使用qml的过程
 
@@ -20,20 +22,23 @@ from PyQt5.QtQml import QQmlApplicationEngine
 #
 #     set_views(my_app.root_view)
 #
-#     MyApp.show(my_app)
+#     MyApp.run(my_app)
 
 class MyApp(QObject):
-    def __init__(self, qml):
+    def __init__(self, qml, set_content=None):
         super().__init__()
-
         self.app = QApplication(sys.argv)
 
         self.engine = QQmlApplicationEngine(self)
+        self.root_context = self.engine.rootContext()
+
+        set_content(self.root_context)
+
         self.engine.load(QUrl(qml))
         self.root_view = self.engine.rootObjects()[0]
 
     @staticmethod
-    def show(my_app):
+    def run(my_app):
         my_app.root_view.show()
         my_app.app.exec_()
         sys.exit()
@@ -59,7 +64,7 @@ def set_button(parent_view, object_name, function=None):
 
 class ErrorDialog(MyView):
     def __init__(self):
-        from src.const import ERROR_QML_DIR
+        from src.util.const import ERROR_QML_DIR
         super().__init__(ERROR_QML_DIR)
 
     def set_error_info(self, error_info):

@@ -17,6 +17,7 @@ Rectangle {
         height: 17
         text: qsTr("主页url")
         font.pixelSize: 14
+        font.family: "Times New Roman"
     }
 
     TextInput {
@@ -27,6 +28,7 @@ Rectangle {
         width: 273
         height: 20
         text: qsTr("http://www.zhihu.com/people/yuwei-80")
+        selectionColor: "#800000"
         opacity: 1
         visible: true
         passwordCharacter: "•"
@@ -56,6 +58,7 @@ Rectangle {
         y: 87
         text: qsTr("关注方式")
         font.pixelSize: 12
+        font.family: "Times New Roman"
     }
 
 
@@ -76,6 +79,7 @@ Rectangle {
         y: 150
         text: qsTr("是否提醒")
         font.pixelSize: 12
+        font.family: "Times New Roman"
     }
 
     SpinBox {
@@ -95,6 +99,7 @@ Rectangle {
         y: 87
         text: qsTr("1为关注回答，2为关注动态")
         font.pixelSize: 12
+        font.family: "Times New Roman"
     }
 
     Text {
@@ -103,6 +108,7 @@ Rectangle {
         y: 151
         text: qsTr("0为不提醒，1为提醒")
         font.pixelSize: 12
+        font.family: "Times New Roman"
     }
 }
 

@@ -18,10 +18,9 @@ def record_add_info(root, sign_dialog, error_dialog):
     try:
         noticer = Noticer.init_noticer([url, notice_method, is_remind, None])
     except UrlError:
-        sign_dialog.close()
-
-        error_dialog.set_error_info("添加失败！错误：主页url无效！")
+        error_dialog.set_error_info("添加失败。错误：主页url无效！")
         error_dialog.show()
+        return
 
     Noticer.add_noticer(noticer)
 

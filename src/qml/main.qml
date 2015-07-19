@@ -20,6 +20,13 @@ ApplicationWindow {
         text: qsTr("主页")
         z: 3
         iconSource: "/Users/yuwei/Pictures/Snip20150717_22.png"
+
+        onClicked: {
+            noticers1_model.clear()
+            for(var i = 0; i < noticers1_length; i++){
+                noticers1_model.append({"name":noticers1_names[i]})
+            }
+        }
     }
     Button {
         objectName: "add_button"
@@ -81,77 +88,100 @@ ApplicationWindow {
             anchors.left: parent.left
             anchors.top: parent.top
             anchors.bottom: parent.bottom
-            width: 180
+            width: 160
 
             color: "#f6f6f6"
             antialiasing: true
             border.color: "#b0aeb0"
             border.width: 1
 
+            ListModel {
+                id: noticers1_model
+
+            }
+
+
             ListView {
-                id: listViewNoticers0
-                x: 8
-                y: 8
-                width: 170
-                height: 250
-                boundsBehavior: Flickable.StopAtBounds
-                orientation: ListView.Horizontal
+                id: listViewNoticers1
+                x: 25
+                y: 40
 
-                model: listViewNoticers0Model
 
-                delegate: Item {
-                    x: 5
-                    width: 80
-                    height: 40
 
-                    Row {
-                        id: row2
-                        spacing: 10
+                width: 135
+                height: 230
+
+                model: noticers1_model
+
+
+                delegate: Component {
 
                         Text {
-                            text: model.name
-                            font.bold: true
-                            anchors.verticalCenter: parent.verticalCenter
+                            width:50
+                            height: 24
+                            text: name
+                            font.pixelSize: 14
+                            font.family: "Times New Roman"
                         }
-                    }
                 }
             }
 
             ListView {
-                id: listViewNoticers1
+                id: listViewNoticers2
                 x: 8
                 y: 298
-                anchors.right: listViewNoticers0.right
-                anchors.top: listViewNoticers0.bottom
+                flickDeceleration: 1498
+                maximumFlickVelocity: 2497
+                anchors.rightMargin: 0
+                anchors.right: listViewNoticers1.right
+                anchors.left: listViewNoticers1.left
+                anchors.top: listViewNoticers1.bottom
+                anchors.topMargin:40
                 anchors.bottom: parent.bottom
                 model: ListModel {
                     ListElement {
                         name: "Grey"
 
                     }
-
-
                 }
                 delegate: Item {
                     x: 5
                     width: 80
-                    height: 40
-                    Row {
-                        id: row3
-                        spacing: 10
-                        Rectangle {
-                            width: 40
-                            height: 40
+                    height: 60
 
-                        }
+
 
                         Text {
+
                             text: name
-                            font.bold: true
+                            font.family: "Times New Roman"
+                            font.pixelSize: 14
                             anchors.verticalCenter: parent.verticalCenter
                         }
-                    }
+
                 }
+            }
+
+            Text {
+                id: text1
+                x: 15
+                y: 20
+                color: "#707070"
+                text: qsTr("关注回答")
+                font.bold: true
+                font.family: "Courier"
+                font.pixelSize: 13
+            }
+
+            Text {
+                id: text2
+                x: 15
+                y: 285
+                color: "#707070"
+                text: qsTr("关注动态")
+                font.bold: true
+                font.family: "Times New Roman"
+                font.pixelSize: 13
             }
 
 
@@ -165,7 +195,7 @@ ApplicationWindow {
             anchors.left: rectangle1.right
             width: 190
             anchors.bottom: parent.bottom
-            color: "#ffffff"
+
             antialiasing: true
             border.color: "#b0aeb0"
             border.width: 1
@@ -187,25 +217,15 @@ ApplicationWindow {
 
                 }
                 delegate: Item {
-                    x: 5
-                    width: 80
-                    height: 40
-                    Row {
-                        id: row1
-                        spacing: 10
-                        Rectangle {
-                            width: 40
-                            height: 40
-
-                        }
 
                         Text {
+                            font.pixelSize: 14
                             text: name
-                            font.bold: true
+                            font.family: "Times New Roman"
                             anchors.verticalCenter: parent.verticalCenter
                         }
                     }
-                }
+
             }
         }
 

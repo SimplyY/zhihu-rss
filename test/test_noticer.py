@@ -9,13 +9,13 @@ class TestNoticer(TestCase):
     # def test_get_noticers_in_json(self):
     #     noticer = Noticer('d', 'd', 'r', 'f')
     #
-    #     noticers = Noticer.get_noticers_in_json()
+    #     noticers_items = Noticer.get_noticers_in_json()
     #
-    #     for noticer in noticers:
+    #     for noticer in noticers_items:
     #         print(noticer)
-    #     print(len(noticers))
+    #     print(len(noticers_items))
     #
-    #     Noticer.write_noticers_in_json(noticer, noticers)
+    #     Noticer.write_noticers_in_json(noticer, noticers_items)
 
     def test_get_noticer(self):
         noticer = Noticer.get_noticers(0)

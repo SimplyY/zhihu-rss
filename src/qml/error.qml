@@ -19,7 +19,6 @@ Rectangle {
         height: 20
         text: qsTr("错误")
         font.family: "Times New Roman"
-        font.bold: true
         font.pixelSize: 14
     }
 }

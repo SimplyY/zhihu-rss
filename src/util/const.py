@@ -9,7 +9,7 @@ ERROR_QML_NAME = 'error.qml'
 
 NOTICERS_FILE = 'noticers.json'
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 MAIN_QML_DIR = os.path.join(BASE_DIR, 'src', 'qml', MAIN_QML_NAME)
 SIGN_QML_DIR = os.path.join(BASE_DIR, 'src', 'qml', SIGN_QML_NAME)
