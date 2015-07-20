@@ -2,7 +2,7 @@ __author__ = 'yuwei'
 
 import sys
 
-from PyQt5.QtCore import QUrl, QObject
+from PyQt5.QtCore import QUrl, QObject, QVariant, QMetaObject, Q_ARG, Qt
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtQuick import QQuickView
 from PyQt5.QtQml import QQmlApplicationEngine
@@ -11,18 +11,7 @@ from PyQt5.QtQml import QQmlApplicationEngine
 # 在MyApp抽象了pyqt使用qml的过程
 
 # 使用示例
-# import MyApp
-#
-# def set_views(root_view):
-#     button = root_view.findChild(QObject, 'button')
-#     button.clicked.connect(lambda: load_answer(root_view))
-#
-# if __name__ == '__main__':
-#     my_app = MyApp(qml='test.qml')
-#
-#     set_views(my_app.root_view)
-#
-#     MyApp.run(my_app)
+# 见main.py
 
 class MyApp(QObject):
     def __init__(self, qml, set_content=None):
@@ -63,12 +52,9 @@ def set_button(parent_view, object_name, function=None):
         button.clicked.connect(function)
 
 
-class ErrorDialog(MyView):
-    def __init__(self):
-        from src.util.const import ERROR_QML_DIR
-        super().__init__(ERROR_QML_DIR)
+def use_qml_fun(parent_view, fun_name, arg):
+    q_arg = QVariant(arg)
+    QMetaObject.invokeMethod(parent_view, fun_name, Qt.DirectConnection,
+                             Q_ARG(QVariant, q_arg))
 
-    def set_error_info(self, error_info):
-        text = find_view(self.root_content, 'errorInfoText')
-        text.setProperty('text', error_info)
 

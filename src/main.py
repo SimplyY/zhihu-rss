@@ -1,10 +1,11 @@
-__author__ = 'yuwei'
+__author____author__ = 'yuwei'
 
-from PyQt5.QtCore import QObject, QVariant, pyqtSlot, QVariant, QMetaObject, Q_ARG, Qt, Q_RETURN_ARG
+from PyQt5.QtCore import QObject, QVariant
 
 from src.control import add, sign
-from src.util.my_pyqt import MyApp, ErrorDialog, set_button
+from src.util.my_pyqt import MyApp, set_button, use_qml_fun
 from src.util.const import MAIN_QML_DIR, SIGN_QML_DIR, ADD_QML_DIR
+from src.util.error import ErrorDialog
 from src.model import noticer
 
 
@@ -18,19 +19,18 @@ def set_views():
 
     my_app.web_view = root_view.findChild(QObject, 'web_view')
     my_app.noticers1_model = root_view.findChild(QObject, 'noticers1_model')
-    load_listview()
+    my_app.noticers2_model = root_view.findChild(QObject, 'noticers2_model')
+    load_listviews()
 
-def append_item(name):
-    return {"name": name}
 
-def load_listview():
-
+def load_listviews():
     noticers1_names = [noticer1.name for noticer1 in noticer.Noticer.get_noticers(1)]
+    use_qml_fun(parent_view=my_app.noticers1_model, fun_name="updateNoticers1List", arg=noticers1_names)
 
-    q_noticers1_names = QVariant(noticers1_names)
+    noticer2_names = [noticer2.name for noticer2 in noticer.Noticer.get_noticers(2)]
 
-    QMetaObject.invokeMethod(my_app.noticers1_model, "updateNoticersList", Qt.DirectConnection,
-                             Q_ARG(QVariant, q_noticers1_names))
+    use_qml_fun(parent_view=my_app.noticers2_model, fun_name="updateNoticers2List", arg=noticer2_names)
+
 
 if __name__ == '__main__':
     my_app = MyApp(qml=MAIN_QML_DIR)

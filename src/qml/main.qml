@@ -6,7 +6,7 @@ import QtQuick.Layouts 1.0
 
 
 ApplicationWindow {
-    id: test
+    id: applicationWindow
     width: 1020
     height: 600
 
@@ -94,37 +94,61 @@ ApplicationWindow {
             ListModel {
                 id: noticers1_model
                 objectName: "noticers1_model"
-                function updateNoticersList(noticers1_names){
+                function updateNoticers1List(noticers1_names){
                     noticers1_model.clear()
                     for(var i = 0; i < noticers1_names.length; i++){
                         noticers1_model.append({"name":noticers1_names[i]})
                     }
 
                 }
+
             }
 
 
             ListView {
                 id: listViewNoticers1
-                x: 25
+                x: 0
                 y: 40
-
-                width: 135
+                anchors.left: parent.left
+                anchors.right: parent.right
                 height: 230
+                layoutDirection: Qt.RightToLeft
 
                 model: noticers1_model
 
-
                 delegate: Component {
+                    Item{
+                        id: listItem1
+                        x:20
+                        width: 60
+                        height:24
 
-                        Text {
-                            width:50
-                            height: 24
+
+
+                        Text{
+
+                            width:60
+                            height:24
                             text: name
+
                             font.pixelSize: 14
                             font.family: "Times New Roman"
                         }
+                        MouseArea {
+                            anchors.fill: parent
+                            onClicked: listViewNoticers1.currentIndex = index
+                        }
+                    }
                 }
+                highlight: Rectangle {
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+
+                    height: 24
+                    color: '#cecece'
+                }
+                focus: true
+                onCurrentItemChanged: console.log(noticers1_model.get(listViewNoticers1.currentIndex).name + ' selected')
             }
 
             ListView {
@@ -139,26 +163,28 @@ ApplicationWindow {
                 anchors.top: listViewNoticers1.bottom
                 anchors.topMargin:40
                 anchors.bottom: parent.bottom
+
                 model: ListModel {
-                    ListElement {
-                        name: "Grey"
+                    id: noticers2_model
+                    objectName: "noticers2_model"
+                    function updateNoticers2List(noticers2_names){
+                        noticers2_model.clear()
+                        for(var i = 0; i < noticers2_names.length; i++){
+                            noticers2_model.append({"name":noticers2_names[i]})
+                        }
 
                     }
                 }
-                delegate: Item {
-                    x: 5
-                    width: 80
-                    height: 60
+                delegate: Component {
 
 
-
-                        Text {
-
-                            text: name
-                            font.family: "Times New Roman"
-                            font.pixelSize: 14
-                            anchors.verticalCenter: parent.verticalCenter
-                        }
+                    Text {
+                        width:50
+                        height: 24
+                        text: name
+                        font.pixelSize: 14
+                        font.family: "Times New Roman"
+                    }
 
                 }
             }
@@ -219,13 +245,13 @@ ApplicationWindow {
                 }
                 delegate: Item {
 
-                        Text {
-                            font.pixelSize: 14
-                            text: name
-                            font.family: "Times New Roman"
-                            anchors.verticalCenter: parent.verticalCenter
-                        }
+                    Text {
+                        font.pixelSize: 14
+                        text: name
+                        font.family: "Times New Roman"
+                        anchors.verticalCenter: parent.verticalCenter
                     }
+                }
 
             }
         }
