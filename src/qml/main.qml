@@ -21,12 +21,6 @@ ApplicationWindow {
         z: 3
         iconSource: "/Users/yuwei/Pictures/Snip20150717_22.png"
 
-        onClicked: {
-            noticers1_model.clear()
-            for(var i = 0; i < noticers1_length; i++){
-                noticers1_model.append({"name":noticers1_names[i]})
-            }
-        }
     }
     Button {
         objectName: "add_button"
@@ -94,10 +88,19 @@ ApplicationWindow {
             antialiasing: true
             border.color: "#b0aeb0"
             border.width: 1
+            objectName: "rect"
+
 
             ListModel {
                 id: noticers1_model
+                objectName: "noticers1_model"
+                function updateNoticersList(noticers1_names){
+                    noticers1_model.clear()
+                    for(var i = 0; i < noticers1_names.length; i++){
+                        noticers1_model.append({"name":noticers1_names[i]})
+                    }
 
+                }
             }
 
 
@@ -105,8 +108,6 @@ ApplicationWindow {
                 id: listViewNoticers1
                 x: 25
                 y: 40
-
-
 
                 width: 135
                 height: 230
@@ -166,7 +167,7 @@ ApplicationWindow {
                 id: text1
                 x: 15
                 y: 20
-                color: "#707070"
+                color: "#878787"
                 text: qsTr("关注回答")
                 font.bold: true
                 font.family: "Courier"
@@ -180,7 +181,7 @@ ApplicationWindow {
                 color: "#707070"
                 text: qsTr("关注动态")
                 font.bold: true
-                font.family: "Times New Roman"
+                font.family: "Courier"
                 font.pixelSize: 13
             }
 

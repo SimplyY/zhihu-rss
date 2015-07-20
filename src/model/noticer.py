@@ -2,7 +2,7 @@ __author__ = 'yuwei'
 
 import json
 try:
-    import zhihu
+    from src.util import zhihu
 except ConnectionError:
     print("connect error")
 #     TODO:

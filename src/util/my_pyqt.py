@@ -32,7 +32,8 @@ class MyApp(QObject):
         self.engine = QQmlApplicationEngine(self)
         self.root_context = self.engine.rootContext()
 
-        set_content(self.root_context)
+        if set_content:
+            set_content(self.root_context)
 
         self.engine.load(QUrl(qml))
         self.root_view = self.engine.rootObjects()[0]
