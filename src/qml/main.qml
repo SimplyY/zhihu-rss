@@ -90,24 +90,20 @@ ApplicationWindow {
             objectName: "rect"
             function updateNoticers1List(noticers1){
                 noticers1_model.clear()
-//                var urls = noticers1["urls"]
+
                 var names = noticers1["names"]
-                noticers1_model.append({"name": "test"})
+
                 for(var i = 0; i < names.length; i++){
-                    noticers1_model.append({"name": names[i]})
-//                    var noticers_attr = noticers1[i]
-//                    for(var j = 0; j < noticers_attr.length; j++){
-//                        noticers1_model.append({"name":noticers_attr[j]})
-//                    }
-                }
+                    noticers1_model.append({"name": names[i]})                }
 
             }
-            function updateNoticers2List(noticers2_names){
+            function updateNoticers2List(noticers2){
                 noticers2_model.clear()
-                for(var i = 0; i < noticers2_names.length; i++){
-                    noticers2_model.append({"name":noticers2_names[i]})
-                }
+                var names = noticers2["names"]
 
+                for(var i = 0; i < names.length; i++){
+                    noticers2_model.append({"name": names[i]})
+                }
             }
 
             ListModel {
