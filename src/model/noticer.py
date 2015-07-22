@@ -47,7 +47,6 @@ class Noticer:
     @staticmethod
     def add_noticer(noticer):
         noticers = Noticer.get_noticers_in_json()
-
         Noticer.write_noticers_in_json(noticer, noticers)
 
     @staticmethod

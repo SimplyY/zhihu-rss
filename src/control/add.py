@@ -3,6 +3,7 @@ __author__ = 'yuwei'
 
 from src.util.my_pyqt import MyView, set_button, find_view
 from src.model.noticer import Noticer
+from src.model.feed_list import FeedsList
 from src.util.error import UrlError
 from src.control import listview
 
@@ -27,6 +28,7 @@ def record_add_info(my_app, add_dialog, error_dialog):
         return
 
     Noticer.add_noticer(noticer)
+    # TODO: FeedsList.add_feeds_list
     listview.load_noticers_listview(my_app)
 
 
