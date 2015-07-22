@@ -66,6 +66,7 @@ Rectangle {
         id: spinBox1
         x: 130
         y: 83
+        width: 40
         minimumValue: 1
         maximumValue: 2
 
@@ -86,6 +87,7 @@ Rectangle {
         id: spinBox2
         x: 130
         y: 146
+        width: 40
 
         minimumValue: 0
         maximumValue: 1

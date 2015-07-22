@@ -13,7 +13,7 @@ from src.util.const import NOTICERS_JSON_DIR
 
 
 class Noticer:
-    def __init__(self, url, notice_method, is_remind, latest_answer_title, name=None):
+    def __init__(self, url, notice_method, is_remind, latest_title=None, name=None):
         if name:
             self.name = name
         else:
@@ -27,11 +27,15 @@ class Noticer:
         self.url = url
         self.notice_method = notice_method
         self.is_remind = is_remind
-        self.latest_answer_title = latest_answer_title
-        self.list = [self.url, self.notice_method, self.is_remind, self.latest_answer_title, self.name]
+        self.latest_title = latest_title
+        self.list = [self.url, self.notice_method, self.is_remind, self.latest_title, self.name]
 
     def __str__(self):
         return str(self.list)
+
+    def set_latest_title(self, title):
+        self.latest_title = title
+        self.list[3] = title
 
     @staticmethod
     def init_noticer(noticer_list):
@@ -45,6 +49,10 @@ class Noticer:
         noticers = Noticer.get_noticers_in_json()
 
         Noticer.write_noticers_in_json(noticer, noticers)
+
+    @staticmethod
+    def del_noticer():
+        pass
 
     @staticmethod
     def get_noticers(index):

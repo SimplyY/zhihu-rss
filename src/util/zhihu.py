@@ -1117,7 +1117,7 @@ class Article():
         """
         :param str url: 文章所在URL
         :param Book book: 所属专栏
-        :param Author author: 文章作者
+        :param Author author: 文章作者·
         :param str title: 文章标题
         :param int agree_num: 赞同数
         :param int comment_num: 评论数

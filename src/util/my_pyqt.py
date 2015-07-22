@@ -39,7 +39,7 @@ class MyView(QQuickView):
         super().__init__()
         self.setResizeMode(QQuickView.SizeRootObjectToView)
         self.setSource(QUrl(qml))
-        self.root_content = self.rootObject()
+        self.root_view = self.rootObject()
 
 
 def find_view(parent_view, object_name):
@@ -52,8 +52,8 @@ def set_button(parent_view, object_name, function=None):
         button.clicked.connect(function)
 
 
-def use_qml_fun(parent_view, fun_name, arg):
-    q_arg = QVariant(arg)
+def use_qml_fun(parent_view, fun_name, args):
+    q_arg = QVariant(args)
     QMetaObject.invokeMethod(parent_view, fun_name, Qt.DirectConnection,
                              Q_ARG(QVariant, q_arg))
 

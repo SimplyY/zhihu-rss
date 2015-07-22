@@ -12,5 +12,5 @@ class ErrorDialog(MyView):
         super().__init__(ERROR_QML_DIR)
 
     def set_error_info(self, error_info):
-        text = find_view(self.root_content, 'errorInfoText')
+        text = find_view(self.root_view, 'errorInfoText')
         text.setProperty('text', error_info)

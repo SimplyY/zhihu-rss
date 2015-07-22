@@ -9,6 +9,7 @@ ApplicationWindow {
     id: applicationWindow
     width: 1020
     height: 600
+    color: "#dedede"
 
 
     Button {
@@ -55,8 +56,6 @@ ApplicationWindow {
         y: 5
         text: qsTr("登陆")
         z: 2
-
-
         enabled: true
 
     }
@@ -87,23 +86,34 @@ ApplicationWindow {
             color: "#f6f6f6"
             antialiasing: true
             border.color: "#b0aeb0"
-            border.width: 1
+            border.width: 0
             objectName: "rect"
+            function updateNoticers1List(noticers1){
+                noticers1_model.clear()
+//                var urls = noticers1["urls"]
+                var names = noticers1["names"]
+                noticers1_model.append({"name": "test"})
+                for(var i = 0; i < names.length; i++){
+                    noticers1_model.append({"name": names[i]})
+//                    var noticers_attr = noticers1[i]
+//                    for(var j = 0; j < noticers_attr.length; j++){
+//                        noticers1_model.append({"name":noticers_attr[j]})
+//                    }
+                }
 
-
-            ListModel {
-                id: noticers1_model
-                objectName: "noticers1_model"
-                function updateNoticers1List(noticers1_names){
-                    noticers1_model.clear()
-                    for(var i = 0; i < noticers1_names.length; i++){
-                        noticers1_model.append({"name":noticers1_names[i]})
-                    }
-
+            }
+            function updateNoticers2List(noticers2_names){
+                noticers2_model.clear()
+                for(var i = 0; i < noticers2_names.length; i++){
+                    noticers2_model.append({"name":noticers2_names[i]})
                 }
 
             }
 
+            ListModel {
+                id: noticers1_model
+                objectName: "noticers1_model"
+            }
 
             ListView {
                 id: listViewNoticers1
@@ -113,6 +123,7 @@ ApplicationWindow {
                 anchors.right: parent.right
                 height: 230
                 layoutDirection: Qt.RightToLeft
+                currentIndex: -1
 
                 model: noticers1_model
 
@@ -123,10 +134,7 @@ ApplicationWindow {
                         width: 60
                         height:24
 
-
-
                         Text{
-
                             width:60
                             height:24
                             text: name
@@ -134,21 +142,24 @@ ApplicationWindow {
                             font.pixelSize: 14
                             font.family: "Times New Roman"
                         }
-                        MouseArea {
+                        MouseArea{
                             anchors.fill: parent
-                            onClicked: listViewNoticers1.currentIndex = index
+                            onClicked:{
+                                listViewNoticers1.currentIndex = index
+                                listViewNoticers2.currentIndex = -1
+                            }
                         }
                     }
                 }
+
                 highlight: Rectangle {
                     anchors.left: parent.left
                     anchors.right: parent.right
-
                     height: 24
-                    color: '#cecece'
+                    color: '#ddd'
                 }
                 focus: true
-                onCurrentItemChanged: console.log(noticers1_model.get(listViewNoticers1.currentIndex).name + ' selected')
+                //                onCurrentItemChanged:
             }
 
             ListView {
@@ -163,30 +174,47 @@ ApplicationWindow {
                 anchors.top: listViewNoticers1.bottom
                 anchors.topMargin:40
                 anchors.bottom: parent.bottom
+                currentIndex: -1
 
                 model: ListModel {
                     id: noticers2_model
                     objectName: "noticers2_model"
-                    function updateNoticers2List(noticers2_names){
-                        noticers2_model.clear()
-                        for(var i = 0; i < noticers2_names.length; i++){
-                            noticers2_model.append({"name":noticers2_names[i]})
-                        }
 
-                    }
                 }
                 delegate: Component {
+                    Item{
+                        id: listItem2
+                        x:20
+                        width: 60
+                        height:24
 
+                        Text{
+                            width:60
+                            height:24
+                            text: name
 
-                    Text {
-                        width:50
-                        height: 24
-                        text: name
-                        font.pixelSize: 14
-                        font.family: "Times New Roman"
+                            font.pixelSize: 14
+                            font.family: "Times New Roman"
+                        }
+                        MouseArea{
+                            anchors.fill: parent
+                            onClicked:{
+
+                                listViewNoticers2.currentIndex = index;
+                                listViewNoticers1.currentIndex = -1
+                            }
+                        }
                     }
-
                 }
+
+                highlight: Rectangle {
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    height: 24
+                    color: '#ddd'
+                }
+                focus: true
+                //                onCurrentItemChanged:
             }
 
             Text {
@@ -220,11 +248,11 @@ ApplicationWindow {
 
             anchors.top: parent.top
             anchors.left: rectangle1.right
-            width: 190
+            width: 208
             anchors.bottom: parent.bottom
 
             antialiasing: true
-            border.color: "#b0aeb0"
+            border.color: "#dbdbdb"
             border.width: 1
 
             ListView {
@@ -234,13 +262,9 @@ ApplicationWindow {
                 anchors.top: parent.top
                 anchors.bottom: parent.bottom
                 anchors.topMargin: 10
-                width: 190
+                width: 208
                 height: 593
                 model: ListModel {
-                    ListElement {
-                        name: "Grey"
-
-                    }
 
                 }
                 delegate: Item {
@@ -257,6 +281,9 @@ ApplicationWindow {
         }
 
         WebView{
+            anchors.rightMargin: -18
+            anchors.bottomMargin: 0
+            anchors.leftMargin: 0
 
             anchors.left: rectangle2.right
             anchors.top: parent.top
@@ -275,7 +302,18 @@ ApplicationWindow {
 
         }
 
+        Rectangle {
+            id: rectangle3
+            x: 0
+            y: 0
+            width: 1020
+            height: 1
+            color: "#afafaf"
+            border.color: "#afafaf"
+        }
+
     }
+
 
 
 

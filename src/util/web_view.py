@@ -7,9 +7,8 @@ def load_css(html):
     return new_html
 
 
-def load_answer(answer, web_view):
+def load_answer(html, web_view):
 
-    html = answer.content
     new_html = load_css(html)
 
     web_view.loadHtml(new_html)

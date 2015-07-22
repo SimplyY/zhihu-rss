@@ -28,7 +28,7 @@ def record_sign_info(my_app, root, sign_dialog):
     answers = get_answers(url, url_input)
     answer = next(answers)
 
-    load_answer(answer, my_app.web_view)
+    load_answer(answer.html, my_app.web_view)
 
     if answers:
         sign_dialog.close()
@@ -38,8 +38,8 @@ def show_sign_dialog(my_app, qml):
     sign_dialog = MyView(qml)
     sign_dialog.show()
 
-    set_button(sign_dialog.root_content, 'button',
-               lambda: record_sign_info(my_app, sign_dialog.root_content, sign_dialog))
+    set_button(sign_dialog.root_view, 'button',
+               lambda: record_sign_info(my_app, sign_dialog.root_view, sign_dialog))
 
 
 
