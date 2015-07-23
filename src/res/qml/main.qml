@@ -7,8 +7,8 @@ import QtQuick.Layouts 1.0
 
 ApplicationWindow {
     id: applicationWindow
-    width: 1300
-    height: 700
+    width: 1100
+    height: 600
     color: "#dedede"
     maximumWidth: 1500
     title: "zhihu-rss"
@@ -23,31 +23,22 @@ ApplicationWindow {
             spacing: 0
 
 
-
+            Item { Layout.preferredWidth: 10 }
             ToolButton {
                 objectName: "add_button"
 
                 x: 470
                 y: 5
                 width: 80
-                height: 22
-                text: qsTr("添加")
+                height: 26
+                text: qsTr("添加关注")
                 z: 2
 
 
 
             }
-            Item { Layout.preferredWidth: 20 }
-            ToolButton {
-                objectName: "sign_button"
 
-                x: 937
-                y: 5
-                text: qsTr("登陆")
-                z: 2
-                enabled: true
-            }
-            Item { Layout.preferredWidth: 20 }
+            Item { Layout.preferredWidth: 120 }
             ToolButton {
                 id: backButton
                 tooltip: qsTr("Back")
@@ -59,7 +50,7 @@ ApplicationWindow {
                     background: Rectangle { color: "transparent" }
                 }
             }
-            Item { Layout.preferredWidth: 20 }
+
             ToolButton {
                 id: forwardButton
                 tooltip: qsTr("Forward")
@@ -71,7 +62,7 @@ ApplicationWindow {
                     background: Rectangle { color: "transparent" }
                 }
             }
-            Item { Layout.preferredWidth: 20 }
+
             ToolButton {
                 id: reloadButton
                 tooltip: webView.loading ? qsTr("Stop"): qsTr("Refresh")
@@ -83,7 +74,7 @@ ApplicationWindow {
                 }
             }
 
-            Item { Layout.preferredWidth: 5 }
+            Item { Layout.preferredWidth: 35 }
 
             TextField {
                 Layout.fillWidth: true
@@ -95,9 +86,9 @@ ApplicationWindow {
                 onAccepted: webView.url = text
 
                 ProgressBar {
-                    x: 8
-                    y: 15
-                    width: 969
+                    x: 3
+                    y: 18
+                    width: parent.width
                     height: 20
 
                     visible: webView.loading && Qt.platform.os !== "ios"
@@ -123,7 +114,7 @@ ApplicationWindow {
                 }
             }
 
-            Item { Layout.preferredWidth: 10 }
+            Item { Layout.preferredWidth: 8 }
         }
     }
 
@@ -158,9 +149,11 @@ ApplicationWindow {
             anchors.left: parent.left
             anchors.top: parent.top
             anchors.bottom: parent.bottom
-            width: 160
+            width: 140
 
             color: "#f6f6f6"
+            anchors.bottomMargin: 0
+            anchors.leftMargin: 0
             anchors.topMargin: 1
             antialiasing: true
             border.color: "#b0aeb0"
@@ -192,7 +185,7 @@ ApplicationWindow {
             ListView {
                 id: listViewNoticers1
                 x: 0
-                y: 40
+                y: 41
                 anchors.left: parent.left
                 anchors.right: parent.right
                 height: 230
@@ -204,8 +197,10 @@ ApplicationWindow {
                 delegate: Component {
                     Item{
                         id: listItem1
-                        x:20
-                        width: 60
+                        anchors.leftMargin:20
+                        anchors.left: parent.left
+                        anchors.right: parent.right
+
                         height:24
 
                         Text{
@@ -322,7 +317,7 @@ ApplicationWindow {
 
             anchors.top: parent.top
             anchors.left: rectangle1.right
-            width: 208
+            width: 218
             anchors.bottom: parent.bottom
 
             antialiasing: true
@@ -330,24 +325,24 @@ ApplicationWindow {
             border.width: 1
 
             ListView {
-                id: listViewAnswers
-                x: 0
-                y: 3
+                id: listViewFeeds
+                x: 2
+                y: 0
                 anchors.top: parent.top
                 anchors.bottom: parent.bottom
-                anchors.topMargin: 10
-                width: 208
+                anchors.topMargin: 2
+                width: 214
                 height: 593
+                currentIndex: -1
+
                 model: ListModel {
 
                 }
                 delegate: Item {
 
-                    Text {
-                        font.pixelSize: 14
-                        text: name
-                        font.family: "Times New Roman"
-                        anchors.verticalCenter: parent.verticalCenter
+//                                rectangle1.load_feed(name)
+                            }
+                        }
                     }
                 }
 
@@ -358,8 +353,10 @@ ApplicationWindow {
 
         WebView{
             id: webView
+            width: 764
+            anchors.rightMargin: 0
             anchors.bottomMargin: 0
-            anchors.leftMargin: 0
+            anchors.leftMargin: 2
 
             anchors.left: rectangle2.right
             anchors.top: parent.top
