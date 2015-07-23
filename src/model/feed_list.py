@@ -10,7 +10,10 @@ from src.util.const import FEEDS_JSON_DIR, MAX_FIRST_FEED_NUM
 #     feedslist{
 #         name
 #         url
-#         feeds
+#         feeds{
+#            url,
+#            action
+# }
 #         list
 #     }
 # ]

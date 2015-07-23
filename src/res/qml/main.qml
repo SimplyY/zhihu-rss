@@ -7,74 +7,151 @@ import QtQuick.Layouts 1.0
 
 ApplicationWindow {
     id: applicationWindow
-    width: 1020
-    height: 600
+    width: 1300
+    height: 700
     color: "#dedede"
+    maximumWidth: 1500
+    title: "zhihu-rss"
+    minimumWidth: 800
+    minimumHeight: 600
+    maximumHeight: 1000
+
+    toolBar: ToolBar {
+        id: navigationBar
+        RowLayout {
+            anchors.fill: parent
+            spacing: 0
 
 
-    Button {
-        objectName: "home_button"
-        x: 395
-        y: 5
-        width: 80
-        height: 28
-        text: qsTr("主页")
-        z: 3
-        iconSource: "/Users/yuwei/Pictures/Snip20150717_22.png"
 
+            ToolButton {
+                objectName: "add_button"
+
+                x: 470
+                y: 5
+                width: 80
+                height: 22
+                text: qsTr("添加")
+                z: 2
+
+
+
+            }
+            Item { Layout.preferredWidth: 20 }
+            ToolButton {
+                objectName: "sign_button"
+
+                x: 937
+                y: 5
+                text: qsTr("登陆")
+                z: 2
+                enabled: true
+            }
+            Item { Layout.preferredWidth: 20 }
+            ToolButton {
+                id: backButton
+                tooltip: qsTr("Back")
+                iconSource: "images/left-32.png"
+                onClicked: webView.goBack()
+                enabled: webView.canGoBack
+                Layout.preferredWidth: navigationBar.height
+                style: ButtonStyle {
+                    background: Rectangle { color: "transparent" }
+                }
+            }
+            Item { Layout.preferredWidth: 20 }
+            ToolButton {
+                id: forwardButton
+                tooltip: qsTr("Forward")
+                iconSource: "images/right-32.png"
+                onClicked: webView.goForward()
+                enabled: webView.canGoForward
+                Layout.preferredWidth: navigationBar.height
+                style: ButtonStyle {
+                    background: Rectangle { color: "transparent" }
+                }
+            }
+            Item { Layout.preferredWidth: 20 }
+            ToolButton {
+                id: reloadButton
+                tooltip: webView.loading ? qsTr("Stop"): qsTr("Refresh")
+                iconSource: webView.loading ? "images/stop-32.png" : "images/refresh-32.png"
+                onClicked: webView.loading ? webView.stop() : webView.reload()
+                Layout.preferredWidth: navigationBar.height
+                style: ButtonStyle {
+                    background: Rectangle { color: "transparent" }
+                }
+            }
+
+            Item { Layout.preferredWidth: 5 }
+
+            TextField {
+                Layout.fillWidth: true
+                id: urlField
+                x: 370
+                inputMethodHints: Qt.ImhUrlCharactersOnly | Qt.ImhPreferLowercase
+                text: webView.url
+
+                onAccepted: webView.url = text
+
+                ProgressBar {
+                    x: 8
+                    y: 15
+                    width: 969
+                    height: 20
+
+                    visible: webView.loading && Qt.platform.os !== "ios"
+                    minimumValue: 0
+                    maximumValue: 100
+                    value: webView.loadProgress > 100 ? 0 : webView.loadProgress
+                }
+            }
+
+            Item { Layout.preferredWidth: 5 }
+
+            ToolButton {
+                id: goButton
+                text: qsTr("Go")
+                Layout.preferredWidth: navigationBar.height
+                onClicked: {
+                    Qt.inputMethod.commit()
+                    Qt.inputMethod.hide()
+                    webView.url = urlField.text
+                }
+                style: ButtonStyle {
+                    background: Rectangle { color: "transparent" }
+                }
+            }
+
+            Item { Layout.preferredWidth: 10 }
+        }
     }
-    Button {
-        objectName: "add_button"
 
-        x: 470
-        y: 5
-        width: 80
-        height: 28
-        text: qsTr("添加")
-        z: 2
-        iconSource: '/Users/yuwei/Pictures/Snip20150717_25.png'
-
+    statusBar: StatusBar {
+        id: statusBar
+        visible: webView.loading && Qt.platform.os !== "ios"
+        RowLayout {
+            anchors.fill: parent
+            Label { text: webView.loadProgress == 100 ? qsTr("Done") : qsTr("Loading: ") + webView.loadProgress + "%" }
+        }
     }
 
-    Button {
-        objectName: "remind_button"
-
-        x: 545
-        y: 5
-        width: 80
-        height: 28
-        text: qsTr("提醒")
-        iconSource: "/Users/yuwei/Pictures/Snip20150717_11.png"
-        z: 1
-
-    }
-
-    Button {
-        objectName: "sign_button"
-
-        x: 937
-        y: 5
-        text: qsTr("登陆")
-        z: 2
-        enabled: true
-
-    }
 
 
 
     Rectangle {
         id: rectangle0
+        border.width: 0
 
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.top: parent.top
         anchors.bottom: parent.bottom
 
-        anchors.topMargin: 38
+        anchors.topMargin: 0
 
 
-        border.color: "#b0aeb0"
-        border.width: 2
+
 
         Rectangle {
             id: rectangle1
@@ -84,6 +161,7 @@ ApplicationWindow {
             width: 160
 
             color: "#f6f6f6"
+            anchors.topMargin: 1
             antialiasing: true
             border.color: "#b0aeb0"
             border.width: 0
@@ -276,8 +354,10 @@ ApplicationWindow {
             }
         }
 
+
+
         WebView{
-            anchors.rightMargin: -18
+            id: webView
             anchors.bottomMargin: 0
             anchors.leftMargin: 0
 
@@ -298,15 +378,7 @@ ApplicationWindow {
 
         }
 
-        Rectangle {
-            id: rectangle3
-            x: 0
-            y: 0
-            width: 1020
-            height: 1
-            color: "#afafaf"
-            border.color: "#afafaf"
-        }
+
 
     }
 
