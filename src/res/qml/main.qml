@@ -98,20 +98,17 @@ ApplicationWindow {
                 }
             }
 
-            Item { Layout.preferredWidth: 5 }
+            Item { Layout.preferredWidth: 25 }
+
 
             ToolButton {
-                id: goButton
-                text: qsTr("Go")
-                Layout.preferredWidth: navigationBar.height
-                onClicked: {
-                    Qt.inputMethod.commit()
-                    Qt.inputMethod.hide()
-                    webView.url = urlField.text
-                }
-                style: ButtonStyle {
-                    background: Rectangle { color: "transparent" }
-                }
+                objectName: "sign_button"
+
+                x: 937
+                y: 5
+                text: qsTr("登陆")
+                z: 2
+                enabled: true
             }
 
             Item { Layout.preferredWidth: 8 }
@@ -177,6 +174,15 @@ ApplicationWindow {
                 }
             }
 
+            function load_feeds_list(name){
+                var feedslist = feedslist_dic[name]
+                feeds_list_model.clear()
+                console.debug(feedslist)
+                for(var feed_index in feedslist){
+                    feeds_list_model.append({"name": feedslist[feed_index]})
+                }
+            }
+
             ListModel {
                 id: noticers1_model
                 objectName: "noticers1_model"
@@ -189,6 +195,8 @@ ApplicationWindow {
                 anchors.left: parent.left
                 anchors.right: parent.right
                 height: 230
+                anchors.rightMargin: 1
+                anchors.leftMargin: 1
                 layoutDirection: Qt.RightToLeft
                 currentIndex: -1
 
@@ -216,6 +224,7 @@ ApplicationWindow {
                             onClicked:{
                                 listViewNoticers1.currentIndex = index
                                 listViewNoticers2.currentIndex = -1
+                                rectangle1.load_feeds_list(name)
                             }
                         }
                     }
@@ -336,16 +345,41 @@ ApplicationWindow {
                 currentIndex: -1
 
                 model: ListModel {
+                    id: feeds_list_model
 
                 }
-                delegate: Item {
+                delegate: Component {
+                    Item{
+                        id: listItem1
+                        x:2
+                        width: 214
+                        height:40
+
+                        Text{
+                            width:60
+                            height:40
+                            text: name
+
+                            font.pixelSize: 12
+                            font.family: "Times New Roman"
+                        }
+                        MouseArea{
+                            anchors.fill: parent
+                            onClicked:{
+                                listViewFeeds.currentIndex = index
 
 //                                rectangle1.load_feed(name)
                             }
                         }
                     }
                 }
-
+                highlight: Rectangle {
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    height: 24
+                    color: '#e6e6e6'
+                }
+                focus: true
             }
         }
 

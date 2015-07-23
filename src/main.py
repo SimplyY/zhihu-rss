@@ -8,7 +8,6 @@ from src.util.const import MAIN_QML_DIR, SIGN_QML_DIR, ADD_QML_DIR
 from src.util.error import ErrorDialog
 
 
-
 def on_noticer_click(listview_item):
     _my_app.noticers1_listview.setProperty("currentIndex", listview_item.getProperty("index"))
 
@@ -26,13 +25,18 @@ def set_views():
     listview.load_noticers_listview(_my_app)
 
 
+def set_content(root_context):
+    feedslist_dic = {"yuwei": ["yuwei1", "yuwei 在 2015-07-20 16:59:06 赞同了问题\n"
+                                         " 通过旅行去了解对方是怎样的一种体验？", "yuweasdfasdfi3"],
+                     "采铜": ["caitasdfsadong1", "caitong2", "caitong3"],
+                     "7sDream": ["1", "2", "3"]}
+    root_context.setContextProperty("feedslist_dic", feedslist_dic)
+    root_context.setContextProperty("current_noticer", None)
+
+
 if __name__ == '__main__':
-    _my_app = MyApp(qml=MAIN_QML_DIR)
+    _my_app = MyApp(qml=MAIN_QML_DIR, set_content=set_content)
 
     set_views()
 
     MyApp.run(_my_app)
-
-
-
-
