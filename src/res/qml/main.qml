@@ -8,7 +8,7 @@ import QtQuick.Layouts 1.0
 ApplicationWindow {
     id: applicationWindow
     width: 1100
-    height: 600
+    height: 660
     color: "#dedede"
     maximumWidth: 1500
     title: "zhihu-rss"
@@ -23,7 +23,7 @@ ApplicationWindow {
             spacing: 0
 
 
-            Item { Layout.preferredWidth: 10 }
+            Item { Layout.preferredWidth: 2 }
             ToolButton {
                 objectName: "add_button"
 
@@ -33,48 +33,59 @@ ApplicationWindow {
                 height: 26
                 text: qsTr("添加关注")
                 z: 2
-
+                style: ButtonStyle {
+                    Text {
+                                font.family: "Helvetica"
+                        text: control.text
+                    }
+                }
 
 
             }
 
-            Item { Layout.preferredWidth: 120 }
+            Item { Layout.preferredWidth: 102 }
             ToolButton {
                 id: backButton
                 tooltip: qsTr("Back")
-                iconSource: "images/left-32.png"
+                text: qsTr("后退")
+//                iconSource: "images/left-32.png"
                 onClicked: webView.goBack()
                 enabled: webView.canGoBack
                 Layout.preferredWidth: navigationBar.height
                 style: ButtonStyle {
                     background: Rectangle { color: "transparent" }
+
                 }
             }
 
             ToolButton {
                 id: forwardButton
                 tooltip: qsTr("Forward")
-                iconSource: "images/right-32.png"
+                text: qsTr("前进")
+//                iconSource: "images/right-32.png"
                 onClicked: webView.goForward()
                 enabled: webView.canGoForward
                 Layout.preferredWidth: navigationBar.height
                 style: ButtonStyle {
                     background: Rectangle { color: "transparent" }
+
                 }
             }
 
             ToolButton {
                 id: reloadButton
                 tooltip: webView.loading ? qsTr("Stop"): qsTr("Refresh")
-                iconSource: webView.loading ? "images/stop-32.png" : "images/refresh-32.png"
+                text: webView.loading ? qsTr("停止"): qsTr("刷新")
+//                iconSource: webView.loading ? "images/stop-32.png" : "images/refresh-32.png"
                 onClicked: webView.loading ? webView.stop() : webView.reload()
                 Layout.preferredWidth: navigationBar.height
                 style: ButtonStyle {
                     background: Rectangle { color: "transparent" }
+
                 }
             }
 
-            Item { Layout.preferredWidth: 35 }
+            Item { Layout.preferredWidth: 75 }
 
             TextField {
                 Layout.fillWidth: true
@@ -90,7 +101,7 @@ ApplicationWindow {
                     y: 18
                     width: parent.width
                     height: 20
-
+//                    color:
                     visible: webView.loading && Qt.platform.os !== "ios"
                     minimumValue: 0
                     maximumValue: 100
@@ -101,15 +112,7 @@ ApplicationWindow {
             Item { Layout.preferredWidth: 25 }
 
 
-            ToolButton {
-                objectName: "sign_button"
 
-                x: 937
-                y: 5
-                text: qsTr("登陆")
-                z: 2
-                enabled: true
-            }
 
             Item { Layout.preferredWidth: 8 }
         }
@@ -162,8 +165,10 @@ ApplicationWindow {
                 var notice_method = args["notice_method"]
 
                 var model = notice_method===1 ? noticers1_model: noticers2_model
+                console.debug(feeds_list["name"])
                 model.append({"name": feeds_list["name"], "feedslist": feeds_list})
 
+                var feeds = feeds_list["feeds"]
 
                 for(var i in feeds){
                     console.debug(feeds)
@@ -249,7 +254,7 @@ ApplicationWindow {
                             text: name
 
                             font.pixelSize: 14
-                            font.family: "Times New Roman"
+                                    font.family: "Times New Roman"
                         }
                         MouseArea{
                             anchors.fill: parent
@@ -304,7 +309,7 @@ ApplicationWindow {
                             text: name
 
                             font.pixelSize: 14
-                            font.family: "Times New Roman"
+                                    font.family: "Times New Roman"
                         }
                         MouseArea{
                             anchors.fill: parent
@@ -335,7 +340,7 @@ ApplicationWindow {
                 color: "#878787"
                 text: qsTr("关注回答")
                 font.bold: true
-                font.family: "Courier"
+                        font.family: "Helvetica"
                 font.pixelSize: 13
             }
 
@@ -346,7 +351,7 @@ ApplicationWindow {
                 color: "#707070"
                 text: qsTr("关注动态")
                 font.bold: true
-                font.family: "Courier"
+                       font.family: "Helvetica"
                 font.pixelSize: 13
             }
 
@@ -386,11 +391,11 @@ ApplicationWindow {
                         id: listItem1
                         x:2
                         width: 210
-                        height:55
+                        height:68
 
                         Text{
                             width:50
-                            height:50
+                            height:65
                             text: name
 
                             font.pixelSize: 12
@@ -401,6 +406,7 @@ ApplicationWindow {
                             onClicked:{
                                 listViewFeeds.currentIndex = index
                                 webView.url = url
+
                             }
                         }
                     }
@@ -409,7 +415,7 @@ ApplicationWindow {
                     anchors.left: parent.left
                     anchors.right: parent.right
                     height: 24
-                    color: '#e6e6e6'
+                    color: '#ddd'
                 }
                 focus: true
             }
@@ -426,7 +432,7 @@ ApplicationWindow {
 
             anchors.left: rectangle2.right
             anchors.top: parent.top
-            anchors.topMargin: 1
+            anchors.topMargin: url.toString().match("www.zhihu.com")=="www.zhihu.com" ? -95 : 0
             anchors.right: parent.right
             anchors.bottom: parent.bottom
 
