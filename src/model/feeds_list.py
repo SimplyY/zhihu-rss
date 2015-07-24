@@ -27,11 +27,7 @@ class FeedsList:
 
             author = zhihu.Author(self.url)
 
-            if noticer.notice_method == 1:
-                self.feeds = FeedsList.get_word_feeds(noticer, author, old_feeds_list)
-
-                # elif noticer.notice_method == 2:
-                # self.feeds = feeds = zhihu.Author(self.url).feeds
+            self.feeds = FeedsList.get_feeds(noticer, author, old_feeds_list)
 
             self.list = [self.url, self.name]
             self.list.extend(self.feeds)
@@ -89,26 +85,24 @@ class FeedsList:
         return new_feeds_lists
 
     @staticmethod
-    def get_word_feeds(noticer, author, old_feeds_list=None):
+    def get_feeds(noticer, author, old_feeds_list=None):
         feeds = []
 
         latest_act_url = noticer.latest_act_url
         activities = author.activities
 
-        if not latest_act_url:  # add feeds_list
-            for act in activities:
-                if act.type in [zhihu.ActType.ANSWER_QUESTION, zhihu.ActType.PUBLISH_POST]:
-                    FeedsList._set_feed_word(feeds, author, act)
-                if len(feeds) == MAX_FIRST_FEED_NUM:
-                    break
-        else:
-            for act in activities:
-                if act.type in [zhihu.ActType.ANSWER_QUESTION, zhihu.ActType.PUBLISH_POST]:
-                    FeedsList._set_feed_word(feeds, author, act)
+        for act in activities:
+            # 两个截止遍历的条件
+            if latest_act_url and latest_act_url == act.content.url:
+                break
+            if MAX_FIRST_FEED_NUM == len(feeds):
+                break
 
-                if latest_act_url == act.content.url:
-                    break
+            feed = FeedsList._create_feed(author, act, noticer)
+            if feed:
+                feeds.append(feed)
 
+        if old_feeds_list:
             feeds.extend(old_feeds_list)
 
         noticer.set_latest_act_url(feeds[0]["url"])
@@ -116,23 +110,28 @@ class FeedsList:
         return feeds
 
     @staticmethod
-    def _set_feed_word(feeds, author, act):
+    def _create_feed(author, act, noticer):
+        if noticer.notice_method == 1 and act.type not in [zhihu.ActType.ANSWER_QUESTION, zhihu.ActType.PUBLISH_POST]:
+            return None
+
         feed = {"url": None, "action": None}
+
         FeedsList._set_feed_word_action(feed, author, act)
         feed["url"] = act.content.url
-        feeds.append(feed)
+
+        return feed
 
     @staticmethod
     def _set_feed_word_action(feed, author, act):
 
         if act.type == zhihu.ActType.ANSWER_QUESTION:
-            feed["action"] = ('{} 在 {} 回答了问题\n{} \n赞同数 {}'.format(author.name, act.time.split(" ")[0],
+            feed["action"] = ('{} 在 {} 回答了问题\n{} \n赞同数 {}'.format(author.name, str(act.time).split(" ")[0],
                                                                         act.answer.question.title,
                                                                         act.answer.upvote_num))
         elif act.type == zhihu.ActType.PUBLISH_POST:
             feed["action"] = ('{} 在 {} 在专栏\n {} 中发布了文章\n {}'.format(author.name, act.time,
                                                                           act.post.column.name, act.post.title,
-                                                                          act.post.upvote_num))
+                                                                              act.post.upvote_num))
 
     @staticmethod
     def del_feeds_list():

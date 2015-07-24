@@ -15,7 +15,6 @@ def on_noticer_click(listview_item):
 def set_views():
     root_view = _my_app.root_view
 
-    set_button(root_view, 'sign_button', lambda: sign.show_sign_dialog(_my_app, SIGN_QML_DIR))
     set_button(root_view, 'home_button')
     set_button(root_view, 'add_button', lambda: add.show_add_dialog(_my_app, ADD_QML_DIR, ErrorDialog()))
     set_button(root_view, 'remind_button')

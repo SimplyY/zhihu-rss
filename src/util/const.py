@@ -24,4 +24,4 @@ FEEDS_JSON_DIR = os.path.join(BASE_DIR, 'json', FEEDS_FILE)
 
 CSS_GITHUB_PATH = "https://raw.githubusercontent.com/SimplyY/save/master/github-markdown.css"
 
-MAX_FIRST_FEED_NUM = 3
+MAX_FIRST_FEED_NUM = 10
