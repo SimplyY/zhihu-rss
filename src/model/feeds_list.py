@@ -129,7 +129,7 @@ class FeedsList:
                                                                         act.answer.question.title,
                                                                         act.answer.upvote_num))
         elif act.type == zhihu.ActType.PUBLISH_POST:
-            feed["action"] = ('{} 在 {} 在专栏\n {} 中发布了文章\n {}'.format(author.name, act.time,
+            feed["action"] = ('{} 在 {} 在专栏\n {} 中发布了文章\n {}'.format(author.name, str(act.time).split(" ")[0],
                                                                           act.post.column.name, act.post.title,
                                                                               act.post.upvote_num))
 

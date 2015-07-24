@@ -4,6 +4,10 @@
 
 you can rss any zhihu's user in it
 
+开发者预览版
+![image](https://cloud.githubusercontent.com/assets/8455579/8877985/1408786a-325b-11e5-8d2c-ecc35cf63ead.png)
+
+![image](https://cloud.githubusercontent.com/assets/8455579/8877987/1703d6d6-325b-11e5-9348-61bd28fc5db4.png)
 
 ## 功能：
 - [x] minibrower
