@@ -1,4 +1,4 @@
-import QtQuick 2.2
+import QtQuick 2.0
 import QtWebKit 3.0
 import QtQuick.Controls 1.3
 import QtQuick.Controls.Styles 1.3
@@ -156,32 +156,64 @@ ApplicationWindow {
             border.color: "#b0aeb0"
             border.width: 0
             objectName: "rect"
-            function updateNoticers1List(noticers1){
+
+            function add_new_feedslist(args){
+                var feeds_list = args["feeds_list"]
+                var notice_method = args["notice_method"]
+
+                var model = notice_method===1 ? noticers1_model: noticers2_model
+                model.append({"name": feeds_list["name"], "feedslist": feeds_list})
+
+
+                for(var i in feeds){
+                    console.debug(feeds)
+                    feeds_list_model.append({"name": feeds[i]["action"], "url": feeds[i]["url"]})
+                }
+            }
+
+
+            function updateNoticers1List(args){
                 noticers1_model.clear()
 
-                var names = noticers1["names"]
+                var names = args["names"]
+                var feedslists = args["feedslists"]
 
                 for(var i = 0; i < names.length; i++){
-                    noticers1_model.append({"name": names[i]})                }
-
+                    noticers1_model.append({"name": names[i], "feedslist": feedslists[i]})
+                }
+                noticers1_model.append({"length": names.length})
             }
-            function updateNoticers2List(noticers2){
+
+            function updateNoticers2List(args){
                 noticers2_model.clear()
-                var names = noticers2["names"]
+
+                var names = args["names"]
+                var feedslists = args["feedslists"]
 
                 for(var i = 0; i < names.length; i++){
-                    noticers2_model.append({"name": names[i]})
+                    noticers2_model.append({"name": names[i], "feedslist": feedslists[i]})
+                }
+
+            }
+
+            function load_feeds_list(name, i){
+                feeds_list_model.clear()
+                var model = i===1 ? noticers1_model: noticers2_model
+                var feedslist = []
+
+
+                for(var j = 0;j < model.count; j++){
+                    if(model.get(j).name === name){
+                        feedslist = model.get(j)["feedslist"]
+                        console.debug("test" + feedslist["feeds"][0]["action"])
+                    }
+                }
+                var feeds = feedslist["feeds"]
+                for(var index in feeds){
+                    feeds_list_model.append({"name": feeds[index]["action"], "url": feeds[index]["url"]})
                 }
             }
 
-            function load_feeds_list(name){
-                var feedslist = feedslist_dic[name]
-                feeds_list_model.clear()
-                console.debug(feedslist)
-                for(var feed_index in feedslist){
-                    feeds_list_model.append({"name": feedslist[feed_index]})
-                }
-            }
 
             ListModel {
                 id: noticers1_model
@@ -224,7 +256,7 @@ ApplicationWindow {
                             onClicked:{
                                 listViewNoticers1.currentIndex = index
                                 listViewNoticers2.currentIndex = -1
-                                rectangle1.load_feeds_list(name)
+                                rectangle1.load_feeds_list(name, 1)
                             }
                         }
                     }
@@ -280,6 +312,7 @@ ApplicationWindow {
 
                                 listViewNoticers2.currentIndex = index;
                                 listViewNoticers1.currentIndex = -1
+                                rectangle1.load_feeds_list(name, 2)
                             }
                         }
                     }
@@ -352,12 +385,12 @@ ApplicationWindow {
                     Item{
                         id: listItem1
                         x:2
-                        width: 214
-                        height:40
+                        width: 210
+                        height:55
 
                         Text{
-                            width:60
-                            height:40
+                            width:50
+                            height:50
                             text: name
 
                             font.pixelSize: 12
@@ -367,8 +400,7 @@ ApplicationWindow {
                             anchors.fill: parent
                             onClicked:{
                                 listViewFeeds.currentIndex = index
-
-//                                rectangle1.load_feed(name)
+                                webView.url = url
                             }
                         }
                     }
@@ -387,7 +419,7 @@ ApplicationWindow {
 
         WebView{
             id: webView
-            width: 764
+            width: 762
             anchors.rightMargin: 0
             anchors.bottomMargin: 0
             anchors.leftMargin: 2

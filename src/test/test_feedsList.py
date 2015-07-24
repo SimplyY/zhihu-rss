@@ -1,5 +1,5 @@
 from unittest import TestCase
-from src.model.feed_list import FeedsList
+from src.model.feeds_list import FeedsList
 from src.model.noticer import Noticer
 
 import zhihu

@@ -10,10 +10,10 @@ from src.util.const import FEEDS_JSON_DIR, MAX_FIRST_FEED_NUM
 #     feedslist{
 #         name
 #         url
-#         feeds{
+#         feeds[{
 #            url,
 #            action
-# }
+# }]
 #         list
 #     }
 # ]
@@ -34,13 +34,23 @@ class FeedsList:
                 # self.feeds = feeds = zhihu.Author(self.url).feeds
 
             self.list = [self.url, self.name]
-            for feed in self.feeds:
-                self.list.append(self.feeds[feed])
+            self.list.extend(self.feeds)
         else:
             self.url = list[0]
             self.name = list[1]
             self.list = list
             self.feeds = list[2:]
+
+    def get_dict(self):
+        return {"url": self.url, "name": self.name, "feeds": self.feeds}
+
+    @staticmethod
+    def get_feeds_list(name):
+        feeds_lists = FeedsList.get_feeds_lists_in_json()
+        for feeds_list in feeds_lists:
+            if feeds_list.name == name:
+                return feeds_list.get_dict()
+        raise "can't get a feedslist whose name is arg name"
 
     @staticmethod
     def renew_feeds_lists(noticers):
@@ -61,10 +71,14 @@ class FeedsList:
         if noticers is not list:  # add feeds_list
             noticer = noticers
 
+            if noticer.name in [feeds_list.name for feeds_list in old_feeds_lists]:
+                return old_feeds_lists
+
             feeds_list = FeedsList(noticer)
 
             old_feeds_lists.append(feeds_list)
             new_feeds_lists = old_feeds_lists
+
         else:  # renew feeds_lists
             for noticer in noticers:
                 for old_feeds_list in old_feeds_lists:
@@ -77,48 +91,48 @@ class FeedsList:
     @staticmethod
     def get_word_feeds(noticer, author, old_feeds_list=None):
         feeds = []
-        feed = {"feed_url": None, "feed_action": None}
 
         latest_act_url = noticer.latest_act_url
-        activitys = author.activities
+        activities = author.activities
 
         if not latest_act_url:  # add feeds_list
-            for act in activitys:
-                if act.type not in [zhihu.ActType.ANSWER_QUESTION, zhihu.ActType.PUBLISH_POST]:
+            for act in activities:
+                if act.type in [zhihu.ActType.ANSWER_QUESTION, zhihu.ActType.PUBLISH_POST]:
+                    FeedsList._set_feed_word(feeds, author, act)
+                if len(feeds) == MAX_FIRST_FEED_NUM:
                     break
-
-                FeedsList._set_feed_word(feeds, feed, author, act)
         else:
-            for act in activitys:
-                if act.type not in [zhihu.ActType.ANSWER_QUESTION, zhihu.ActType.PUBLISH_POST]:
-                    break
+            for act in activities:
+                if act.type in [zhihu.ActType.ANSWER_QUESTION, zhihu.ActType.PUBLISH_POST]:
+                    FeedsList._set_feed_word(feeds, author, act)
+
                 if latest_act_url == act.content.url:
                     break
 
-                FeedsList._set_feed_word(feeds, feed, author, act)
             feeds.extend(old_feeds_list)
 
-        noticer.set_latest_act_url(feeds[0]["feed_url"])
+        noticer.set_latest_act_url(feeds[0]["url"])
         Noticer.add_noticer(noticer)
         return feeds
 
     @staticmethod
-    def _set_feed_word(feeds, feed, author, act):
+    def _set_feed_word(feeds, author, act):
+        feed = {"url": None, "action": None}
         FeedsList._set_feed_word_action(feed, author, act)
-        feed["feed_url"] = act.content.url
+        feed["url"] = act.content.url
         feeds.append(feed)
 
     @staticmethod
     def _set_feed_word_action(feed, author, act):
 
         if act.type == zhihu.ActType.ANSWER_QUESTION:
-            feed["feed_action"] = ('%s 在 %s 回答了问题\n %s \n赞同数 %d'
-                                   .format(author.name, act.time, act.answer.question.title,
-                                           act.answer.upvote_num))
+            feed["action"] = ('{} 在 {} 回答了问题\n{} \n赞同数 {}'.format(author.name, act.time.split(" ")[0],
+                                                                        act.answer.question.title,
+                                                                        act.answer.upvote_num))
         elif act.type == zhihu.ActType.PUBLISH_POST:
-            feed["feed_action"] = ('%s 在 %s 在专栏\n %s 中发布了文章\n %s，' %
-                                   (author.name, act.time, act.post.column.name,
-                                    act.post.title, act.post.upvote_num))
+            feed["action"] = ('{} 在 {} 在专栏\n {} 中发布了文章\n {}'.format(author.name, act.time,
+                                                                          act.post.column.name, act.post.title,
+                                                                          act.post.upvote_num))
 
     @staticmethod
     def del_feeds_list():
@@ -136,7 +150,9 @@ class FeedsList:
     def get_feeds_lists_in_json():
         with open(FEEDS_JSON_DIR, mode='r') as f:
             json_data = f.read()
+        if not json_data:
+            return []
 
         data = json.loads(json_data)
-        feeds_lists = [FeedsList(list=list) for list in data]
+        feeds_lists = [FeedsList(list=feeds_list) for feeds_list in data]
         return feeds_lists

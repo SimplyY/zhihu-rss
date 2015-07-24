@@ -1,10 +1,12 @@
 __author__ = 'yuwei'
 
 
-from src.util.my_pyqt import MyView, set_button, find_view
-from src.model.noticer import Noticer
-from src.model.feed_list import FeedsList
+from src.util.my_pyqt import MyView, set_button, find_view, use_qml_fun
 from src.util.error import UrlError
+from src.util.my_thread import MyThread
+
+from src.model.noticer import Noticer
+from src.model.feeds_list import FeedsList
 from src.control import listview
 
 
@@ -26,10 +28,19 @@ def record_add_info(my_app, add_dialog, error_dialog):
         error_dialog.set_error_info("添加失败。错误：主页url无效！")
         error_dialog.show()
         return
+    add_new_feedslist(my_app, noticer)
+    # my_thread = MyThread("add_new_feedslist", add_new_feedslist, my_app, noticer)
+    # my_thread.start()
 
+def add_new_feedslist(my_app, noticer):
     Noticer.add_noticer(noticer)
-    # TODO: FeedsList.add_feeds_list
-    listview.load_noticers_listview(my_app)
+    FeedsList.add_feeds_list(noticer)
+
+    use_qml_fun(my_app, fun_parent_name="rect", fun_name="add_new_feedslist",
+                args={"feeds_list": FeedsList.get_feeds_list(noticer.name), "notice_method": noticer.notice_method})
+
+    listview.load_listviews(my_app)
+
 
 
 def show_add_dialog(my_app, qml, error_dialog):

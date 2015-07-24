@@ -23,8 +23,8 @@ Rectangle {
     TextInput {
         objectName: "url_input"
         id: url_input
-        x: 130
-        y: 33
+        x: 131
+        y: 36
         width: 273
         height: 20
         text: qsTr("http://www.zhihu.com/people/yuwei-80")
