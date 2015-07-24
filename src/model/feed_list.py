@@ -1,5 +1,5 @@
 __author__ = 'yuwei'
-from src.util import zhihu
+import zhihu
 import json
 
 from src.model.noticer import Noticer
@@ -20,7 +20,6 @@ from src.util.const import FEEDS_JSON_DIR, MAX_FIRST_FEED_NUM
 
 
 class FeedsList:
-
     def __init__(self, noticer=None, old_feeds_list=None, list=None):
         if not list:
             self.url = noticer.url
@@ -31,7 +30,7 @@ class FeedsList:
             if noticer.notice_method == 1:
                 self.feeds = FeedsList.get_word_feeds(noticer, author, old_feeds_list)
 
-            # elif noticer.notice_method == 2:
+                # elif noticer.notice_method == 2:
                 # self.feeds = feeds = zhihu.Author(self.url).feeds
 
             self.list = [self.url, self.name]
@@ -41,6 +40,7 @@ class FeedsList:
             self.url = list[0]
             self.name = list[1]
             self.list = list
+            self.feeds = list[2:]
 
     @staticmethod
     def renew_feeds_lists(noticers):
@@ -70,46 +70,64 @@ class FeedsList:
                 for old_feeds_list in old_feeds_lists:
                     if old_feeds_list.url == noticer.url:
                         break
-            # TODO:
+                        # TODO:
 
         return new_feeds_lists
 
     @staticmethod
     def get_word_feeds(noticer, author, old_feeds_list=None):
-        answers = []
-        # books = []
-        latest_title = noticer.latest_title
+        feeds = []
+        feed = {"feed_url": None, "feed_action": None}
 
-        if not latest_title:  # add feeds_list
-            answers = []
-            for index, answer in enumerate(author.answers):
-                if index < MAX_FIRST_FEED_NUM:
-                    answers.append(answer)
-                else:
+        latest_act_url = noticer.latest_act_url
+        activitys = author.activities
+
+        if not latest_act_url:  # add feeds_list
+            for act in activitys:
+                if act.type not in [zhihu.ActType.ANSWER_QUESTION, zhihu.ActType.PUBLISH_POST]:
                     break
-            # books = [book.html for index, book in enumerate(author.books) if index < MAX_FIRST_FEED_NUM]
+
+                FeedsList._set_feed_word(feeds, feed, author, act)
         else:
-            # TODO: old_feeds_list
-            for answer in author.answers:
-                answers.append(answer)
-                if answer.question.title == latest_title:
+            for act in activitys:
+                if act.type not in [zhihu.ActType.ANSWER_QUESTION, zhihu.ActType.PUBLISH_POST]:
                     break
-            # for index, book in enumerate(author.books):
-            #     books.append(book)
+                if latest_act_url == act.content.url:
+                    break
 
-        noticer.set_latest_title(answers[0].question.title)
+                FeedsList._set_feed_word(feeds, feed, author, act)
+            feeds.extend(old_feeds_list)
+
+        noticer.set_latest_act_url(feeds[0]["feed_url"])
         Noticer.add_noticer(noticer)
-        feeds = {"answers_html": [answer.html for answer in answers]}
         return feeds
+
+    @staticmethod
+    def _set_feed_word(feeds, feed, author, act):
+        FeedsList._set_feed_word_action(feed, author, act)
+        feed["feed_url"] = act.content.url
+        feeds.append(feed)
+
+    @staticmethod
+    def _set_feed_word_action(feed, author, act):
+
+        if act.type == zhihu.ActType.ANSWER_QUESTION:
+            feed["feed_action"] = ('%s 在 %s 回答了问题\n %s \n赞同数 %d'
+                                   .format(author.name, act.time, act.answer.question.title,
+                                           act.answer.upvote_num))
+        elif act.type == zhihu.ActType.PUBLISH_POST:
+            feed["feed_action"] = ('%s 在 %s 在专栏\n %s 中发布了文章\n %s，' %
+                                   (author.name, act.time, act.post.column.name,
+                                    act.post.title, act.post.upvote_num))
 
     @staticmethod
     def del_feeds_list():
         pass
 
+    # save and load
     @staticmethod
     def write_feeds_lists_in_json(feeds_lists):
         data = [feeds_list.list for feeds_list in feeds_lists]
-
         json_data = json.dumps(data)
         with open(FEEDS_JSON_DIR, mode='w') as f:
             f.write(json_data)

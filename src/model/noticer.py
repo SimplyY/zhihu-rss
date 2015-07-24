@@ -2,7 +2,7 @@ __author__ = 'yuwei'
 
 import json
 try:
-    from src.util import zhihu
+    import zhihu
 except ConnectionError:
     print("connect error")
 #     TODO:
@@ -13,7 +13,7 @@ from src.util.const import NOTICERS_JSON_DIR
 
 
 class Noticer:
-    def __init__(self, url, notice_method, is_remind, latest_title=None, name=None):
+    def __init__(self, url, notice_method, is_remind, latest_act_url=None, name=None):
         if name:
             self.name = name
         else:
@@ -27,15 +27,15 @@ class Noticer:
         self.url = url
         self.notice_method = notice_method
         self.is_remind = is_remind
-        self.latest_title = latest_title
-        self.list = [self.url, self.notice_method, self.is_remind, self.latest_title, self.name]
+        self.latest_act_url = latest_act_url
+        self.list = [self.url, self.notice_method, self.is_remind, self.latest_act_url, self.name]
 
     def __str__(self):
         return str(self.list)
 
-    def set_latest_title(self, title):
-        self.latest_title = title
-        self.list[3] = title
+    def set_latest_act_url(self, url):
+        self.latest_act_url = url
+        self.list[3] = url
 
     @staticmethod
     def init_noticer(noticer_list):
