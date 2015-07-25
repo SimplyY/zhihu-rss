@@ -11,33 +11,33 @@ from src.control import listview
 
 
 def record_add_info(my_app, add_dialog, error_dialog):
+
     root = add_dialog.root_view
     url_input = find_view(root, 'url_input')
-    notice_method_spin = find_view(root, 'notice_method')
-    is_remind_spin = find_view(root, 'is_remind')
+    feed_num_input = find_view(root, 'feed_num_input')
 
     url = url_input.property("text")
-    notice_method = notice_method_spin.property("value")
-    is_remind = is_remind_spin.property("value")
+    feed_num = feed_num_input.property("text")
 
     add_dialog.close()
 
     try:
-        noticer = Noticer.init_noticer([url, notice_method, is_remind, None])
+        noticer = Noticer(url=url)
     except UrlError:
         error_dialog.set_error_info("添加失败。错误：主页url无效！")
         error_dialog.show()
         return
-    add_new_feedslist(my_app, noticer)
+
+    add_new_feedslist(my_app, noticer, feed_num)
     # my_thread = MyThread("add_new_feedslist", add_new_feedslist, my_app, noticer)
     # my_thread.start()
 
-def add_new_feedslist(my_app, noticer):
+def add_new_feedslist(my_app, noticer, feed_num):
     Noticer.add_noticer(noticer)
-    FeedsList.add_feeds_list(noticer)
+    FeedsList.add_feeds_list(noticer, feed_num)
 
     use_qml_fun(my_app, fun_parent_name="rect", fun_name="add_new_feedslist",
-                args={"feeds_list": FeedsList.get_feeds_list(noticer.name), "notice_method": noticer.notice_method})
+                args={"feeds_list": FeedsList.get_feeds_list(noticer.name), "notice_methods": noticer.notice_methods})
 
     listview.load_listviews(my_app)
 

@@ -11,7 +11,7 @@ Rectangle {
 
     Text {
         id: text6
-        x: 51
+        x: 56
         y: 36
         width: 28
         height: 17
@@ -23,7 +23,7 @@ Rectangle {
     TextInput {
         objectName: "url_input"
         id: url_input
-        x: 131
+        x: 136
         y: 36
         width: 273
         height: 20
@@ -52,65 +52,45 @@ Rectangle {
         checkable: true
     }
 
+    TextInput {
+        id: textInput1
+        x: 136
+        y: 93
+        width: 80
+        height: 20
+        text: qsTr("20")
+        cursorVisible: true
+        font.pixelSize: 14
+        echoMode: TextInput.Normal
+        horizontalAlignment: Text.AlignLeft
+        font.family: "Times New Roman"
+
+        objectName: "feed_num_input"
+    }
+
     Text {
         id: text1
-        x: 51
-        y: 87
-        text: qsTr("关注方式")
-        font.pixelSize: 12
+        x: 56
+        y: 91
+        text: qsTr("动态数量")
         font.family: "Times New Roman"
+        font.pixelSize: 14
     }
-
-
-    SpinBox {
-        id: spinBox1
-        x: 130
-        y: 83
-        width: 40
-        minimumValue: 1
-        maximumValue: 2
-
-        objectName: 'notice_method'
-    }
-
 
     Text {
         id: text2
-        x: 51
-        y: 150
-        text: qsTr("是否提醒")
-        font.pixelSize: 12
+        x: 56
+        y: 148
+        width: 286
+        height: 15
+        text: qsTr("注意动态数量越多，所花时间越长，推荐50以内")
         font.family: "Times New Roman"
-    }
-
-    SpinBox {
-        id: spinBox2
-        x: 130
-        y: 146
-        width: 40
-
-        minimumValue: 0
-        maximumValue: 1
-
-        objectName: 'is_remind'
-    }
-
-    Text {
-        id: text3
-        x: 213
-        y: 87
-        text: qsTr("1为关注回答，2为关注动态")
+        font.italic: true
         font.pixelSize: 12
-        font.family: "Times New Roman"
     }
 
-    Text {
-        id: text4
-        x: 213
-        y: 151
-        text: qsTr("0为不提醒，1为提醒")
-        font.pixelSize: 12
-        font.family: "Times New Roman"
-    }
+
+
+
 }
 

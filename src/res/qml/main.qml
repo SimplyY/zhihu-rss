@@ -7,11 +7,11 @@ import QtQuick.Layouts 1.0
 
 ApplicationWindow {
     id: applicationWindow
-    width: 1100
-    height: 660
+    width: 1400
+    height: 750
     color: "#dedede"
     maximumWidth: 1500
-    title: "zhihu-rss"
+    title: "zhihu rss "
     minimumWidth: 800
     minimumHeight: 600
     maximumHeight: 1000
@@ -43,7 +43,7 @@ ApplicationWindow {
 
             }
 
-            Item { Layout.preferredWidth: 102 }
+            Item { Layout.preferredWidth: 100 }
             ToolButton {
                 id: backButton
                 tooltip: qsTr("Back")
@@ -76,6 +76,7 @@ ApplicationWindow {
                 id: reloadButton
                 tooltip: webView.loading ? qsTr("Stop"): qsTr("Refresh")
                 text: webView.loading ? qsTr("停止"): qsTr("刷新")
+
 //                iconSource: webView.loading ? "images/stop-32.png" : "images/refresh-32.png"
                 onClicked: webView.loading ? webView.stop() : webView.reload()
                 Layout.preferredWidth: navigationBar.height
@@ -85,7 +86,7 @@ ApplicationWindow {
                 }
             }
 
-            Item { Layout.preferredWidth: 75 }
+            Item { Layout.preferredWidth: 100 }
 
             TextField {
                 Layout.fillWidth: true
@@ -109,12 +110,22 @@ ApplicationWindow {
                 }
             }
 
-            Item { Layout.preferredWidth: 25 }
+            Item { Layout.preferredWidth: 100 }
+            ToolButton {
+                tooltip: qsTr("powered by SimplyY")
+                text: qsTr("powered by SimplyY")
+//                iconSource: "images/right-32.png"
+
+                Layout.preferredWidth: navigationBar.height
+                style: ButtonStyle {
+                    background: Rectangle { color: "transparent" }
+
+                }
+            }
+
+            Item { Layout.preferredWidth: 65 }
 
 
-
-
-            Item { Layout.preferredWidth: 8 }
         }
     }
 
@@ -164,53 +175,38 @@ ApplicationWindow {
                 var feeds_list = args["feeds_list"]
                 var notice_method = args["notice_method"]
 
-                var model = notice_method===1 ? noticers1_model: noticers2_model
-                console.debug(feeds_list["name"])
+                var model = noticers1_model
                 model.append({"name": feeds_list["name"], "feedslist": feeds_list})
 
                 var feeds = feeds_list["feeds"]
 
                 for(var i in feeds){
-                    console.debug(feeds)
                     feeds_list_model.append({"name": feeds[i]["action"], "url": feeds[i]["url"]})
                 }
             }
 
 
-            function updateNoticers1List(args){
+            function updateNoticersList(args){
                 noticers1_model.clear()
 
                 var names = args["names"]
                 var feedslists = args["feedslists"]
 
                 for(var i = 0; i < names.length; i++){
+                    console.debug(i, names[i])
                     noticers1_model.append({"name": names[i], "feedslist": feedslists[i]})
-                }
-                noticers1_model.append({"length": names.length})
-            }
-
-            function updateNoticers2List(args){
-                noticers2_model.clear()
-
-                var names = args["names"]
-                var feedslists = args["feedslists"]
-
-                for(var i = 0; i < names.length; i++){
-                    noticers2_model.append({"name": names[i], "feedslist": feedslists[i]})
                 }
 
             }
 
             function load_feeds_list(name, i){
                 feeds_list_model.clear()
-                var model = i===1 ? noticers1_model: noticers2_model
+                var model = noticers1_model
                 var feedslist = []
-
 
                 for(var j = 0;j < model.count; j++){
                     if(model.get(j).name === name){
                         feedslist = model.get(j)["feedslist"]
-                        console.debug("test" + feedslist["feeds"][0]["action"])
                     }
                 }
                 var feeds = feedslist["feeds"]
@@ -228,10 +224,13 @@ ApplicationWindow {
             ListView {
                 id: listViewNoticers1
                 x: 0
-                y: 41
+
                 anchors.left: parent.left
                 anchors.right: parent.right
-                height: 230
+                anchors.top: parent.top
+                anchors.bottom: parent.bottom
+
+                anchors.topMargin: 40
                 anchors.rightMargin: 1
                 anchors.leftMargin: 1
                 layoutDirection: Qt.RightToLeft
@@ -260,7 +259,7 @@ ApplicationWindow {
                             anchors.fill: parent
                             onClicked:{
                                 listViewNoticers1.currentIndex = index
-                                listViewNoticers2.currentIndex = -1
+
                                 rectangle1.load_feeds_list(name, 1)
                             }
                         }
@@ -277,83 +276,20 @@ ApplicationWindow {
                 //                onCurrentItemChanged:
             }
 
-            ListView {
-                id: listViewNoticers2
-                x: 8
-                y: 298
-                flickDeceleration: 1498
-                maximumFlickVelocity: 2497
-                anchors.rightMargin: 0
-                anchors.right: listViewNoticers1.right
-                anchors.left: listViewNoticers1.left
-                anchors.top: listViewNoticers1.bottom
-                anchors.topMargin:40
-                anchors.bottom: parent.bottom
-                currentIndex: -1
 
-                model: ListModel {
-                    id: noticers2_model
-                    objectName: "noticers2_model"
-
-                }
-                delegate: Component {
-                    Item{
-                        id: listItem2
-                        x:20
-                        width: 60
-                        height:24
-
-                        Text{
-                            width:60
-                            height:24
-                            text: name
-
-                            font.pixelSize: 14
-                                    font.family: "Times New Roman"
-                        }
-                        MouseArea{
-                            anchors.fill: parent
-                            onClicked:{
-
-                                listViewNoticers2.currentIndex = index;
-                                listViewNoticers1.currentIndex = -1
-                                rectangle1.load_feeds_list(name, 2)
-                            }
-                        }
-                    }
-                }
-
-                highlight: Rectangle {
-                    anchors.left: parent.left
-                    anchors.right: parent.right
-                    height: 24
-                    color: '#ddd'
-                }
-                focus: true
-                //                onCurrentItemChanged:
-            }
 
             Text {
                 id: text1
                 x: 15
                 y: 20
                 color: "#878787"
-                text: qsTr("关注回答")
+                text: qsTr("noticers")
                 font.bold: true
                         font.family: "Helvetica"
                 font.pixelSize: 13
             }
 
-            Text {
-                id: text2
-                x: 15
-                y: 285
-                color: "#707070"
-                text: qsTr("关注动态")
-                font.bold: true
-                       font.family: "Helvetica"
-                font.pixelSize: 13
-            }
+
 
 
 
@@ -371,13 +307,26 @@ ApplicationWindow {
             border.color: "#dbdbdb"
             border.width: 1
 
+
+            Text {
+                id: text2
+                x: 5
+                y: 18
+                color: "#878787"
+                text: qsTr("feeds")
+                font.bold: true
+                font.family: "Helvetica"
+                font.pixelSize: 14
+            }
+
+
             ListView {
                 id: listViewFeeds
                 x: 2
                 y: 0
-                anchors.top: parent.top
+                anchors.top: text2.bottom
                 anchors.bottom: parent.bottom
-                anchors.topMargin: 2
+                anchors.topMargin: 9
                 width: 214
                 height: 593
                 currentIndex: -1
@@ -390,12 +339,12 @@ ApplicationWindow {
                     Item{
                         id: listItem1
                         x:2
-                        width: 210
-                        height:68
+                        width: 200
+                        height:60
 
                         Text{
                             width:50
-                            height:65
+                            height:60
                             text: name
 
                             font.pixelSize: 12
@@ -414,7 +363,8 @@ ApplicationWindow {
                 highlight: Rectangle {
                     anchors.left: parent.left
                     anchors.right: parent.right
-                    height: 24
+
+                    height: 20
                     color: '#ddd'
                 }
                 focus: true
@@ -432,7 +382,7 @@ ApplicationWindow {
 
             anchors.left: rectangle2.right
             anchors.top: parent.top
-            anchors.topMargin: url.toString().match("www.zhihu.com")=="www.zhihu.com" ? -95 : 0
+            anchors.topMargin: url.toString().match("www.zhihu.com")=="www.zhihu.com" ? -65 : 0
             anchors.right: parent.right
             anchors.bottom: parent.bottom
 

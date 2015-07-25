@@ -6,10 +6,8 @@ from src.model.noticer import Noticer
 from src.model.feeds_list import FeedsList
 
 def load_listviews(my_app):
-    load_notice_listview(my_app, list_items=Noticer.get_noticers(1),
-                         fun_name="updateNoticers1List", fun_parent_name="rect")
-    load_notice_listview(my_app, list_items=Noticer.get_noticers(2),
-                         fun_name="updateNoticers2List", fun_parent_name="rect")
+    load_notice_listview(my_app, list_items=Noticer.get_noticers_in_json(),
+                         fun_name="updateNoticersList", fun_parent_name="rect")
 
 
 def load_notice_listview(my_app, list_items, fun_name, fun_parent_name):

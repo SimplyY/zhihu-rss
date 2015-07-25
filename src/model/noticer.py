@@ -11,12 +11,9 @@ except ConnectionError:
 from src.util.error import UrlError
 from src.util.const import NOTICERS_JSON_DIR
 
-
 class Noticer:
-    def __init__(self, url, notice_method, is_remind, latest_act_url=None, name=None):
-        if name:
-            self.name = name
-        else:
+    def __init__(self, url=None, noticer_list=None):
+        if not noticer_list:  # 创建一个新的Noticer
             try:
                 self.name = zhihu.Author(url).name
             except AttributeError:
@@ -24,25 +21,31 @@ class Noticer:
                 raise UrlError
                 return
 
-        self.url = url
-        self.notice_method = notice_method
-        self.is_remind = is_remind
-        self.latest_act_url = latest_act_url
-        self.list = [self.url, self.notice_method, self.is_remind, self.latest_act_url, self.name]
+            self.notice_methods = [notice_method for notice_method in zhihu.ActType]
+            notice_methods_in_json = [notice_method.value for notice_method in zhihu.ActType]
+            self.url = url
+            self.latest_act_url = None
+
+        else:  # 从json里导入时
+            self.url = noticer_list[0]
+            notice_methods_in_json = noticer_list[1]
+            self.latest_act_url = noticer_list[2]
+            self.name = noticer_list[3]
+            self.notice_methods = list()
+
+            for act_type in zhihu.ActType:
+                for notice_method in noticer_list[1]:
+                    if act_type.value == notice_method:
+                        self.notice_methods.append(act_type)
+
+        self.list = [self.url, notice_methods_in_json, self.latest_act_url, self.name]
 
     def __str__(self):
         return str(self.list)
 
     def set_latest_act_url(self, url):
         self.latest_act_url = url
-        self.list[3] = url
-
-    @staticmethod
-    def init_noticer(noticer_list):
-        if len(noticer_list) == 5:
-            return Noticer(noticer_list[0], noticer_list[1], noticer_list[2], noticer_list[3], noticer_list[4])
-        else:
-            return Noticer(noticer_list[0], noticer_list[1], noticer_list[2], noticer_list[3])
+        self.list[2] = url
 
     @staticmethod
     def add_noticer(noticer):
@@ -54,12 +57,6 @@ class Noticer:
         pass
 
     @staticmethod
-    def get_noticers(index):
-        noticers = Noticer.get_noticers_in_json()
-
-        return [noticer for noticer in noticers if noticer.notice_method == index]
-
-    @staticmethod
     def get_noticers_in_json():
         noticers = []
         try:
@@ -69,10 +66,10 @@ class Noticer:
                     return noticers
 
                 data = json.loads(file[0])
-                noticers = [Noticer.init_noticer(noticer_data) for noticer_data in data]
+                noticers = [Noticer(noticer_list=noticer_list) for noticer_list in data]
 
         except IOError:
-            assert "can't find NOTICERS_FILE"
+            noticers = None
 
         return noticers
 
