@@ -28,7 +28,7 @@ you can rss any zhihu's user in it
 
 1. zhihu 前往 [zhihu-py3](https://github.com/7sDream/zhihu-py3)
 2.  requests 、BeautifulSoup4、html2text 使用前请先安装
-3. [https://www.qt.io/zh-hans/download-open-source/](qt)  在线安装的时候不需要安装安卓相关（安卓相关几个g...）
+3. [qt](https://www.qt.io/zh-hans/download-open-source/)  在线安装的时候不需要安装安卓相关（安卓相关几个g...）
 
 > html2text 只在导出为 markdown 格式功能被使用时才会被 import，如果没有此模块其他功能也能正常完成。
 
