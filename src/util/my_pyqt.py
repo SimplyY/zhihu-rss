@@ -51,6 +51,11 @@ def set_button(parent_view, object_name, function=None):
     if function:
         button.clicked.connect(function)
 
+def set_menu(parent_view, object_name, function=None):
+    menu = find_view(parent_view, object_name)
+    if function:
+        menu.triggered.connect(function)
+
 
 def use_qml_fun(root_view, fun_parent_name, fun_name, args):
     parent_view = root_view.findChild(QObject, fun_parent_name)
