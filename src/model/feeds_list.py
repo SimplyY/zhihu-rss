@@ -1,6 +1,7 @@
 __author__ = 'yuwei'
 import zhihu
 import json
+import os
 
 from src.model.noticer import Noticer
 from src.util.const import FEEDS_JSON_DIR
@@ -166,6 +167,10 @@ class FeedsList:
 
     @staticmethod
     def get_feeds_lists_in_json():
+        if not os.path.exists(FEEDS_JSON_DIR):
+            file = open(FEEDS_JSON_DIR, 'w')
+            file.close()
+
         with open(FEEDS_JSON_DIR, mode='r') as f:
             json_data = f.read()
         if not json_data:

@@ -387,6 +387,7 @@ ApplicationWindow {
             anchors.bottom: parent.bottom
 
 
+
             objectName: "web_view"
 
             opacity: 1
