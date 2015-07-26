@@ -110,7 +110,7 @@ ApplicationWindow {
                 }
             }
 
-            Item { Layout.preferredWidth: 100 }
+            Item { Layout.preferredWidth: 75 }
             ToolButton {
                 tooltip: qsTr("powered by SimplyY")
                 text: qsTr("powered by SimplyY")
@@ -193,7 +193,7 @@ ApplicationWindow {
                 var feedslists = args["feedslists"]
 
                 for(var i = 0; i < names.length; i++){
-                    console.debug(i, names[i])
+
                     noticers1_model.append({"name": names[i], "feedslist": feedslists[i]})
                 }
 
@@ -210,6 +210,7 @@ ApplicationWindow {
                     }
                 }
                 var feeds = feedslist["feeds"]
+                console.debug(feeds.length)
                 for(var index in feeds){
                     feeds_list_model.append({"name": feeds[index]["action"], "url": feeds[index]["url"]})
                 }
@@ -224,6 +225,8 @@ ApplicationWindow {
             ListView {
                 id: listViewNoticers1
                 x: 0
+
+                objectName: "noticers_list"
 
                 anchors.left: parent.left
                 anchors.right: parent.right
@@ -257,12 +260,19 @@ ApplicationWindow {
                         }
                         MouseArea{
                             anchors.fill: parent
+                            acceptedButtons: Qt.LeftButton | Qt.RightButton // 激活右键（别落下这个）
                             onClicked:{
                                 listViewNoticers1.currentIndex = index
+                                if (mouse.button == Qt.LeftButton){
+                                    rectangle1.load_feeds_list(name, 1)
+                                }
 
-                                rectangle1.load_feeds_list(name, 1)
+                                 if (mouse.button == Qt.RightButton) {
+                                    contentMenu.popup()
+                                }
                             }
                         }
+
                     }
                 }
 
@@ -275,7 +285,20 @@ ApplicationWindow {
                 focus: true
                 //                onCurrentItemChanged:
             }
+            Menu { // 右键菜单
+                id: contentMenu
 
+                MenuItem {
+                    objectName: "change_notice_method"
+                    text:"更改关注方式"
+
+                }
+                MenuItem {
+                    objectName: "delete_noticer"
+                    text:"取消关注"
+
+                }
+            }
 
 
             Text {
@@ -283,15 +306,11 @@ ApplicationWindow {
                 x: 15
                 y: 20
                 color: "#878787"
-                text: qsTr("noticers")
+                text: qsTr("关注")
                 font.bold: true
                         font.family: "Helvetica"
                 font.pixelSize: 13
             }
-
-
-
-
 
         }
 
@@ -313,7 +332,7 @@ ApplicationWindow {
                 x: 5
                 y: 18
                 color: "#878787"
-                text: qsTr("feeds")
+                text: qsTr("动态")
                 font.bold: true
                 font.family: "Helvetica"
                 font.pixelSize: 14

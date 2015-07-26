@@ -105,12 +105,12 @@ class FeedsList:
             feeds.append(feed)
 
             feed_num += 1
-            progress.renew_feed_num(progress_dialog, feed_num)
+            # progress.renew_feed_num(progress_dialog, feed_num)
 
         if old_feeds_list:
             feeds.extend(old_feeds_list)
 
-        progress_dialog.close()
+        # progress_dialog.close()
         noticer.set_latest_act_url(feeds[0]["url"])
         Noticer.add_noticer(noticer)
         return feeds
@@ -119,13 +119,14 @@ class FeedsList:
     def _create_feed(author, act):
         feed = dict()
 
-        feed["action"] = FeedsList._get_feed_act_action(feed, author, act)
+        feed["action"] = FeedsList._get_feed_act_action(author, act)
+        feed["action_type"] = act.type.value
         feed["url"] = act.content.url
 
         return feed
 
     @staticmethod
-    def _get_feed_act_action(feed, author, act):
+    def _get_feed_act_action(author, act):
         action = str()
         if act.type == zhihu.ActType.FOLLOW_COLUMN:
             action = ('%s 在 %s 关注了专栏\n %s' %
