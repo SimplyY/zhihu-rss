@@ -21,7 +21,7 @@ def set_views():
 
     _my_app.web_view = root_view.findChild(QObject, 'web_view')
 
-    listview.load_listviews(_my_app)
+    listview.load_listviews(root_view)
 
 
 if __name__ == '__main__':

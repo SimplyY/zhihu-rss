@@ -52,9 +52,8 @@ def set_button(parent_view, object_name, function=None):
         button.clicked.connect(function)
 
 
-
-def use_qml_fun(my_app, fun_parent_name, fun_name, args):
-    parent_view = my_app.root_view.findChild(QObject, fun_parent_name)
+def use_qml_fun(root_view, fun_parent_name, fun_name, args):
+    parent_view = root_view.findChild(QObject, fun_parent_name)
     q_arg = QVariant(args)
     QMetaObject.invokeMethod(parent_view, fun_name, Qt.DirectConnection, Q_ARG(QVariant, q_arg))
 

@@ -1,5 +1,5 @@
 __author__ = 'yuwei'
-
+import os
 import json
 try:
     import zhihu
@@ -58,6 +58,10 @@ class Noticer:
 
     @staticmethod
     def get_noticers_in_json():
+        if not os.path.exists(NOTICERS_JSON_DIR):
+            file = open(NOTICERS_JSON_DIR, 'w')
+            file.close()
+
         noticers = []
         try:
             with open(NOTICERS_JSON_DIR, mode='r') as f:
