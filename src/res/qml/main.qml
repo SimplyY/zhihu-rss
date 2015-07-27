@@ -193,11 +193,12 @@ ApplicationWindow {
                 noticers1_model.clear()
 
                 var names = args["names"]
+                var unread_nums = args["unread_nums"]
                 var feedslists = args["feedslists"]
 
                 for(var i = 0; i < names.length; i++){
 
-                    noticers1_model.append({"name": names[i], "feedslist": feedslists[i]})
+                    noticers1_model.append({"name": names[i], "unread_num": unread_nums[i],"feedslist": feedslists[i]})
                 }
 
             }
@@ -274,7 +275,7 @@ ApplicationWindow {
                             y:2
                             width:20
                             height:24
-                            text: qsTr("20")
+                            text: unread_num
                             font.pixelSize: 14
                             font.family: "Times New Roman"
                         }
@@ -284,6 +285,7 @@ ApplicationWindow {
                             acceptedButtons: Qt.LeftButton | Qt.RightButton // 激活右键（别落下这个）
                             onClicked:{
                                 listViewNoticers1.currentIndex = index
+                                listViewFeeds.currentIndex = -1
                                 current_noticer_name.text = noticers1_model.get(listViewNoticers1.currentIndex)["name"]
                                 if (mouse.button == Qt.LeftButton){
                                     rectangle1.load_feeds_list(name, 1)
@@ -301,7 +303,7 @@ ApplicationWindow {
                 highlight: Rectangle {
                     anchors.left: parent.left
                     anchors.right: parent.right
-                    height: 24
+                    height: 20
                     color: '#ddd'
                 }
                 focus: true
@@ -344,6 +346,7 @@ ApplicationWindow {
             id: rectangle2
 
             anchors.top: parent.top
+            anchors.topMargin: -2
             anchors.left: rectangle1.right
             width: 218
             anchors.bottom: parent.bottom
@@ -383,11 +386,20 @@ ApplicationWindow {
                 delegate: Component {
                     Item{
                         id: listItem1
-                        x:2
+                        x:0
                         width: 200
-                        height:60
+                        height:55
+                        Rectangle{
+                            anchors.top: parent.top
+
+                            width: rectangle2.width - 4
+                            height: 1
+                            border.color: "#efeff0"
+                            border.width: 1
+                        }
 
                         Text{
+                            x:2
                             width:50
                             height:60
                             text: name
@@ -423,7 +435,7 @@ ApplicationWindow {
             width: 762
             anchors.rightMargin: 0
             anchors.bottomMargin: 0
-            anchors.leftMargin: 2
+            anchors.leftMargin: 0
 
             anchors.left: rectangle2.right
             anchors.top: parent.top

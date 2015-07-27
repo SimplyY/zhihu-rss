@@ -43,6 +43,13 @@ class FeedsList:
     def get_dict(self):
         return {"url": self.url, "name": self.name, "feeds": self.feeds}
 
+    def get_unread_num(self):
+        num = 0
+        for feed in self.feeds:
+            if not feed["is_read"]:
+                num += 1
+        return num
+
     @staticmethod
     def get_feeds_list(name):
         feeds_lists = FeedsList.get_feeds_lists_in_json()
@@ -90,8 +97,6 @@ class FeedsList:
     @staticmethod
     def get_feeds(noticer, author, amount_num, old_feeds_list=None, progress_dialog=None):
         feeds = []
-        feed_num = 0
-
         latest_act_url = noticer.latest_act_url
         activities = author.activities
 
@@ -105,7 +110,7 @@ class FeedsList:
             feed = FeedsList._create_feed(author, act)
             feeds.append(feed)
 
-            feed_num += 1
+            # feed_num += 1
             # progress.renew_feed_num(progress_dialog, feed_num)
 
         if old_feeds_list:
@@ -120,6 +125,7 @@ class FeedsList:
     def _create_feed(author, act):
         feed = dict()
 
+        feed["is_read"] = False
         feed["action"] = FeedsList._get_feed_act_action(author, act)
         feed["action_type"] = act.type.value
         feed["url"] = act.content.url
