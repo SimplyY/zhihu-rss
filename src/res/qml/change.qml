@@ -31,7 +31,7 @@ Rectangle {
         id: checkBox2
         x: 116
         y: 62
-        text: qsTr("赞同问题")
+        text: qsTr("赞同回答")
         objectName: "checkBox2"
     }
 
@@ -85,14 +85,24 @@ Rectangle {
 
     Button {
         id: button1
-        x: 170
-        y: 152
+        x: 223
+        y: 155
         text: qsTr("确定")
         enabled: true
         activeFocusOnPress: true
-        isDefault: true
+        isDefault: false
         checkable: true
         objectName: "button"
+
+    }
+
+    Button {
+        id: button2
+        x: 116
+        y: 155
+        text: qsTr("全选")
+        isDefault: false
+        objectName: "all_sel_button"
 
     }
 

@@ -14,6 +14,7 @@ from src.control import progress
 #         url
 #         feeds[{
 #            url,
+#            action_type,
 #            action
 # }]
 #         list

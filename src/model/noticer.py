@@ -43,12 +43,17 @@ class Noticer:
     def __str__(self):
         return str(self.list)
 
+    def set_notice_methods(self, notice_methods):
+        self.notice_methods = notice_methods
+        self.list[1] = [notice_method.value for notice_method in notice_methods]
+
     def set_latest_act_url(self, url):
         self.latest_act_url = url
         self.list[2] = url
 
     @staticmethod
     def add_noticer(noticer):
+
         noticers = Noticer.get_noticers_in_json()
         Noticer.write_noticers_in_json(noticer, noticers)
 

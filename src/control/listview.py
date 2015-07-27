@@ -14,13 +14,15 @@ def set_noticers_data(noticers_names, feedslists_processed, noticers, feedslists
                 noticers_names.append(noticer.name)
 
                 feeds = list()
-                notice_methods = list()  # TODO: get it and show it
+                notice_methods = list()
+
                 for feed in feedlists.feeds:
                     # 根据不同的 noticer 的notice_method 筛选出相应的 feedslist
                     if feed["action_type"] in [notice_method.value for notice_method in noticer.notice_methods]:
                         feeds.append({"url": feed["url"], "action": feed["action"]})
+                        notice_methods.append(feed["action_type"])
 
-                feedslists_processed.append({"name": noticer.name, "feeds": feeds, "notice_methods": })
+                feedslists_processed.append({"name": noticer.name, "feeds": feeds, "notice_methods": notice_methods})
 
 
 def load_noticers_listview(root_view):

@@ -110,10 +110,10 @@ ApplicationWindow {
                 }
             }
 
-            Item { Layout.preferredWidth: 75 }
+            Item { Layout.preferredWidth: 65 }
             ToolButton {
-                tooltip: qsTr("powered by SimplyY")
-                text: qsTr("powered by SimplyY")
+                tooltip: qsTr("Code By SimplyY")
+                text: qsTr("Code By SimplyY")
 //                iconSource: "images/right-32.png"
 
                 Layout.preferredWidth: navigationBar.height
@@ -123,7 +123,7 @@ ApplicationWindow {
                 }
             }
 
-            Item { Layout.preferredWidth: 65 }
+            Item { Layout.preferredWidth: 55 }
 
 
         }
@@ -221,6 +221,13 @@ ApplicationWindow {
                 id: noticers1_model
                 objectName: "noticers1_model"
             }
+            Text{
+                id: current_noticer_name
+                x:2000
+                width: 0
+                height: 0
+                objectName: "current_noticer_name"
+            }
 
             ListView {
                 id: listViewNoticers1
@@ -251,6 +258,7 @@ ApplicationWindow {
                         height:24
 
                         Text{
+                            objectName: "noticer_text"
                             width:60
                             height:24
                             text: name
@@ -291,7 +299,11 @@ ApplicationWindow {
                 MenuItem {
                     objectName: "change_notice_method"
                     text:"更改关注方式"
-
+                    onTriggered: {
+                        console.debug(listViewNoticers1.currentIndex)
+                        current_noticer_name.text = noticers1_model.get(listViewNoticers1.currentIndex)["name"]
+                        console.debug(current_noticer_name.text)
+                    }
                 }
                 MenuItem {
                     objectName: "delete_noticer"
