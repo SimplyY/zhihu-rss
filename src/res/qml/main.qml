@@ -112,14 +112,19 @@ ApplicationWindow {
 
             Item { Layout.preferredWidth: 65 }
             ToolButton {
-                tooltip: qsTr("Code By SimplyY")
-                text: qsTr("Code By SimplyY")
+                width: 120
+                height: 26
+                tooltip: qsTr("Coded By SimplyY")
+                text: qsTr("Coded By SimplyY")
 //                iconSource: "images/right-32.png"
 
                 Layout.preferredWidth: navigationBar.height
                 style: ButtonStyle {
                     background: Rectangle { color: "transparent" }
 
+                }
+                onClicked: {
+                    webView.url = "https://github.com/SimplyY/zhihu_rss"
                 }
             }
 
@@ -137,8 +142,6 @@ ApplicationWindow {
             Label { text: webView.loadProgress == 100 ? qsTr("Done") : qsTr("Loading: ") + webView.loadProgress + "%" }
         }
     }
-
-
 
 
     Rectangle {
@@ -264,8 +267,18 @@ ApplicationWindow {
                             text: name
 
                             font.pixelSize: 14
-                                    font.family: "Times New Roman"
+                            font.family: "Times New Roman"
                         }
+                        Text{
+                            anchors.right: parent.right
+                            y:2
+                            width:20
+                            height:24
+                            text: qsTr("20")
+                            font.pixelSize: 14
+                            font.family: "Times New Roman"
+                        }
+
                         MouseArea{
                             anchors.fill: parent
                             acceptedButtons: Qt.LeftButton | Qt.RightButton // 激活右键（别落下这个）
@@ -317,12 +330,12 @@ ApplicationWindow {
             Text {
                 id: text1
                 x: 15
-                y: 20
+                y: 12
                 color: "#878787"
                 text: qsTr("关注")
                 font.bold: true
                         font.family: "Helvetica"
-                font.pixelSize: 13
+                font.pixelSize: 14
             }
 
         }
@@ -343,7 +356,7 @@ ApplicationWindow {
             Text {
                 id: text2
                 x: 5
-                y: 18
+                y: 10
                 color: "#878787"
                 text: qsTr("动态")
                 font.bold: true
