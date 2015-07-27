@@ -66,3 +66,5 @@ target/
 
 # Database
 #TODO *.sqlite3
+
+*.autosave
