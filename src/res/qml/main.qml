@@ -271,6 +271,7 @@ ApplicationWindow {
                             acceptedButtons: Qt.LeftButton | Qt.RightButton // 激活右键（别落下这个）
                             onClicked:{
                                 listViewNoticers1.currentIndex = index
+                                current_noticer_name.text = noticers1_model.get(listViewNoticers1.currentIndex)["name"]
                                 if (mouse.button == Qt.LeftButton){
                                     rectangle1.load_feeds_list(name, 1)
                                 }
@@ -301,7 +302,7 @@ ApplicationWindow {
                     text:"更改关注方式"
                     onTriggered: {
                         console.debug(listViewNoticers1.currentIndex)
-                        current_noticer_name.text = noticers1_model.get(listViewNoticers1.currentIndex)["name"]
+
                         console.debug(current_noticer_name.text)
                     }
                 }

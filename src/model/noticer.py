@@ -10,6 +10,8 @@ except ConnectionError:
 
 from src.util.error import UrlError
 from src.util.const import NOTICERS_JSON_DIR
+from ..util.my_pyqt import find_view
+
 
 class Noticer:
     def __init__(self, url=None, noticer_list=None):
@@ -53,13 +55,24 @@ class Noticer:
 
     @staticmethod
     def add_noticer(noticer):
-
         noticers = Noticer.get_noticers_in_json()
-        Noticer.write_noticers_in_json(noticer, noticers)
+        Noticer.write_noticers_in_json(noticers, noticer)
 
     @staticmethod
-    def del_noticer():
-        pass
+    def del_noticer(root_view):
+        name = Noticer.get_current_noticer_name(root_view)
+        noticers = Noticer.get_noticers_in_json()
+
+        for index, noticer in enumerate(noticers):
+            if noticer.name == name:
+                del noticers[index]
+
+        Noticer.write_noticers_in_json(noticers)
+
+    @staticmethod
+    def get_current_noticer_name(root_view):
+        name = find_view(root_view, "current_noticer_name").property("text")
+        return name
 
     @staticmethod
     def get_noticers_in_json():
@@ -83,8 +96,9 @@ class Noticer:
         return noticers
 
     @staticmethod
-    def write_noticers_in_json(noticer, noticers):
-        noticers = Noticer._get_new_noticers(noticer, noticers)
+    def write_noticers_in_json(noticers, new_noticer=None):
+        if new_noticer:
+            noticers = Noticer._get_new_noticers(new_noticer, noticers)
 
         json_data = json.dumps([noticer.list for noticer in noticers])
         with open(NOTICERS_JSON_DIR, mode='w') as f:

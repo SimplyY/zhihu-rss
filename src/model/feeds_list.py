@@ -161,8 +161,14 @@ class FeedsList:
         return action
 
     @staticmethod
-    def del_feeds_list():
-        pass
+    def del_feeds_list(name):
+        feeds_lists = FeedsList.get_feeds_lists_in_json()
+
+        for index, feeds_list in enumerate(feeds_lists):
+            if feeds_list.name == name:
+                del feeds_lists[index]
+
+        FeedsList.write_feeds_lists_in_json(feeds_lists)
 
     # save and load
     @staticmethod

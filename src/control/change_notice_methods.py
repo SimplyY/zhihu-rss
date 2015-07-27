@@ -3,7 +3,6 @@
 __author__ = 'yuwei'
 
 import zhihu
-from PyQt5.QtQml import QQmlListProperty
 
 from ..util.my_pyqt import MyView, set_button, find_view
 from ..model.noticer import Noticer
@@ -17,16 +16,10 @@ def _set_methods(root_view, new_notice_methods, checkbox_name, checkbox_value):
             if act_type.value == checkbox_value:
                 new_notice_methods.append(act_type)
 
-
-def get_current_noticer_name(my_app):
-    name = find_view(my_app.root_view, "current_noticer_name").property("text")
-
-    return name
-
 def _set_noticer(my_app, new_notice_methods):
-    name = get_current_noticer_name(my_app)
-
+    name = Noticer.get_current_noticer_name(my_app.root_view)
     noticers = Noticer.get_noticers_in_json()
+
     for noticer in noticers:
         if noticer.name == name:
             noticer.set_notice_methods(new_notice_methods)
