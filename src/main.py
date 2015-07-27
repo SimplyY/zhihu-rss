@@ -1,6 +1,6 @@
 __author____author__ = 'yuwei'
 
-from PyQt5.QtCore import QObject
+from PyQt5.QtCore import QObject, pyqtSlot, QVariant
 
 from src.control import add, listview
 from src.control.change_notice_methods import show_change_dialog
@@ -12,9 +12,18 @@ from src.util.error import ErrorDialog
 from src.model.noticer import Noticer
 from src.model.feeds_list import FeedsList
 
-def on_noticer_click(listview_item):
-    _my_app.noticers1_listview.setProperty("currentIndex", listview_item.getProperty("index"))
 
+def set_is_read(url):
+    feeds_lists = FeedsList.get_feeds_lists_in_json()
+    for feeds_list in feeds_lists:
+        for index, feed in enumerate(feeds_list.feeds):
+            if feed["url"] == url:
+                feeds_list.feeds[index]["is_read"] = True
+                FeedsList.write_feeds_lists_in_json(feeds_lists)
+                return
+
+# def on_noticer_click(listview_item):
+#     _my_app.noticers1_listview.setProperty("currentIndex", listview_item.getProperty("index"))
 
 def del_noticer(root_view):
     Noticer.del_noticer(root_view)
@@ -33,6 +42,8 @@ def set_views():
     set_menu(root_view, 'delete_noticer', lambda: del_noticer(root_view))
 
     _my_app.web_view = root_view.findChild(QObject, 'web_view')
+
+    root_view.sendClicked.connect(set_is_read)
 
     listview.load_noticers_listview(root_view)
 

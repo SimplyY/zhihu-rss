@@ -16,6 +16,7 @@ Rectangle {
         width: 28
         height: 17
         text: qsTr("主页url")
+
         font.pixelSize: 14
         font.family: "Times New Roman"
     }
@@ -31,7 +32,6 @@ Rectangle {
         selectionColor: "#800000"
         opacity: 1
         visible: true
-        passwordCharacter: "•"
         font.family: "Times New Roman"
         echoMode: TextInput.Normal
         cursorVisible: true
@@ -58,7 +58,7 @@ Rectangle {
         y: 93
         width: 80
         height: 20
-        text: qsTr("20")
+        text: qsTr("60")
         cursorVisible: true
         font.pixelSize: 14
         echoMode: TextInput.Normal

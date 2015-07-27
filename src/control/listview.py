@@ -1,6 +1,5 @@
 __author__ = 'yuwei'
 
-
 from src.util.my_pyqt import use_qml_fun
 from src.model.noticer import Noticer
 from src.model.feeds_list import FeedsList
@@ -12,18 +11,19 @@ def set_noticers_data(noticers_names, unread_nums, feedslists_processed, noticer
         for feedlists in feedslists:
             if feedlists.name == noticer.name:
                 noticers_names.append(noticer.name)
-                unread_nums.append(feedlists.get_unread_num())
 
                 feeds = list()
-                notice_methods = list()
+                unread_num = 0
 
                 for feed in feedlists.feeds:
                     # 根据不同的 noticer 的notice_method 筛选出相应的 feedslist
                     if feed["action_type"] in [notice_method.value for notice_method in noticer.notice_methods]:
-                        feeds.append({"url": feed["url"], "action": feed["action"]})
-                        notice_methods.append(feed["action_type"])
+                        feeds.append({"url": feed["url"], "action": feed["action"], "is_read": feed["is_read"]})
+                        if not feed["is_read"]:
+                            unread_num += 1
 
-                feedslists_processed.append({"name": noticer.name, "feeds": feeds, "notice_methods": notice_methods})
+                unread_nums.append(unread_num)
+                feedslists_processed.append({"name": noticer.name, "feeds": feeds})
 
 
 def load_noticers_listview(root_view):
