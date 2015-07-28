@@ -28,24 +28,24 @@ def record_add_info(my_app, add_dialog, error_dialog):
         error_dialog.show()
         return
 
-    progress_dialog = progress.show_progress_dialog(noticer.name, feed_num)
+    # progress_dialog = progress.show_progress_dialog(noticer.name, feed_num)
 
-    add_new_feedslist(my_app, noticer, feed_num, progress_dialog=progress_dialog)
+    add_new_feedslist(my_app, noticer, feed_num)
     # my_thread = MyThread("add_new_feedslist", add_new_feedslist, my_app, noticer)
     # my_thread.start()
 
 def add_new_feedslist(my_app, noticer, feed_num, progress_dialog=None):
     Noticer.add_noticer(noticer)
 
-    my_thread = MyThread("add_feeds_list_thread", FeedsList.add_feeds_list, noticer, feed_num, progress_dialog)
-    my_thread.start()
+    # my_thread = MyThread("add_feeds_list_thread", FeedsList.add_feeds_list, noticer, feed_num, progress_dialog)
+    # my_thread.start()
 
-    # FeedsList.add_feeds_list(noticer, feed_num, progress_dialog)
+    FeedsList.add_feeds_list(noticer, feed_num, progress_dialog)
 
-    # use_qml_fun(my_app.root_view, fun_parent_name="rect", fun_name="add_new_feedslist",
-    #             args={"feeds_list": FeedsList.get_feeds_list(noticer.name), "notice_methods": noticer.notice_methods})
-    #
-    # listview.load_listviews(my_app.root_view)
+    use_qml_fun(my_app.root_view, fun_parent_name="rect", fun_name="add_new_feedslist",
+                args={"feeds_list": FeedsList.get_feeds_list(noticer.name), "notice_methods": noticer.notice_methods})
+
+    listview.load_noticers_listview(my_app.root_view)
 
 
 def show_add_dialog(my_app, qml, error_dialog):

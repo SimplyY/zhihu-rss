@@ -6,15 +6,17 @@ import QtQuick.Layouts 1.0
 
 
 ApplicationWindow {
-    id: applicationWindow
-    width: 1400
-    height: 750
+    id: root
+    width: 1150
+    height: 700
     color: "#dedede"
     maximumWidth: 1500
     title: "zhihu rss "
     minimumWidth: 800
     minimumHeight: 600
     maximumHeight: 1000
+
+    signal sendClicked(string url)
 
     toolBar: ToolBar {
         id: navigationBar
@@ -27,7 +29,7 @@ ApplicationWindow {
             ToolButton {
                 objectName: "add_button"
 
-                x: 470
+                x:0
                 y: 5
                 width: 80
                 height: 26
@@ -43,7 +45,7 @@ ApplicationWindow {
 
             }
 
-            Item { Layout.preferredWidth: 100 }
+            Item { Layout.preferredWidth: 107 }
             ToolButton {
                 id: backButton
                 tooltip: qsTr("Back")
@@ -57,7 +59,7 @@ ApplicationWindow {
 
                 }
             }
-
+            Item { Layout.preferredWidth: 10 }
             ToolButton {
                 id: forwardButton
                 tooltip: qsTr("Forward")
@@ -71,7 +73,7 @@ ApplicationWindow {
 
                 }
             }
-
+            Item { Layout.preferredWidth: 10 }
             ToolButton {
                 id: reloadButton
                 tooltip: webView.loading ? qsTr("Stop"): qsTr("Refresh")
@@ -86,7 +88,7 @@ ApplicationWindow {
                 }
             }
 
-            Item { Layout.preferredWidth: 100 }
+            Item { Layout.preferredWidth: 105 }
 
             TextField {
                 Layout.fillWidth: true
@@ -98,11 +100,11 @@ ApplicationWindow {
                 onAccepted: webView.url = text
 
                 ProgressBar {
-                    x: 3
+                    x: 0
                     y: 18
                     width: parent.width
-                    height: 20
-//                    color:
+
+
                     visible: webView.loading && Qt.platform.os !== "ios"
                     minimumValue: 0
                     maximumValue: 100
@@ -110,10 +112,12 @@ ApplicationWindow {
                 }
             }
 
-            Item { Layout.preferredWidth: 100 }
+            Item { Layout.preferredWidth: 65 }
             ToolButton {
-                tooltip: qsTr("powered by SimplyY")
-                text: qsTr("powered by SimplyY")
+                width: 120
+                height: 26
+                tooltip: qsTr("Coded By SimplyY")
+                text: qsTr("Coded By SimplyY")
 //                iconSource: "images/right-32.png"
 
                 Layout.preferredWidth: navigationBar.height
@@ -121,9 +125,12 @@ ApplicationWindow {
                     background: Rectangle { color: "transparent" }
 
                 }
+                onClicked: {
+                    webView.url = "https://github.com/SimplyY/zhihu_rss"
+                }
             }
 
-            Item { Layout.preferredWidth: 65 }
+            Item { Layout.preferredWidth: 55 }
 
 
         }
@@ -137,8 +144,6 @@ ApplicationWindow {
             Label { text: webView.loadProgress == 100 ? qsTr("Done") : qsTr("Loading: ") + webView.loadProgress + "%" }
         }
     }
-
-
 
 
     Rectangle {
@@ -162,10 +167,10 @@ ApplicationWindow {
             anchors.bottom: parent.bottom
             width: 140
 
-            color: "#f6f6f6"
+            color: "#ebebeb"
             anchors.bottomMargin: 0
             anchors.leftMargin: 0
-            anchors.topMargin: 1
+            anchors.topMargin: 0
             antialiasing: true
             border.color: "#b0aeb0"
             border.width: 0
@@ -173,7 +178,6 @@ ApplicationWindow {
 
             function add_new_feedslist(args){
                 var feeds_list = args["feeds_list"]
-                var notice_method = args["notice_method"]
 
                 var model = noticers1_model
                 model.append({"name": feeds_list["name"], "feedslist": feeds_list})
@@ -190,16 +194,17 @@ ApplicationWindow {
                 noticers1_model.clear()
 
                 var names = args["names"]
+                var unread_nums = args["unread_nums"]
                 var feedslists = args["feedslists"]
 
                 for(var i = 0; i < names.length; i++){
-                    console.debug(i, names[i])
-                    noticers1_model.append({"name": names[i], "feedslist": feedslists[i]})
+
+                    noticers1_model.append({"name": names[i], "unread_num": unread_nums[i],"feedslist": feedslists[i]})
                 }
 
             }
 
-            function load_feeds_list(name, i){
+            function load_feeds_list(name){
                 feeds_list_model.clear()
                 var model = noticers1_model
                 var feedslist = []
@@ -210,8 +215,9 @@ ApplicationWindow {
                     }
                 }
                 var feeds = feedslist["feeds"]
+
                 for(var index in feeds){
-                    feeds_list_model.append({"name": feeds[index]["action"], "url": feeds[index]["url"]})
+                    feeds_list_model.append({"name": feedslist["name"],"action": feeds[index]["action"],"url": feeds[index]["url"], "is_read": feeds[index]["is_read"]})
                 }
             }
 
@@ -220,17 +226,26 @@ ApplicationWindow {
                 id: noticers1_model
                 objectName: "noticers1_model"
             }
+            Text{
+                id: current_noticer_name
+                x:2000
+                width: 0
+                height: 0
+                objectName: "current_noticer_name"
+            }
 
             ListView {
                 id: listViewNoticers1
                 x: 0
+
+                objectName: "noticers_list"
 
                 anchors.left: parent.left
                 anchors.right: parent.right
                 anchors.top: parent.top
                 anchors.bottom: parent.bottom
 
-                anchors.topMargin: 40
+                anchors.topMargin: 35
                 anchors.rightMargin: 1
                 anchors.leftMargin: 1
                 layoutDirection: Qt.RightToLeft
@@ -248,50 +263,88 @@ ApplicationWindow {
                         height:24
 
                         Text{
+                            objectName: "noticer_text"
                             width:60
                             height:24
                             text: name
 
                             font.pixelSize: 14
-                                    font.family: "Times New Roman"
+                            font.family: "Times New Roman"
                         }
+                        Text{
+                            anchors.right: parent.right
+                            anchors.rightMargin: 6
+                            anchors.top: parent.top
+                            anchors.topMargin: 3
+                            width:20
+                            height:24
+                            horizontalAlignment: Text.AlignRight
+                            text: unread_num
+
+                            font.pixelSize: 13
+                            color: "#9e9e9e"
+                            font.family: "Times New Roman"
+                        }
+
                         MouseArea{
                             anchors.fill: parent
+                            acceptedButtons: Qt.LeftButton | Qt.RightButton // 激活右键（别落下这个）
                             onClicked:{
                                 listViewNoticers1.currentIndex = index
+                                listViewFeeds.currentIndex = -1
+                                current_noticer_name.text = noticers1_model.get(listViewNoticers1.currentIndex)["name"]
+                                if (mouse.button == Qt.LeftButton){
+                                    rectangle1.load_feeds_list(name)
+                                }
 
-                                rectangle1.load_feeds_list(name, 1)
+                                 if (mouse.button == Qt.RightButton) {
+                                    noticerMenu.popup()
+                                }
                             }
                         }
+
                     }
                 }
 
                 highlight: Rectangle {
                     anchors.left: parent.left
                     anchors.right: parent.right
-                    height: 24
-                    color: '#ddd'
+                    height: 20
+                    color: '#d5d5d5'
                 }
                 focus: true
                 //                onCurrentItemChanged:
             }
 
 
+            Menu { // 右键菜单
+                id: noticerMenu
+
+                MenuItem {
+                    objectName: "change_notice_method"
+                    text:"更改关注方式"
+                    onTriggered: {
+                    }
+                }
+                MenuItem {
+                    objectName: "delete_noticer"
+                    text:"取消关注"
+
+                }
+            }
+
 
             Text {
                 id: text1
                 x: 15
-                y: 20
+                y: 12
                 color: "#878787"
-                text: qsTr("noticers")
+                text: qsTr("关注")
                 font.bold: true
-                        font.family: "Helvetica"
-                font.pixelSize: 13
+                font.family: "Helvetica"
+                font.pixelSize: 14
+                z:1
             }
-
-
-
-
 
         }
 
@@ -299,35 +352,56 @@ ApplicationWindow {
             id: rectangle2
 
             anchors.top: parent.top
+            anchors.topMargin: -2
             anchors.left: rectangle1.right
-            width: 218
+            width: 250
             anchors.bottom: parent.bottom
 
             antialiasing: true
-            border.color: "#dbdbdb"
-            border.width: 1
 
+            Rectangle{
+                anchors.left: rectangle2.left
+                width: 1
+                anchors.top: rectangle2.top
+                anchors.bottom: rectangle2.bottom
+                color:  "#dbdbdb"
+                z:1
+            }
+
+
+
+            Rectangle{
+                anchors.right: rectangle2.right
+                anchors.rightMargin: 0
+                width: 1
+                anchors.top: rectangle2.top
+                anchors.bottom: rectangle2.bottom
+                color:  "#dbdbdb"
+                z:1
+            }
 
             Text {
                 id: text2
                 x: 5
-                y: 18
+                y: 13
                 color: "#878787"
-                text: qsTr("feeds")
+                text: qsTr("动态")
                 font.bold: true
                 font.family: "Helvetica"
                 font.pixelSize: 14
+                z:2
             }
 
 
             ListView {
                 id: listViewFeeds
                 x: 2
-                y: 0
+
                 anchors.top: text2.bottom
                 anchors.bottom: parent.bottom
-                anchors.topMargin: 9
-                width: 214
+                anchors.bottomMargin: -13
+                anchors.topMargin: 8
+                width: rectangle2.width-14
                 height: 593
                 currentIndex: -1
 
@@ -338,23 +412,48 @@ ApplicationWindow {
                 delegate: Component {
                     Item{
                         id: listItem1
-                        x:2
+                        x:0
                         width: 200
-                        height:60
+                        height:56
+                        Rectangle{
+                            anchors.top: parent.top
+
+                            width: rectangle2.width
+                            height: 1
+                            border.color: "#efeff0"
+                            border.width: 1
+                        }
 
                         Text{
-                            width:50
-                            height:60
-                            text: name
-
-                            font.pixelSize: 12
+                            x:-3
+                            color: is_read? "#9f9f9f":"#3b3b3b"
+                            width:55
+                            height:55
+                            text: is_read?  action.replace('="4"', '="3"').replace("black", "grey").replace('="4"', '="3"').replace("black", "grey") :action
+                            textFormat: Text.RichText
+                            font.pixelSize: 11
                             font.family: "Times New Roman"
                         }
                         MouseArea{
                             anchors.fill: parent
                             onClicked:{
                                 listViewFeeds.currentIndex = index
+                                console.debug(index + is_read)
+
                                 webView.url = url
+                                feeds_list_model.get(index)["is_read"] = true
+
+                                for(var i = 0; i < noticers1_model.count; i++){
+
+                                    if(noticers1_model.get(i)["name"] == name){
+                                        noticers1_model.get(i)["unread_num"]--
+                                    }
+                                }
+
+
+
+                                root.sendClicked(url)
+
 
                             }
                         }
@@ -365,20 +464,43 @@ ApplicationWindow {
                     anchors.right: parent.right
 
                     height: 20
-                    color: '#ddd'
+                    color: '#ebebeb'
                 }
-                focus: true
+                highlightFollowsCurrentItem : true
+                highlightMoveDuration: 1
             }
+
+
+            Rectangle{
+                anchors.right: rectangle2.right
+                anchors.rightMargin: 1
+                width:10
+                anchors.top: rectangle2.top
+                anchors.bottom: rectangle2.bottom
+                color: "#f5f5f5"
+                z:1
+            }
+
+
+            ScrollBar{
+                flk: listViewFeeds
+                radius: 10
+                color: "grey"
+                expandedWidth: 5
+                anchors.topMargin: -34
+                anchors.rightMargin: -9
+            }
+
         }
 
 
 
         WebView{
             id: webView
-            width: 762
+            width: 758
             anchors.rightMargin: 0
             anchors.bottomMargin: 0
-            anchors.leftMargin: 2
+            anchors.leftMargin: 0
 
             anchors.left: rectangle2.right
             anchors.top: parent.top
@@ -397,7 +519,27 @@ ApplicationWindow {
             maximumFlickVelocity: 2000
 
         }
+        Rectangle{
+            anchors.right: webView.right
+            anchors.rightMargin: 1
+            width: 11
+            anchors.top: webView.top
+            color: "#f5f5f5"
+            anchors.bottom: webView.bottom
 
+            z:2
+        }
+
+        ScrollBar{
+            flk: webView
+            radius: 10
+            color: "grey"
+            expandedWidth: 5
+            anchors.topMargin: webView.url.toString().match("www.zhihu.com")=="www.zhihu.com" ? 66 : 0
+            anchors.right: parent.right
+            anchors.rightMargin: 3
+            z:3
+        }
 
 
     }

@@ -12,8 +12,10 @@ from src.control import progress
 #     feedslist{
 #         name
 #         url
-#         feeds[{
+#         feeds[feed{
+#            is_read,
 #            url,
+#            action_type,
 #            action
 # }]
 #         list
@@ -89,8 +91,6 @@ class FeedsList:
     @staticmethod
     def get_feeds(noticer, author, amount_num, old_feeds_list=None, progress_dialog=None):
         feeds = []
-        feed_num = 0
-
         latest_act_url = noticer.latest_act_url
         activities = author.activities
 
@@ -104,13 +104,13 @@ class FeedsList:
             feed = FeedsList._create_feed(author, act)
             feeds.append(feed)
 
-            feed_num += 1
-            progress.renew_feed_num(progress_dialog, feed_num)
+            # feed_num += 1
+            # progress.renew_feed_num(progress_dialog, feed_num)
 
         if old_feeds_list:
             feeds.extend(old_feeds_list)
 
-        progress_dialog.close()
+        # progress_dialog.close()
         noticer.set_latest_act_url(feeds[0]["url"])
         Noticer.add_noticer(noticer)
         return feeds
@@ -119,48 +119,50 @@ class FeedsList:
     def _create_feed(author, act):
         feed = dict()
 
-        feed["action"] = FeedsList._get_feed_act_action(feed, author, act)
+        feed["is_read"] = False
+        feed["action"] = FeedsList._get_feed_act_action(author, act)
+        feed["action_type"] = act.type.value
         feed["url"] = act.content.url
 
         return feed
 
     @staticmethod
-    def _get_feed_act_action(feed, author, act):
+    def _get_feed_act_action(author, act):
         action = str()
+        my_str = '<b><font size="4" color="black">「{}」</font></b>'
+        my_space = '&nbsp;&nbsp;&nbsp;'
         if act.type == zhihu.ActType.FOLLOW_COLUMN:
-            action = ('%s 在 %s 关注了专栏\n %s' %
-                  (author.name, str(act.time).split(" ")[0], act.column.name))
+            action = (my_space+'{} 在 {} 关注了专栏<br>'+my_str).format(author.name, str(act.time).split(" ")[0], act.column.name)
         elif act.type == zhihu.ActType.FOLLOW_QUESTION:
-            action = ('%s 在 %s 关注了问题\n %s' % (author.name, act.time, act.question.title))
+            action = (my_space+' {} 在 {} 关注了问题<br>'+my_str).format(author.name, act.time, act.question.title)
         elif act.type == zhihu.ActType.ASK_QUESTION:
-            action = ('%s 在 %s 提了个问题\n %s' %
-                  (author.name, str(act.time).split(" ")[0], act.question.title))
+            action = (my_space+'{} 在 {} 提了个问题<br>'+my_str).format(author.name, str(act.time).split(" ")[0], act.question.title)
         elif act.type == zhihu.ActType.UPVOTE_POST:
-            action = ('%s 在 %s 赞同了专栏\n %s 中 %s 的文章\n %s' %
-                  (author.name, str(act.time).split(" ")[0], act.post.column.name,
-                   act.post.author.name, act.post.title))
+            action = (my_space+'{} 在 {} 赞同了专栏<br>'+my_str+'中 {} 的文章<br>'+my_str).format(author.name, str(act.time).split(" ")[0], act.post.column.name,
+                   act.post.author.name, act.post.title)
         elif act.type == zhihu.ActType.PUBLISH_POST:
-            action = ('%s 在 %s 在专栏\n %s 中发布了文章\n %s' %
-                  (author.name, str(act.time).split(" ")[0], act.post.column.name,
-                   act.post.title))
+            action = (my_space+'{} 在 {} 在专栏<br>'+my_str+'中发布了文章<br>'+my_str).format(
+                author.name, str(act.time).split(" ")[0], act.post.column.name,act.post.title)
         elif act.type == zhihu.ActType.UPVOTE_ANSWER:
-            action = ('%s 在 %s 赞同了问题\n %s \n中 %s 的回答, '
-                  '此回答赞同数:%d' %
-                  (author.name, str(act.time).split(" ")[0], act.answer.question.title,
-                   act.answer.author.name, act.answer.upvote_num))
+            action = (my_space+'{} 在 {} 赞同了问题<br>'+my_str+'<br>'+my_space+'中 {} 的回答, '
+                  '此回答赞同数:{}').format(author.name, str(act.time).split(" ")[0], act.answer.question.title,
+                                 act.answer.author.name, int(act.answer.upvote_num))
         elif act.type == zhihu.ActType.ANSWER_QUESTION:
-            action = ('%s 在 %s 回答了问题\n %s \n此回答赞同数:%d' %
-                  (author.name, str(act.time).split(" ")[0], act.answer.question.title,
-                   act.answer.upvote_num))
+            action = (my_space+'{} 在 {} 回答了问题<br>'+my_str+'<br>'+my_space+'此回答赞同数:{}').format(
+                author.name, str(act.time).split(" ")[0], act.answer.question.title, int(act.answer.upvote_num))
         elif act.type == zhihu.ActType.FOLLOW_TOPIC:
-            action = ('%s 在 %s \n关注了话题 %s' %
-                  (author.name, str(act.time).split(" ")[0], act.topic.name))
-
+            action = (my_space+'{} 在 {} <br>my_space+关注了话题'+my_str).format(author.name, str(act.time).split(" ")[0], act.topic.name)
         return action
 
     @staticmethod
-    def del_feeds_list():
-        pass
+    def del_feeds_list(name):
+        feeds_lists = FeedsList.get_feeds_lists_in_json()
+
+        for index, feeds_list in enumerate(feeds_lists):
+            if feeds_list.name == name:
+                del feeds_lists[index]
+
+        FeedsList.write_feeds_lists_in_json(feeds_lists)
 
     # save and load
     @staticmethod
