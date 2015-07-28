@@ -5,6 +5,10 @@ __pycache__/
 # json file
 *.json
 
+#photo
+*.gif
+*.mp4
+
 # C extensions
 *.so
 
