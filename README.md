@@ -4,10 +4,14 @@
 
 you can rss any zhihu's user in it
 
-开发者预览版
-![image](https://cloud.githubusercontent.com/assets/8455579/8877985/1408786a-325b-11e5-8d2c-ecc35cf63ead.png)
+## 开发者预览版
 
-![image](https://cloud.githubusercontent.com/assets/8455579/8877987/1703d6d6-325b-11e5-9348-61bd28fc5db4.png)
+![](http://img-storage.qiniudn.com/15-7-28/15352747.jpg)
+
+### 为了图片小一点的渣画质的功能演示gif, 实际画质效果如上图
+
+
+![](http://img-storage.qiniudn.com/15-7-28/94436942.jpg)
 
 ## 功能：
 - [x] minibrower
