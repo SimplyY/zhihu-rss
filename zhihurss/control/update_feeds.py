@@ -12,10 +12,9 @@ __author__ = 'yuwei'
 mutex = threading.Lock()
 
 def update_feeds():
-    if mutex.acquire(1):
+    with mutex:
         noticers = Noticer.get_noticers_in_json()
         FeedsList.update_feeds_lists(noticers)
-        mutex.release()
 
 
 def _run_update():
