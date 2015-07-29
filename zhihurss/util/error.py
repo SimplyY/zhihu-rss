@@ -8,8 +8,8 @@ class UrlError(Exception):
 
 class ErrorDialog(MyView):
     def __init__(self):
-        from zhihurss.util.const import ERROR_QML_DIR
-        super().__init__(ERROR_QML_DIR)
+        from .const import ERROR_QML_PATH
+        super().__init__(ERROR_QML_PATH)
 
     def set_error_info(self, error_info):
         text = find_view(self.root_view, 'errorInfoText')

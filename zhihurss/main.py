@@ -3,15 +3,15 @@ __author____author__ = 'yuwei'
 from PyQt5.QtCore import QObject
 
 from .control import add, listview
-from zhihurss.control.change_notice_methods import show_change_dialog
-from zhihurss.control.update_feeds import set_update_timer
+from .control.change_notice_methods import show_change_dialog
+from .control.update_feeds import spawn_update_thread
 
-from zhihurss.util.my_pyqt import MyApp, set_button, set_menu
-from zhihurss.util.const import MAIN_QML_DIR, ADD_QML_DIR, CHANGE_QML_DIR
-from zhihurss.util.error import ErrorDialog
+from .util.my_pyqt import MyApp, set_button, set_menu
+from .util.const import MAIN_QML_PATH, ADD_QML_PATH, CHANGE_QML_PATH
+from .util.error import ErrorDialog
 
-from zhihurss.model.noticer import Noticer
-from zhihurss.model.feeds_list import FeedsList
+from .model.noticer import Noticer
+from .model.feeds_list import FeedsList
 
 
 def set_is_read(url):
@@ -35,10 +35,10 @@ def del_noticer(root_view):
 def set_views(_my_app):
     root_view = _my_app.root_view
 
-    set_button(root_view, 'add_button', lambda: add.show_add_dialog(_my_app, ADD_QML_DIR, ErrorDialog()))
+    set_button(root_view, 'add_button', lambda: add.show_add_dialog(_my_app, ADD_QML_PATH, ErrorDialog()))
     set_button(root_view, 'updateButton', lambda: listview.load_noticers_listview(root_view))
 
-    set_menu(root_view, 'change_notice_method', lambda: show_change_dialog(_my_app, CHANGE_QML_DIR))
+    set_menu(root_view, 'change_notice_method', lambda: show_change_dialog(_my_app, CHANGE_QML_PATH))
     set_menu(root_view, 'delete_noticer', lambda: del_noticer(root_view))
 
     _my_app.web_view = root_view.findChild(QObject, 'web_view')
@@ -49,9 +49,9 @@ def set_views(_my_app):
 
 
 def run():
-    _my_app = MyApp(qml=MAIN_QML_DIR)
+    _my_app = MyApp(qml=MAIN_QML_PATH)
 
     set_views(_my_app)
-    set_update_timer()
+    spawn_update_thread()
 
-    MyApp.run(_my_app)
+    return MyApp.run(_my_app)

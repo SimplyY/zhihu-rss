@@ -3,30 +3,24 @@ __author__ = 'yuwei'
 import os
 import sys
 
-if getattr(sys, 'frozen'):
+if hasattr(sys, 'frozen'):
     BASE_DIR = os.path.dirname(sys.executable)
 else:
     BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-MAIN_QML_NAME = 'main.qml'
-ADD_QML_NAME = 'add.qml'
-ERROR_QML_NAME = 'error.qml'
-CHANGE_QML_NAME = 'change.qml'
+NOTICERS_FILE = '~/.config/zhihurss/noticers.json'
+FEEDS_FILE = '~/.cache/zhihurss/feeds.json'
 
 
-NOTICERS_FILE = 'noticers.json'
-FEEDS_FILE = 'feeds.json'
+QML_ROOT = os.path.join(BASE_DIR, 'res', 'qml')
+
+MAIN_QML_PATH = os.path.join(QML_ROOT, 'main.qml')
+ADD_QML_PATH = os.path.join(QML_ROOT, 'add.qml')
+ERROR_QML_PATH = os.path.join(QML_ROOT, 'error.qml')
+CHANGE_QML_PATH = os.path.join(QML_ROOT, 'change.qml')
 
 
-RELAT_QML_DIR = os.path.join('res', 'qml')
-
-MAIN_QML_DIR = os.path.join(BASE_DIR, RELAT_QML_DIR, MAIN_QML_NAME)
-ADD_QML_DIR = os.path.join(BASE_DIR, RELAT_QML_DIR, ADD_QML_NAME)
-ERROR_QML_DIR = os.path.join(BASE_DIR, RELAT_QML_DIR, ERROR_QML_NAME)
-CHANGE_QML_DIR = os.path.join(BASE_DIR, RELAT_QML_DIR, CHANGE_QML_NAME)
-
-
-NOTICERS_JSON_DIR = os.path.join(BASE_DIR, 'json', NOTICERS_FILE)
-FEEDS_JSON_DIR = os.path.join(BASE_DIR, 'json', FEEDS_FILE)
+NOTICERS_JSON_PATH = os.path.expanduser(NOTICERS_FILE)
+FEEDS_JSON_PATH = os.path.expanduser(FEEDS_FILE)
 
 CSS_GITHUB_PATH = "https://raw.githubusercontent.com/SimplyY/save/master/github-markdown.css"

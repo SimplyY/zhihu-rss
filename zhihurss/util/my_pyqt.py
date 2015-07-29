@@ -30,8 +30,7 @@ class MyApp(QObject):
     @staticmethod
     def run(my_app):
         my_app.root_view.show()
-        my_app.app.exec_()
-        sys.exit()
+        return my_app.app.exec_()
 
 
 class MyView(QQuickView):

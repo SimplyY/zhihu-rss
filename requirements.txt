@@ -1,0 +1,1 @@
+git+https://github.com/7sDream/zhihu-py3.git#egg=zhihu [lxml]

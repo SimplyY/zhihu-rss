@@ -9,8 +9,9 @@ except ConnectionError:
 #     TODO:
 
 
-from zhihurss.util.error import UrlError
-from zhihurss.util.const import NOTICERS_JSON_DIR
+from ..util.error import UrlError
+from ..util.fs import ensure_dir
+from ..util.const import NOTICERS_JSON_PATH
 from ..util.my_pyqt import find_view
 
 
@@ -79,26 +80,17 @@ class Noticer:
 
     @staticmethod
     def get_noticers_in_json():
-        if Noticer.noticers_json_lock.acquire():
-            if not os.path.exists(NOTICERS_JSON_DIR):
-                file = open(NOTICERS_JSON_DIR, 'w')
-                file.close()
-
-            noticers = []
+        with Noticer.noticers_json_lock:
             try:
-                with open(NOTICERS_JSON_DIR, mode='r') as f:
-                    file = f.readlines()
-                    if not file:
-                        return noticers
+                with open(NOTICERS_JSON_PATH, 'rb') as f:
+                    file = f.read().decode('utf-8')
+                    data = json.loads(file)
+                    return [Noticer(noticer_list=noticer_list) for noticer_list in data]
+            except FileNotFoundError:
+                # TODO: log
+                pass
 
-                    data = json.loads(file[0])
-                    noticers = [Noticer(noticer_list=noticer_list) for noticer_list in data]
-
-            except IOError:
-                noticers = None
-            Noticer.noticers_json_lock.release()
-
-        return noticers
+        return []
 
     @staticmethod
     def write_noticers_in_json(noticers, new_noticer=None):
@@ -107,10 +99,10 @@ class Noticer:
 
         json_data = json.dumps([noticer.list for noticer in noticers])
 
-        if Noticer.noticers_json_lock.acquire():
-            with open(NOTICERS_JSON_DIR, mode='w') as f:
-                f.write(json_data)
-            Noticer.noticers_json_lock.release()
+        with Noticer.noticers_json_lock:
+            ensure_dir(NOTICERS_JSON_PATH)
+            with open(NOTICERS_JSON_PATH, 'wb') as f:
+                f.write(json_data.encode('utf-8'))
 
     @staticmethod
     def _get_new_noticers(noticer, noticers):

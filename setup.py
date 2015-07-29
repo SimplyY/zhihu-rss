@@ -1,22 +1,96 @@
-application_title = "zhihu-rss" #what you want to application to be called
-main_python_file = "enter.py"
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+from __future__ import unicode_literals
 
 import sys
-from cx_Freeze import setup, Executable
+import os
+import re
+import ast
 
-base = None
-if sys.platform == "win32":
-    base = "Win32GUI"
+from setuptools import setup, find_packages
+
+if sys.argv[-1] == 'publish':
+    os.system('python setup.py sdist upload')
+    sys.exit()
+
+
+def extract_requirements(filename='requirements.txt'):
+    with open(filename, 'rb') as f_require:
+        lines = f_require.read().decode('utf-8').split('\n')
+
+    # ignore comments and empty lines
+    require_lines = [
+        line
+        for line in lines
+        if line and not line.strip().startswith('#')
+    ]
+
+    # separate dependency links from in-PyPI deps
+    links, reqs = [], []
+    for line in require_lines:
+        (links if '/' in line else reqs).append(line)
+
+    return links, reqs
+
+
+def extract_version():
+    with open('zhihurss/__init__.py', 'rb') as f_version:
+        ast_tree = re.search(
+            r'__version__ = (.*)',
+            f_version.read().decode('utf-8')
+        ).group(1)
+        if ast_tree is None:
+            raise RuntimeError('Cannot find version information')
+        return str(ast.literal_eval(ast_tree))
+
+    return version
+
+
+with open('README.md', 'rb') as f_readme:
+    readme = f_readme.read().decode('utf-8')
+
+
+version = extract_version()
+dep_links, requires = extract_requirements()
+
 
 setup(
-    name=application_title,
-    version="1.0.0",
-    url='https://github.com/SimplyY',
-    author='SimplyY',
-    description="zhihurss cx_Freeze PyQt5 script",
-    options={
-        "build_exe": {
-            "packages": {"PyQt5.QtCore", "PyQt5.QtWidgets", "PyQt5.QtQuick", "PyQt5.QtQml"},
-            "include_files": ["zhihurss/res/qml/"]}},
+    name='zhihurss',
+    version=version,
+    description='zhihurss',
+    long_description=readme,
 
-    executables=[Executable(main_python_file, base=base)])
+    author='SimplyY',
+    author_email='SimplyYu@163.com',
+    license='GPLv3+',
+
+    url='https://github.com/SimplyY/zhihu_rss',
+    download_url='https://github.com/SimplyY/zhihu-py3/releases',
+
+    install_requires=requires,
+    dependency_links=dep_links,
+    packages=find_packages(),
+    entry_points={
+        'gui_scripts': [
+            'zhihurss = zhihurss.main:run',
+        ],
+    },
+    include_package_data=True,
+
+    classifiers=[
+        'Development Status :: 3 - Alpha',
+        'Intended Audience :: Developers',
+        'Environment :: MacOS X',
+        'Environment :: Win32 (MS Windows)',
+        'Environment :: X11 Applications :: Qt',
+        'Intended Audience :: End Users/Desktop',
+        'License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)',
+        'Natural Language :: Chinese (Simplified)',
+        'Operating System :: MacOS :: MacOS X',
+        'Operating System :: Microsoft :: Windows',
+        'Operating System :: POSIX :: Linux',
+        'Programming Language :: Python :: 3 :: Only',
+        'Topic :: Internet :: WWW/HTTP',
+    ]
+)
