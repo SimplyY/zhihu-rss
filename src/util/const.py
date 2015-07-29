@@ -2,10 +2,10 @@ __author__ = 'yuwei'
 
 import os
 
+
 MAIN_QML_NAME = 'main.qml'
 ADD_QML_NAME = 'add.qml'
 ERROR_QML_NAME = 'error.qml'
-PROGRESS_QML_NAME = 'progress.qml'
 CHANGE_QML_NAME = 'change.qml'
 
 
@@ -19,7 +19,6 @@ RELAT_QML_DIR = os.path.join('src', 'res', 'qml')
 MAIN_QML_DIR = os.path.join(BASE_DIR, RELAT_QML_DIR, MAIN_QML_NAME)
 ADD_QML_DIR = os.path.join(BASE_DIR, RELAT_QML_DIR, ADD_QML_NAME)
 ERROR_QML_DIR = os.path.join(BASE_DIR, RELAT_QML_DIR, ERROR_QML_NAME)
-PROGRESS_QML_DIR = os.path.join(BASE_DIR, RELAT_QML_DIR, PROGRESS_QML_NAME)
 CHANGE_QML_DIR = os.path.join(BASE_DIR, RELAT_QML_DIR, CHANGE_QML_NAME)
 
 

@@ -5,7 +5,6 @@ import os
 
 from src.model.noticer import Noticer
 from src.util.const import FEEDS_JSON_DIR
-from src.control import progress
 
 # 结构
 # feedslists[
@@ -24,14 +23,14 @@ from src.control import progress
 
 
 class FeedsList:
-    def __init__(self, feed_num=100, noticer=None, old_feeds_list=None, list=None, progress_dialog=None):
+    def __init__(self, added_feeds=100, noticer=None, list=None):
         if not list:
             self.url = noticer.url
             self.name = noticer.name
 
             author = zhihu.Author(self.url)
 
-            self.feeds = FeedsList.get_feeds(noticer, author, feed_num, old_feeds_list, progress_dialog=progress_dialog)
+            self.feeds = FeedsList.get_feeds(noticer, author, added_feeds)
 
             self.list = [self.url, self.name]
             self.list.append(self.feeds)
@@ -54,65 +53,80 @@ class FeedsList:
 
     @staticmethod
     def renew_feeds_lists(noticers):
-        # old_feeds_lists = FeedsList.get_feeds_lists_in_json()
-        # new_feeds_lists = FeedsList.get_new_feeds_list(noticer, old_feeds_lists)
-        pass
+        old_feeds_lists = FeedsList.get_feeds_lists_in_json()
+        new_feeds_lists = FeedsList.new_feeds_lists(noticers, old_feeds_lists)
+        FeedsList.write_feeds_lists_in_json(new_feeds_lists)
+    #   TODO renew ui
 
     @staticmethod
-    def add_feeds_list(noticer, feed_num, progress_dialog=None):
+    def new_feeds_lists(noticers, old_feeds_lists):
+
+        for noticer in noticers:
+            for index, old_feeds_list in enumerate(old_feeds_lists):
+                if old_feeds_list.url == noticer.url:
+                    old_feeds_lists[index] = FeedsList.get_new_feeds(noticer, old_feeds_list)
+                    break
+
+        return old_feeds_lists
+
+    @staticmethod
+    def get_new_feeds(noticer, old_feeds_list):
+        latest_act_url = noticer.latest_act_url
+        author = zhihu.Author(noticer.url)
+        acticities = author.activities
+
+        for index, act in enumerate(acticities):
+            # 更新完成条件
+            if latest_act_url and latest_act_url == act.content.url:
+                break
+
+            if index == 0:
+                noticer.latest_act_url = act.content.url
+                Noticer.add_noticer(noticer)
+
+            feed = FeedsList._create_feed(author, act)
+            old_feeds_list.feeds.append(feed)
+
+        return old_feeds_list
+
+    @staticmethod
+    def add_feeds_list(noticer, added_feeds, progress_dialog=None):
         old_feeds_lists = FeedsList.get_feeds_lists_in_json()
-        new_feeds_lists = FeedsList.get_new_feeds_list(noticer, feed_num, old_feeds_lists, progress_dialog=progress_dialog)
+        new_feeds_lists = FeedsList.get_added_feeds_list(noticer, added_feeds, old_feeds_lists, progress_dialog=progress_dialog)
         FeedsList.write_feeds_lists_in_json(new_feeds_lists)
 
     @staticmethod
-    def get_new_feeds_list(noticers, feed_num, old_feeds_lists, progress_dialog=None):
-        new_feeds_lists = []
+    def get_added_feeds_list(noticer, added_feeds, old_feeds_lists, progress_dialog=None):
 
-        if noticers is not list:  # add feeds_list
-            noticer = noticers
+        if noticer.name in [feeds_list.name for feeds_list in old_feeds_lists]:
+            return old_feeds_lists
 
-            if noticer.name in [feeds_list.name for feeds_list in old_feeds_lists]:
-                return old_feeds_lists
+        feeds_list = FeedsList(noticer=noticer, added_feeds=added_feeds)
 
-            feeds_list = FeedsList(noticer=noticer, feed_num=feed_num, progress_dialog=progress_dialog)
-
-            old_feeds_lists.append(feeds_list)
-            new_feeds_lists = old_feeds_lists
-
-        else:  # renew feeds_lists
-            for noticer in noticers:
-                for old_feeds_list in old_feeds_lists:
-                    if old_feeds_list.url == noticer.url:
-                        break
-                        # TODO:
+        old_feeds_lists.append(feeds_list)
+        new_feeds_lists = old_feeds_lists
 
         return new_feeds_lists
 
     @staticmethod
-    def get_feeds(noticer, author, amount_num, old_feeds_list=None, progress_dialog=None):
+    def get_feeds(noticer, author, added_feeds):
         feeds = []
-        latest_act_url = noticer.latest_act_url
         activities = author.activities
 
         for act in activities:
-            # 两个截止遍历的条件
-            if latest_act_url and latest_act_url == act.content.url:
-                break
-            if int(amount_num) == len(feeds):
+            # 截止遍历的条件
+            if int(added_feeds.max_feeds_num) == len(feeds):
                 break
 
             feed = FeedsList._create_feed(author, act)
             feeds.append(feed)
+            added_feeds.add_getted_feeds_num()
 
-            # feed_num += 1
-            # progress.renew_feed_num(progress_dialog, feed_num)
+        added_feeds.is_finish()
 
-        if old_feeds_list:
-            feeds.extend(old_feeds_list)
-
-        # progress_dialog.close()
         noticer.set_latest_act_url(feeds[0]["url"])
         Noticer.add_noticer(noticer)
+
         return feeds
 
     @staticmethod

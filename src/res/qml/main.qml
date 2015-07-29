@@ -7,7 +7,7 @@ import QtQuick.Layouts 1.0
 
 ApplicationWindow {
     id: root
-    width: 1150
+    width: 1155
     height: 700
     color: "#dedede"
     maximumWidth: 1500
@@ -25,7 +25,7 @@ ApplicationWindow {
             spacing: 0
 
 
-            Item { Layout.preferredWidth: 2 }
+            Item { Layout.preferredWidth: 10 }
             ToolButton {
                 objectName: "add_button"
 
@@ -44,8 +44,25 @@ ApplicationWindow {
 
 
             }
+            Item { Layout.preferredWidth: 57 }
 
-            Item { Layout.preferredWidth: 107 }
+            ToolButton {
+                id: updateButton
+                objectName: "updateButton"
+                width: 80
+                text:  qsTr("更新动态")
+
+
+                style: ButtonStyle {
+                    Text {
+                                font.family: "Helvetica"
+                        text: control.text
+                    }
+                }
+            }
+
+            Item { Layout.preferredWidth: 80 }
+
             ToolButton {
                 id: backButton
                 tooltip: qsTr("Back")
@@ -59,7 +76,7 @@ ApplicationWindow {
 
                 }
             }
-            Item { Layout.preferredWidth: 10 }
+
             ToolButton {
                 id: forwardButton
                 tooltip: qsTr("Forward")
@@ -73,7 +90,7 @@ ApplicationWindow {
 
                 }
             }
-            Item { Layout.preferredWidth: 10 }
+
             ToolButton {
                 id: reloadButton
                 tooltip: webView.loading ? qsTr("Stop"): qsTr("Refresh")
@@ -88,7 +105,7 @@ ApplicationWindow {
                 }
             }
 
-            Item { Layout.preferredWidth: 105 }
+            Item { Layout.preferredWidth: 15 }
 
             TextField {
                 Layout.fillWidth: true
@@ -112,7 +129,7 @@ ApplicationWindow {
                 }
             }
 
-            Item { Layout.preferredWidth: 65 }
+            Item { Layout.preferredWidth: 15 }
             ToolButton {
                 width: 120
                 height: 26
@@ -120,17 +137,17 @@ ApplicationWindow {
                 text: qsTr("Coded By SimplyY")
 //                iconSource: "images/right-32.png"
 
-                Layout.preferredWidth: navigationBar.height
+                Layout.preferredWidth: 120
                 style: ButtonStyle {
                     background: Rectangle { color: "transparent" }
 
                 }
                 onClicked: {
-                    webView.url = "https://github.com/SimplyY/zhihu_rss"
+                    webView.url = "https://github.com/SimplyY/zhihu-rss"
                 }
             }
 
-            Item { Layout.preferredWidth: 55 }
+            Item { Layout.preferredWidth: 10 }
 
 
         }
@@ -185,7 +202,7 @@ ApplicationWindow {
                 var feeds = feeds_list["feeds"]
 
                 for(var i in feeds){
-                    feeds_list_model.append({"name": feeds[i]["action"], "url": feeds[i]["url"]})
+                    feeds_list_model.append({"action": feeds[i]["action"], "url": feeds[i]["url"], "is_read": feeds[i]["is_read"]})
                 }
             }
 
@@ -474,7 +491,7 @@ ApplicationWindow {
             Rectangle{
                 anchors.right: rectangle2.right
                 anchors.rightMargin: 1
-                width:10
+                width:8
                 anchors.top: rectangle2.top
                 anchors.bottom: rectangle2.bottom
                 color: "#f5f5f5"
@@ -488,7 +505,7 @@ ApplicationWindow {
                 color: "grey"
                 expandedWidth: 5
                 anchors.topMargin: -34
-                anchors.rightMargin: -9
+                anchors.rightMargin: -10
             }
 
         }
@@ -497,8 +514,8 @@ ApplicationWindow {
 
         WebView{
             id: webView
-            width: 758
-            anchors.rightMargin: 0
+
+            anchors.rightMargin: 5
             anchors.bottomMargin: 0
             anchors.leftMargin: 0
 
@@ -520,8 +537,8 @@ ApplicationWindow {
 
         }
         Rectangle{
-            anchors.right: webView.right
-            anchors.rightMargin: 1
+            anchors.right: parent.right
+            anchors.rightMargin: -1
             width: 11
             anchors.top: webView.top
             color: "#f5f5f5"
@@ -537,7 +554,7 @@ ApplicationWindow {
             expandedWidth: 5
             anchors.topMargin: webView.url.toString().match("www.zhihu.com")=="www.zhihu.com" ? 66 : 0
             anchors.right: parent.right
-            anchors.rightMargin: 3
+            anchors.rightMargin: 2
             z:3
         }
 

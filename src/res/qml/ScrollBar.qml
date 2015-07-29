@@ -32,7 +32,7 @@ Item {
         clip: true
         anchors.left: parent.left
         anchors.right: parent.right
-        height: flk.visibleArea.heightRatio * flk.height
+        height: flk.visibleArea.heightRatio * flk.height < 20 ? 20 : flk.visibleArea.heightRatio * flk.height
         visible: flk.visibleArea.heightRatio < 1.0
         radius: 10
         color: "gray"

@@ -35,9 +35,17 @@ class MyApp(QObject):
 
 
 class MyView(QQuickView):
-    def __init__(self, qml):
+    def __init__(self, qml=None):
         super().__init__()
         self.setResizeMode(QQuickView.SizeRootObjectToView)
+
+        self.root_context = self.rootContext()
+
+        if qml:
+            self.setSource(QUrl(qml))
+            self.root_view = self.rootObject()
+
+    def set_qml(self, qml):
         self.setSource(QUrl(qml))
         self.root_view = self.rootObject()
 
