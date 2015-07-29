@@ -2,13 +2,13 @@ __author__ = 'yuwei'
 
 from PyQt5.QtCore import QObject, pyqtSignal, pyqtProperty
 
-from .util.my_pyqt import MyView, set_button, find_view, use_qml_fun
-from .util.error import UrlError
-from .util.my_thread import MyThread
+from ..util.my_pyqt import MyView, set_button, find_view, use_qml_fun
+from ..util.error import UrlError
+from ..util.my_thread import MyThread
 
-from .model.noticer import Noticer
-from .model.feeds_list import FeedsList
-from .control import listview
+from ..model.noticer import Noticer
+from ..model.feeds_list import FeedsList
+from . import listview
 
 class AddedFeeds(QObject):
 

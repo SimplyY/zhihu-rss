@@ -9,9 +9,9 @@ except ConnectionError:
 #     TODO:
 
 
-from .util.error import UrlError
-from .util.fs import ensure_dir
-from .util.const import NOTICERS_JSON_PATH
+from ..util.error import UrlError
+from ..util.fs import ensure_dir
+from ..util.const import NOTICERS_JSON_PATH
 from ..util.my_pyqt import find_view
 
 

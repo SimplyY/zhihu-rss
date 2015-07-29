@@ -1,4 +1,4 @@
-from .util.const import CSS_GITHUB_PATH
+from .const import CSS_GITHUB_PATH
 
 CSS = '<link href="' + CSS_GITHUB_PATH + '" rel="stylesheet"></link>'
 def load_css(html):

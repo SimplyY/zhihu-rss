@@ -2,10 +2,10 @@
 
 import threading
 
-from .util.my_thread import MyThread
+from ..util.my_thread import MyThread
 
-from .model.feeds_list import FeedsList
-from .model.noticer import Noticer
+from ..model.feeds_list import FeedsList
+from ..model.noticer import Noticer
 
 __author__ = 'yuwei'
 

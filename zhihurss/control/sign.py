@@ -1,9 +1,10 @@
 __author__ = 'yuwei'
 
-from .util.web_view import load_answer
-
-from .util.my_pyqt import MyView, set_button, find_view
 import zhihu
+
+from ..util.web_view import load_answer
+
+from ..util.my_pyqt import MyView, set_button, find_view
 
 def get_answers(url, url_input):
     try:
