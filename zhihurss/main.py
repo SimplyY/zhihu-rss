@@ -54,4 +54,4 @@ def run():
     set_views(_my_app)
     set_update_timer()
 
-    MyApp.run(_my_app)
+    return MyApp.run(_my_app)
