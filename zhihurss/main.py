@@ -4,7 +4,7 @@ from PyQt5.QtCore import QObject
 
 from .control import add, listview
 from .control.change_notice_methods import show_change_dialog
-from .control.update_feeds import set_update_timer
+from .control.update_feeds import spawn_update_thread
 
 from .util.my_pyqt import MyApp, set_button, set_menu
 from .util.const import MAIN_QML_PATH, ADD_QML_PATH, CHANGE_QML_PATH
@@ -52,6 +52,6 @@ def run():
     _my_app = MyApp(qml=MAIN_QML_PATH)
 
     set_views(_my_app)
-    set_update_timer()
+    spawn_update_thread()
 
     return MyApp.run(_my_app)
