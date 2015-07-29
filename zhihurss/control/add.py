@@ -2,13 +2,13 @@ __author__ = 'yuwei'
 
 from PyQt5.QtCore import QObject, pyqtSignal, pyqtProperty
 
-from src.util.my_pyqt import MyView, set_button, find_view, use_qml_fun
-from src.util.error import UrlError
-from src.util.my_thread import MyThread
+from zhihurss.util.my_pyqt import MyView, set_button, find_view, use_qml_fun
+from zhihurss.util.error import UrlError
+from zhihurss.util.my_thread import MyThread
 
-from src.model.noticer import Noticer
-from src.model.feeds_list import FeedsList
-from src.control import listview
+from zhihurss.model.noticer import Noticer
+from zhihurss.model.feeds_list import FeedsList
+from zhihurss.control import listview
 
 class AddedFeeds(QObject):
 
@@ -63,7 +63,7 @@ def record_add_info(my_app, add_dialog, error_dialog, added_feeds):
 
 def add_new_feedslist(noticer, added_feeds):
     Noticer.add_noticer(noticer)
-    FeedsList.add_feeds_list(noticer, added_feeds, added_feeds)
+    FeedsList.add_feeds_list(noticer, added_feeds)
 
 
 def quit_dialog(my_app, add_dialog, added_feeds):

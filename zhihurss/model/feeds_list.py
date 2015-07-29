@@ -2,9 +2,10 @@ __author__ = 'yuwei'
 import zhihu
 import json
 import os
+import threading
 
-from src.model.noticer import Noticer
-from src.util.const import FEEDS_JSON_DIR
+from zhihurss.model.noticer import Noticer
+from zhihurss.util.const import FEEDS_JSON_DIR
 
 # 结构
 # feedslists[
@@ -43,6 +44,8 @@ class FeedsList:
     def get_dict(self):
         return {"url": self.url, "name": self.name, "feeds": self.feeds}
 
+    feeds_lists_json_lock = threading.Lock()
+
     @staticmethod
     def get_feeds_list(name):
         feeds_lists = FeedsList.get_feeds_lists_in_json()
@@ -52,11 +55,10 @@ class FeedsList:
         raise "can't get a feedslist whose name is arg name"
 
     @staticmethod
-    def renew_feeds_lists(noticers):
+    def update_feeds_lists(noticers):
         old_feeds_lists = FeedsList.get_feeds_lists_in_json()
         new_feeds_lists = FeedsList.new_feeds_lists(noticers, old_feeds_lists)
         FeedsList.write_feeds_lists_in_json(new_feeds_lists)
-    #   TODO renew ui
 
     @staticmethod
     def new_feeds_lists(noticers, old_feeds_lists):
@@ -77,28 +79,29 @@ class FeedsList:
 
         for index, act in enumerate(acticities):
             # 更新完成条件
-            if latest_act_url and latest_act_url == act.content.url:
+            if latest_act_url == act.content.url:
                 break
 
             if index == 0:
-                noticer.latest_act_url = act.content.url
+                noticer.set_latest_act_url(act.content.url)
                 Noticer.add_noticer(noticer)
 
             feed = FeedsList._create_feed(author, act)
-            old_feeds_list.feeds.append(feed)
+            old_feeds_list.feeds.insert(0, feed)
 
         return old_feeds_list
 
     @staticmethod
-    def add_feeds_list(noticer, added_feeds, progress_dialog=None):
+    def add_feeds_list(noticer, added_feeds):
         old_feeds_lists = FeedsList.get_feeds_lists_in_json()
-        new_feeds_lists = FeedsList.get_added_feeds_list(noticer, added_feeds, old_feeds_lists, progress_dialog=progress_dialog)
+        new_feeds_lists = FeedsList.get_added_feeds_list(noticer, added_feeds, old_feeds_lists)
         FeedsList.write_feeds_lists_in_json(new_feeds_lists)
 
     @staticmethod
-    def get_added_feeds_list(noticer, added_feeds, old_feeds_lists, progress_dialog=None):
+    def get_added_feeds_list(noticer, added_feeds, old_feeds_lists):
 
         if noticer.name in [feeds_list.name for feeds_list in old_feeds_lists]:
+            added_feeds.is_finish()
             return old_feeds_lists
 
         feeds_list = FeedsList(noticer=noticer, added_feeds=added_feeds)
@@ -175,6 +178,7 @@ class FeedsList:
         for index, feeds_list in enumerate(feeds_lists):
             if feeds_list.name == name:
                 del feeds_lists[index]
+                break
 
         FeedsList.write_feeds_lists_in_json(feeds_lists)
 
@@ -183,8 +187,10 @@ class FeedsList:
     def write_feeds_lists_in_json(feeds_lists):
         data = [feeds_list.list for feeds_list in feeds_lists]
         json_data = json.dumps(data)
-        with open(FEEDS_JSON_DIR, mode='w') as f:
-            f.write(json_data)
+        if FeedsList.feeds_lists_json_lock.acquire():
+            with open(FEEDS_JSON_DIR, mode='w') as f:
+                f.write(json_data)
+        FeedsList.feeds_lists_json_lock.release()
 
     @staticmethod
     def get_feeds_lists_in_json():
@@ -192,10 +198,12 @@ class FeedsList:
             file = open(FEEDS_JSON_DIR, 'w')
             file.close()
 
-        with open(FEEDS_JSON_DIR, mode='r') as f:
-            json_data = f.read()
-        if not json_data:
-            return []
+        if FeedsList.feeds_lists_json_lock.acquire():
+            with open(FEEDS_JSON_DIR, mode='r') as f:
+                json_data = f.read()
+            FeedsList.feeds_lists_json_lock.release()
+            if not json_data:
+                return []
 
         data = json.loads(json_data)
         feeds_lists = [FeedsList(list=feeds_list) for feeds_list in data]

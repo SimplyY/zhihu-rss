@@ -1,8 +1,8 @@
 __author__ = 'yuwei'
 
-from src.util.web_view import load_answer
+from zhihurss.util.web_view import load_answer
 
-from src.util.my_pyqt import MyView, set_button, find_view
+from zhihurss.util.my_pyqt import MyView, set_button, find_view
 import zhihu
 
 def get_answers(url, url_input):

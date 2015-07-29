@@ -12,7 +12,7 @@ ApplicationWindow {
     color: "#dedede"
     maximumWidth: 1500
     title: "zhihu rss "
-    minimumWidth: 800
+    minimumWidth: 1100
     minimumHeight: 600
     maximumHeight: 1000
 
@@ -466,19 +466,15 @@ ApplicationWindow {
                                         noticers1_model.get(i)["unread_num"]--
                                     }
                                 }
-
-
-
                                 root.sendClicked(url)
-
-
                             }
                         }
                     }
                 }
                 highlight: Rectangle {
-                    anchors.left: parent.left
-                    anchors.right: parent.right
+                    anchors.left: parent ? parent.left : None
+                    anchors.right: parent ? parent.right: None
+                    anchors.rightMargin: -2
 
                     height: 20
                     color: '#ebebeb'

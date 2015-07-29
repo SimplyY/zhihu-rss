@@ -11,6 +11,9 @@ class MyThread(threading.Thread):
         self.args = args
 
     def run(self):
+        if not self.args:
+            self.fun()
+
         if len(self.args) == 1:
             self.fun(self.args[0])
         elif len(self.args) == 2:

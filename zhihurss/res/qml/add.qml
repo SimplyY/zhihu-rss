@@ -3,7 +3,7 @@ import QtQuick.Controls 1.3
 
 Rectangle {
     id: rectangle1
-    width: 450
+    width: 442
     height: 220
     color: "#ffffff"
     border.width: 0
@@ -11,7 +11,7 @@ Rectangle {
 
     Text {
         id: text6
-        x: 56
+        x: 70
         y: 36
         width: 28
         height: 17
@@ -19,16 +19,18 @@ Rectangle {
 
         font.pixelSize: 14
         font.family: "Times New Roman"
+
     }
 
     TextInput {
         objectName: "url_input"
         id: url_input
-        x: 136
-        y: 36
+        x: 130
+        y: 38
         width: 273
         height: 20
         text: qsTr("http://www.zhihu.com/people/yuwei-80")
+        clip: false
         selectionColor: "#800000"
         opacity: 1
         visible: true
@@ -37,12 +39,13 @@ Rectangle {
         cursorVisible: true
         horizontalAlignment: Text.AlignLeft
         font.pixelSize: 14
+        KeyNavigation.tab: textInput1
     }
 
     Button {
         id: button_run
-        x: 159
-        y: 186
+        x: 181
+        y: 183
         width: 80
         text: qsTr("开始爬虫")
         isDefault: false
@@ -59,10 +62,10 @@ Rectangle {
 
     Button {
         id: button_running
-        x: 159
-        y: 187
+        x: 181
+        y: 184
         width: 80
-        height: 23
+        height: 22
         text: qsTr("正在爬虫中")
         visible: false
         isDefault: true
@@ -77,8 +80,8 @@ Rectangle {
 
     Button {
         id: button_quit
-        x: 148
-        y: 186
+        x: 170
+        y: 183
         z:2
         width: 103
         height: 26
@@ -93,58 +96,63 @@ Rectangle {
 
     TextInput {
         id: textInput1
-        x: 136
-        y: 93
-        width: 80
+        x: 169
+        y: 94
+        width: 29
         height: 18
         text: qsTr("60")
-        cursorVisible: true
+        cursorVisible: false
         font.pixelSize: 14
         echoMode: TextInput.Normal
         horizontalAlignment: Text.AlignLeft
         font.family: "Times New Roman"
 
         objectName: "feed_num_input"
+        KeyNavigation.tab: url_input
     }
 
     Text {
         id: text1
-        x: 56
+        x: 70
         y: 91
-        text: qsTr("动态数量：")
+        text: qsTr("预设动态数量：")
         font.family: "Times New Roman"
         font.pixelSize: 14
     }
 
     Text {
         id: text2
-        x: 56
-        y: 148
-        width: 286
+        x: 116
+        y: 146
+        width: 213
         height: 15
-        text: qsTr("注意动态数量越多，所花时间越长，推荐50以内")
+        text: added_feeds.is_end ?qsTr("爬虫已完成") : qsTr("注意：动态数量越多，所花时间越长")
+        horizontalAlignment: Text.AlignHCenter
         font.family: "Times New Roman"
         font.italic: true
-        font.pixelSize: 12
+        font.pixelSize: 13
     }
 
     Text{
-        x: 222
-        y: 93
+        x: 235
+        y: 91
         width: 104
         height: 18
         text: "已获取动态数量："
-
+        font.family: "Times New Roman"
+        font.pixelSize: 14
     }
 
     Text {
         id: text3
-        x: 319
-        y: 93
+        x: 345
+        y: 94
         width: 40
         height: 18
         text:  added_feeds.getted_feeds_num
-        font.pixelSize: 12
+        horizontalAlignment: Text.AlignLeft
+        font.pixelSize: 14
+        font.family: "Times New Roman"
     }
 
 

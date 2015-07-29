@@ -1,8 +1,8 @@
 __author__ = 'yuwei'
 
-from src.util.my_pyqt import use_qml_fun
-from src.model.noticer import Noticer
-from src.model.feeds_list import FeedsList
+from zhihurss.util.my_pyqt import use_qml_fun
+from zhihurss.model.noticer import Noticer
+from zhihurss.model.feeds_list import FeedsList
 
 
 # 构造feedslists_processed

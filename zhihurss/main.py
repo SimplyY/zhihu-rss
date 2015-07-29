@@ -1,16 +1,17 @@
 __author____author__ = 'yuwei'
 
-from PyQt5.QtCore import QObject, pyqtSlot, QVariant
+from PyQt5.QtCore import QObject
 
-from src.control import add, listview
-from src.control.change_notice_methods import show_change_dialog
+from .control import add, listview
+from zhihurss.control.change_notice_methods import show_change_dialog
+from zhihurss.control.update_feeds import set_update_timer
 
-from src.util.my_pyqt import MyApp, set_button, set_menu
-from src.util.const import MAIN_QML_DIR, ADD_QML_DIR, CHANGE_QML_DIR
-from src.util.error import ErrorDialog
+from zhihurss.util.my_pyqt import MyApp, set_button, set_menu
+from zhihurss.util.const import MAIN_QML_DIR, ADD_QML_DIR, CHANGE_QML_DIR
+from zhihurss.util.error import ErrorDialog
 
-from src.model.noticer import Noticer
-from src.model.feeds_list import FeedsList
+from zhihurss.model.noticer import Noticer
+from zhihurss.model.feeds_list import FeedsList
 
 
 def set_is_read(url):
@@ -22,8 +23,6 @@ def set_is_read(url):
                 FeedsList.write_feeds_lists_in_json(feeds_lists)
                 return
 
-# def on_noticer_click(listview_item):
-#     _my_app.noticers1_listview.setProperty("currentIndex", listview_item.getProperty("index"))
 
 def del_noticer(root_view):
     Noticer.del_noticer(root_view)
@@ -33,10 +32,11 @@ def del_noticer(root_view):
     listview.load_noticers_listview(root_view)
 
 
-def set_views():
+def set_views(_my_app):
     root_view = _my_app.root_view
 
     set_button(root_view, 'add_button', lambda: add.show_add_dialog(_my_app, ADD_QML_DIR, ErrorDialog()))
+    set_button(root_view, 'updateButton', lambda: listview.load_noticers_listview(root_view))
 
     set_menu(root_view, 'change_notice_method', lambda: show_change_dialog(_my_app, CHANGE_QML_DIR))
     set_menu(root_view, 'delete_noticer', lambda: del_noticer(root_view))
@@ -48,9 +48,10 @@ def set_views():
     listview.load_noticers_listview(root_view)
 
 
-if __name__ == '__main__':
+def run():
     _my_app = MyApp(qml=MAIN_QML_DIR)
 
-    set_views()
+    set_views(_my_app)
+    set_update_timer()
 
     MyApp.run(_my_app)

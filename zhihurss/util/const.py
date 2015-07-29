@@ -1,7 +1,12 @@
 __author__ = 'yuwei'
 
 import os
+import sys
 
+if getattr(sys, 'frozen'):
+    BASE_DIR = os.path.dirname(sys.executable)
+else:
+    BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 MAIN_QML_NAME = 'main.qml'
 ADD_QML_NAME = 'add.qml'
@@ -12,9 +17,8 @@ CHANGE_QML_NAME = 'change.qml'
 NOTICERS_FILE = 'noticers.json'
 FEEDS_FILE = 'feeds.json'
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-RELAT_QML_DIR = os.path.join('src', 'res', 'qml')
+RELAT_QML_DIR = os.path.join('res', 'qml')
 
 MAIN_QML_DIR = os.path.join(BASE_DIR, RELAT_QML_DIR, MAIN_QML_NAME)
 ADD_QML_DIR = os.path.join(BASE_DIR, RELAT_QML_DIR, ADD_QML_NAME)

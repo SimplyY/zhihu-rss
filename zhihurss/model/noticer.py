@@ -1,5 +1,6 @@
 __author__ = 'yuwei'
 import os
+import threading
 import json
 try:
     import zhihu
@@ -8,8 +9,8 @@ except ConnectionError:
 #     TODO:
 
 
-from src.util.error import UrlError
-from src.util.const import NOTICERS_JSON_DIR
+from zhihurss.util.error import UrlError
+from zhihurss.util.const import NOTICERS_JSON_DIR
 from ..util.my_pyqt import find_view
 
 
@@ -41,6 +42,8 @@ class Noticer:
                         self.notice_methods.append(act_type)
 
         self.list = [self.url, notice_methods_in_json, self.latest_act_url, self.name]
+
+    noticers_json_lock = threading.Lock()
 
     def __str__(self):
         return str(self.list)
@@ -76,22 +79,24 @@ class Noticer:
 
     @staticmethod
     def get_noticers_in_json():
-        if not os.path.exists(NOTICERS_JSON_DIR):
-            file = open(NOTICERS_JSON_DIR, 'w')
-            file.close()
+        if Noticer.noticers_json_lock.acquire():
+            if not os.path.exists(NOTICERS_JSON_DIR):
+                file = open(NOTICERS_JSON_DIR, 'w')
+                file.close()
 
-        noticers = []
-        try:
-            with open(NOTICERS_JSON_DIR, mode='r') as f:
-                file = f.readlines()
-                if not file:
-                    return noticers
+            noticers = []
+            try:
+                with open(NOTICERS_JSON_DIR, mode='r') as f:
+                    file = f.readlines()
+                    if not file:
+                        return noticers
 
-                data = json.loads(file[0])
-                noticers = [Noticer(noticer_list=noticer_list) for noticer_list in data]
+                    data = json.loads(file[0])
+                    noticers = [Noticer(noticer_list=noticer_list) for noticer_list in data]
 
-        except IOError:
-            noticers = None
+            except IOError:
+                noticers = None
+            Noticer.noticers_json_lock.release()
 
         return noticers
 
@@ -101,8 +106,11 @@ class Noticer:
             noticers = Noticer._get_new_noticers(new_noticer, noticers)
 
         json_data = json.dumps([noticer.list for noticer in noticers])
-        with open(NOTICERS_JSON_DIR, mode='w') as f:
-            f.write(json_data)
+
+        if Noticer.noticers_json_lock.acquire():
+            with open(NOTICERS_JSON_DIR, mode='w') as f:
+                f.write(json_data)
+            Noticer.noticers_json_lock.release()
 
     @staticmethod
     def _get_new_noticers(noticer, noticers):
@@ -110,9 +118,9 @@ class Noticer:
             for index, the_noticer in enumerate(noticers):
                 if noticer.url == the_noticer.url:
                     del noticers[index]
-                    noticers.append(noticer)
+                    noticers.insert(index, noticer)
                     return noticers
-            noticers.append(noticer)
+            noticers.insert(0, noticer)
         else:
             noticers = [noticer]
 
