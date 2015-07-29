@@ -5,7 +5,7 @@ import os
 import threading
 
 from .model.noticer import Noticer
-from .util.const import FEEDS_JSON_DIR
+from .util.const import FEEDS_JSON_PATH
 
 # 结构
 # feedslists[
@@ -188,18 +188,18 @@ class FeedsList:
         data = [feeds_list.list for feeds_list in feeds_lists]
         json_data = json.dumps(data)
         if FeedsList.feeds_lists_json_lock.acquire():
-            with open(FEEDS_JSON_DIR, mode='w') as f:
+            with open(FEEDS_JSON_PATH, mode='w') as f:
                 f.write(json_data)
         FeedsList.feeds_lists_json_lock.release()
 
     @staticmethod
     def get_feeds_lists_in_json():
-        if not os.path.exists(FEEDS_JSON_DIR):
-            file = open(FEEDS_JSON_DIR, 'w')
+        if not os.path.exists(FEEDS_JSON_PATH):
+            file = open(FEEDS_JSON_PATH, 'w')
             file.close()
 
         if FeedsList.feeds_lists_json_lock.acquire():
-            with open(FEEDS_JSON_DIR, mode='r') as f:
+            with open(FEEDS_JSON_PATH, mode='r') as f:
                 json_data = f.read()
             FeedsList.feeds_lists_json_lock.release()
             if not json_data:

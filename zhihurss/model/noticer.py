@@ -10,7 +10,7 @@ except ConnectionError:
 
 
 from .util.error import UrlError
-from .util.const import NOTICERS_JSON_DIR
+from .util.const import NOTICERS_JSON_PATH
 from ..util.my_pyqt import find_view
 
 
@@ -80,13 +80,13 @@ class Noticer:
     @staticmethod
     def get_noticers_in_json():
         if Noticer.noticers_json_lock.acquire():
-            if not os.path.exists(NOTICERS_JSON_DIR):
-                file = open(NOTICERS_JSON_DIR, 'w')
+            if not os.path.exists(NOTICERS_JSON_PATH):
+                file = open(NOTICERS_JSON_PATH, 'w')
                 file.close()
 
             noticers = []
             try:
-                with open(NOTICERS_JSON_DIR, mode='r') as f:
+                with open(NOTICERS_JSON_PATH, mode='r') as f:
                     file = f.readlines()
                     if not file:
                         return noticers
@@ -108,7 +108,7 @@ class Noticer:
         json_data = json.dumps([noticer.list for noticer in noticers])
 
         if Noticer.noticers_json_lock.acquire():
-            with open(NOTICERS_JSON_DIR, mode='w') as f:
+            with open(NOTICERS_JSON_PATH, mode='w') as f:
                 f.write(json_data)
             Noticer.noticers_json_lock.release()
 
