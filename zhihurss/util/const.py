@@ -3,7 +3,7 @@ __author__ = 'yuwei'
 import os
 import sys
 
-if getattr(sys, 'frozen'):
+if hasattr(sys, 'frozen'):
     BASE_DIR = os.path.dirname(sys.executable)
 else:
     BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
