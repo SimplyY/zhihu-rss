@@ -9,8 +9,8 @@ except ConnectionError:
 #     TODO:
 
 
-from zhihurss.util.error import UrlError
-from zhihurss.util.const import NOTICERS_JSON_DIR
+from .util.error import UrlError
+from .util.const import NOTICERS_JSON_DIR
 from ..util.my_pyqt import find_view
 
 

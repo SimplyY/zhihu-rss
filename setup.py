@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 application_title = "zhihu-rss" #what you want to application to be called
 main_python_file = "enter.py"
 

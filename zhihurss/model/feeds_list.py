@@ -4,8 +4,8 @@ import json
 import os
 import threading
 
-from zhihurss.model.noticer import Noticer
-from zhihurss.util.const import FEEDS_JSON_DIR
+from .model.noticer import Noticer
+from .util.const import FEEDS_JSON_DIR
 
 # 结构
 # feedslists[

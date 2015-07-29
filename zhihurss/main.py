@@ -3,15 +3,15 @@ __author____author__ = 'yuwei'
 from PyQt5.QtCore import QObject
 
 from .control import add, listview
-from zhihurss.control.change_notice_methods import show_change_dialog
-from zhihurss.control.update_feeds import set_update_timer
+from .control.change_notice_methods import show_change_dialog
+from .control.update_feeds import set_update_timer
 
-from zhihurss.util.my_pyqt import MyApp, set_button, set_menu
-from zhihurss.util.const import MAIN_QML_DIR, ADD_QML_DIR, CHANGE_QML_DIR
-from zhihurss.util.error import ErrorDialog
+from .util.my_pyqt import MyApp, set_button, set_menu
+from .util.const import MAIN_QML_DIR, ADD_QML_DIR, CHANGE_QML_DIR
+from .util.error import ErrorDialog
 
-from zhihurss.model.noticer import Noticer
-from zhihurss.model.feeds_list import FeedsList
+from .model.noticer import Noticer
+from .model.feeds_list import FeedsList
 
 
 def set_is_read(url):

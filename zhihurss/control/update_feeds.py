@@ -2,10 +2,10 @@
 
 import threading
 
-from zhihurss.util.my_thread import MyThread
+from .util.my_thread import MyThread
 
-from zhihurss.model.feeds_list import FeedsList
-from zhihurss.model.noticer import Noticer
+from .model.feeds_list import FeedsList
+from .model.noticer import Noticer
 
 __author__ = 'yuwei'
 
