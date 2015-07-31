@@ -1,6 +1,8 @@
 __author__ = 'yuwei'
 import threading
 import json
+import os
+
 try:
     import zhihu
 except ConnectionError:
@@ -81,6 +83,10 @@ class Noticer:
     @staticmethod
     def get_noticers_in_json():
         with Noticer.noticers_json_lock:
+            if not os.path.exists(NOTICERS_JSON_PATH):
+                with open(NOTICERS_JSON_PATH, 'w'):
+                    return []
+
             try:
                 with open(NOTICERS_JSON_PATH, 'rb') as f:
                     file = f.read().decode('utf-8')
