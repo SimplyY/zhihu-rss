@@ -78,6 +78,7 @@ class FeedsList:
         author = zhihu.Author(noticer.url)
         acticities = author.activities
 
+        new_feeds = []
         for index, act in enumerate(acticities):
             # 更新完成条件
             if latest_act_url == act.content.url:
@@ -88,6 +89,9 @@ class FeedsList:
                 Noticer.add_noticer(noticer)
 
             feed = FeedsList._create_feed(author, act)
+            new_feeds.append(feed)
+
+        for feed in reversed(new_feeds):
             old_feeds_list.feeds.insert(0, feed)
 
         return old_feeds_list
@@ -169,7 +173,7 @@ class FeedsList:
             action = (my_space+'{} 在 {} 回答了问题<br>'+my_str+'<br>'+my_space+'此回答赞同数:{}').format(
                 author.name, str(act.time).split(" ")[0], act.answer.question.title, int(act.answer.upvote_num))
         elif act.type == zhihu.ActType.FOLLOW_TOPIC:
-            action = (my_space+'{} 在 {} <br>my_space+关注了话题'+my_str).format(author.name, str(act.time).split(" ")[0], act.topic.name)
+            action = (my_space+'{} 在 {} <br>'+ my_space+'关注了话题'+my_str).format(author.name, str(act.time).split(" ")[0], act.topic.name)
         return action
 
     @staticmethod

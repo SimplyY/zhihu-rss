@@ -482,8 +482,8 @@ ApplicationWindow {
                     }
                 }
                 highlight: Rectangle {
-                    anchors.left: parent ? parent.left : None
-                    anchors.right: parent ? parent.right: None
+                    anchors.left: parent.left
+                    anchors.right: parent.right
                     anchors.rightMargin: -2
 
                     height: 20
