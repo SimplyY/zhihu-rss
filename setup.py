@@ -20,18 +20,13 @@ def extract_requirements(filename='requirements.txt'):
         lines = f_require.read().decode('utf-8').split('\n')
 
     # ignore comments and empty lines
-    require_lines = [
+    requires = [
         line
         for line in lines
         if line and not line.strip().startswith('#')
     ]
 
-    # separate dependency links from in-PyPI deps
-    links, reqs = [], []
-    for line in require_lines:
-        (links if '/' in line else reqs).append(line)
-
-    return links, reqs
+    return requires
 
 
 def extract_version():
@@ -52,7 +47,7 @@ with open('README.md', 'rb') as f_readme:
 
 
 version = extract_version()
-dep_links, requires = extract_requirements()
+requires = extract_requirements()
 
 
 setup(
@@ -69,7 +64,6 @@ setup(
     download_url='https://github.com/SimplyY/zhihu-py3/releases',
 
     install_requires=requires,
-    dependency_links=dep_links,
     packages=find_packages(),
     entry_points={
         'gui_scripts': [
