@@ -207,6 +207,7 @@ class FeedsList:
             try:
                 with open(FEEDS_JSON_PATH, 'rb') as f:
                     json_data = f.read().decode('utf-8')
+
             except FileNotFoundError:
                 return []
         if json_data:

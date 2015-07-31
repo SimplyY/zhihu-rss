@@ -91,7 +91,10 @@ class Noticer:
                 with open(NOTICERS_JSON_PATH, 'rb') as f:
                     file = f.read().decode('utf-8')
                     data = json.loads(file)
-                    return [Noticer(noticer_list=noticer_list) for noticer_list in data]
+                    if data:
+                        return [Noticer(noticer_list=noticer_list) for noticer_list in data]
+                    else:
+                        return []
             except FileNotFoundError:
                 # TODO: log
                 pass
