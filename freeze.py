@@ -40,6 +40,7 @@ setup(
     options={
         "build_exe": {
             "packages": {
+                "zhihu",
                 "PyQt5.QtQuick",
                 "PyQt5.QtCore",
                 "PyQt5.QtWidgets",

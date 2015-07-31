@@ -46,7 +46,7 @@ class Noticer:
 
         self.list = [self.url, notice_methods_in_json, self.latest_act_url, self.name]
 
-    noticers_json_lock = threading.Lock()
+    noticers_json_lock = threading.RLock()
 
     def __str__(self):
         return str(self.list)

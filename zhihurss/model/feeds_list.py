@@ -45,7 +45,7 @@ class FeedsList:
     def get_dict(self):
         return {"url": self.url, "name": self.name, "feeds": self.feeds}
 
-    feeds_lists_json_lock = threading.Lock()
+    feeds_lists_json_lock = threading.RLock()
 
     @staticmethod
     def get_feeds_list(name):

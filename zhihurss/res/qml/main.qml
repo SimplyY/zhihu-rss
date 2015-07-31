@@ -288,20 +288,7 @@ ApplicationWindow {
                             font.pixelSize: 14
                             font.family: "Times New Roman"
                         }
-                        Text{
-                            anchors.right: parent.right
-                            anchors.rightMargin: 6
-                            anchors.top: parent.top
-                            anchors.topMargin: 3
-                            width:20
-                            height:24
-                            horizontalAlignment: Text.AlignRight
-                            text: unread_num
 
-                            font.pixelSize: 13
-                            color: "#9e9e9e"
-                            font.family: "Times New Roman"
-                        }
 
                         MouseArea{
                             anchors.fill: parent
