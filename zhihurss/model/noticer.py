@@ -90,6 +90,9 @@ class Noticer:
             try:
                 with open(NOTICERS_JSON_PATH, 'rb') as f:
                     file = f.read().decode('utf-8')
+                    if not file:
+                        return []
+
                     data = json.loads(file)
                     if data:
                         return [Noticer(noticer_list=noticer_list) for noticer_list in data]
