@@ -89,7 +89,3 @@ def show_add_dialog(my_app, qml, error_dialog):
     set_button(add_dialog.root_view, 'button_run',
                lambda: record_add_info(my_app, add_dialog, error_dialog, added_feeds))
     set_button(add_dialog.root_view, 'button_quit', lambda: quit_dialog(my_app, add_dialog, added_feeds))
-
-
-
-

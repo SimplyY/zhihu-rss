@@ -83,10 +83,6 @@ class Noticer:
     @staticmethod
     def get_noticers_in_json():
         with Noticer.noticers_json_lock:
-            if not os.path.exists(NOTICERS_JSON_PATH):
-                with open(NOTICERS_JSON_PATH, 'w'):
-                    return []
-
             try:
                 with open(NOTICERS_JSON_PATH, 'rb') as f:
                     file = f.read().decode('utf-8')
@@ -98,9 +94,11 @@ class Noticer:
                         return [Noticer(noticer_list=noticer_list) for noticer_list in data]
                     else:
                         return []
-            except FileNotFoundError:
-                # TODO: log
-                pass
+            except FileNotFoundError:   # first run or delete config file
+                if os.path.exists(os.path.dirname(NOTICERS_JSON_PATH)) is False:
+                    os.makedirs(os.path.dirname(NOTICERS_JSON_PATH))
+                with open(NOTICERS_JSON_PATH, 'w'):
+                    return []
 
         return []
 

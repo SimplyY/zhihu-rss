@@ -199,17 +199,16 @@ class FeedsList:
 
     @staticmethod
     def get_feeds_lists_in_json():
-
         with FeedsList.feeds_lists_json_lock:
-            if not os.path.exists(FEEDS_JSON_PATH):
-                with open(FEEDS_JSON_PATH, 'w'):
-                    return []
             try:
                 with open(FEEDS_JSON_PATH, 'rb') as f:
                     json_data = f.read().decode('utf-8')
-
             except FileNotFoundError:
-                return []
+                if os.path.exists(os.path.dirname(FEEDS_JSON_PATH)) is False:
+                    os.makedirs(os.path.dirname(FEEDS_JSON_PATH))
+                with open(FEEDS_JSON_PATH, 'w'):
+                    return []
+
         if json_data:
             data = json.loads(json_data)
         else:
