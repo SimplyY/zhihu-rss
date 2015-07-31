@@ -22,6 +22,9 @@ you can rss any zhihu's user in it
 - [x] 自定义关注方式：用户名上右键点击，然后弹出一个对话框，让用户打勾
 - [ ] 后台更新功能
 
+## 关于动态逆序的迷之 bug
+请点击更新动态或许就好了。
+
 ## 使用
 目前在委托[7sDream](https://github.com/7sDream/)和[CodeFalling](https://github.com/CodeFalling)在win和linux下编译，过些时日能出安装包，敬请期待。
 
