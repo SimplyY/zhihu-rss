@@ -14,6 +14,8 @@ you can rss any zhihu's user in it
 ![](http://img-storage.qiniudn.com/15-7-28/94436942.jpg)
 
 ## 功能：
+最棒的功能是：第三个
+
 1. minibrower
 2. 在用户名的右边, 显示未读数 ，未阅读显示为加粗的标题。
 3. 自定义关注方式：用户名上右键点击，然后弹出一个对话框，让用户打勾
