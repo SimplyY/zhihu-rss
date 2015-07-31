@@ -1,9 +1,11 @@
 #!/usr/bin/env python
 import sys
 import os
+from zhihurss.main import run
 
 __author__ = 'yuwei'
 
 if __name__ == '__main__':
-    print(os.path.abspath(__file__))
-    sys.path.insert(0, os.path.abspath(__file__))
+    path = os.path.dirname(os.path.abspath(__file__))
+    sys.path.insert(0, os.path.join(path, "zhihurss"))
+    run()
