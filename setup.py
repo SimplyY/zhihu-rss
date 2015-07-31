@@ -11,7 +11,7 @@ import ast
 from setuptools import setup, find_packages
 
 if sys.argv[-1] == 'publish':
-    os.system('python setup.py sdist upload')
+    os.system('py setup.py sdist upload')
     sys.exit()
 
 

@@ -1,5 +1,4 @@
 __author__ = 'yuwei'
-import os
 import threading
 import json
 try:
@@ -23,7 +22,8 @@ class Noticer:
             except AttributeError:
                 # TODO:create dialog
                 raise UrlError
-                return
+            except ValueError:
+                raise UrlError
 
             self.notice_methods = [notice_method for notice_method in zhihu.ActType]
             notice_methods_in_json = [notice_method.value for notice_method in zhihu.ActType]

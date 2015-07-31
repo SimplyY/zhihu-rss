@@ -5,14 +5,16 @@ import sys
 
 if hasattr(sys, 'frozen'):
     BASE_DIR = os.path.dirname(sys.executable)
+    QML_ROOT = os.path.join(BASE_DIR, 'qml')
 else:
     BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    QML_ROOT = os.path.join(BASE_DIR, 'res', 'qml')
+
 
 NOTICERS_FILE = '~/.config/zhihurss/noticers.json'
 FEEDS_FILE = '~/.cache/zhihurss/feeds.json'
 
 
-QML_ROOT = os.path.join(BASE_DIR, 'res', 'qml')
 
 MAIN_QML_PATH = os.path.join(QML_ROOT, 'main.qml')
 ADD_QML_PATH = os.path.join(QML_ROOT, 'add.qml')

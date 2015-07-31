@@ -2,10 +2,27 @@
 # -*- coding: utf-8 -*-
 
 application_title = "zhihu-rss"
-main_python_file = "scripts/zhihurss"
+main_python_file = "entry.py"
 
 import sys
+import os
+import shutil
+
 from cx_Freeze import setup, Executable
+import PyQt5
+
+shutil.rmtree("build", ignore_errors=True)
+
+# 非常重要：不同系统位置不同，win 用 everything 来找QtQuick.2文件最好
+QML_DIR = "/usr/local/Cellar/qt5/5.4.1/qml/"
+
+includes_files =  [
+    ("zhihurss/res/qml/", "qml"),
+    (os.path.join(QML_DIR, "QtQuick.2"), "qml/QtQuick.2"),
+    (os.path.join(QML_DIR, "QtQuick"), "qml/QtQuick"),
+    (os.path.join(QML_DIR, "QtWebKit"), "qml/QtWebKit"),
+
+]
 
 base = None
 if sys.platform == "win32":
@@ -23,14 +40,12 @@ setup(
     options={
         "build_exe": {
             "packages": {
+                "PyQt5.QtQuick",
                 "PyQt5.QtCore",
                 "PyQt5.QtWidgets",
-                "PyQt5.QtQuick",
                 "PyQt5.QtQml",
             },
-            "include_files": [
-                "zhihurss/res/qml/",
-            ]
+            "include_files": includes_files
         }
     },
     executables=[Executable(main_python_file, base=base), ],

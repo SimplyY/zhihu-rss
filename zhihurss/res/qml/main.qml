@@ -397,6 +397,16 @@ ApplicationWindow {
                 z:1
             }
 
+            Rectangle{
+                anchors.right: rectangle2.right
+                anchors.rightMargin: 5
+                anchors.left: parent.left
+                anchors.leftMargin: 1
+                anchors.top: rectangle2.top
+                height: 40
+                color:  "#fafafa"
+                z:1
+            }
             Text {
                 id: text2
                 x: 5

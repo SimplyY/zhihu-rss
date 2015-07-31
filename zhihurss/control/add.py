@@ -53,8 +53,10 @@ def record_add_info(my_app, add_dialog, error_dialog, added_feeds):
         noticer = Noticer(url=url)
         added_feeds.noticer = noticer
     except UrlError:
+        add_dialog.close()
         error_dialog.set_error_info("添加失败。错误：主页url无效！")
         error_dialog.show()
+
         return
 
     my_thread = MyThread("add_new_feedslist", add_new_feedslist, noticer, added_feeds)

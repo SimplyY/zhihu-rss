@@ -1,4 +1,4 @@
-import QtQuick 2.2
+import QtQuick 2.0
 import QtQuick.Controls 1.3
 
 Rectangle {
@@ -22,4 +22,3 @@ Rectangle {
         font.pixelSize: 14
     }
 }
-
