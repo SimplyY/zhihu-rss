@@ -10,6 +10,7 @@ from ..model.noticer import Noticer
 from ..model.feeds_list import FeedsList
 from . import listview
 
+
 class AddedFeeds(QObject):
 
     def __init__(self):
