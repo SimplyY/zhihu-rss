@@ -1,4 +1,5 @@
-__author____author__ = 'yuwei'
+#!/usr/bin/env python
+__author__ = 'yuwei'
 
 from PyQt5.QtCore import QObject
 
@@ -49,9 +50,13 @@ def set_views(_my_app):
 
 
 def run():
+
     _my_app = MyApp(qml=MAIN_QML_PATH)
 
     set_views(_my_app)
     spawn_update_thread()
 
     return MyApp.run(_my_app)
+
+if __name__ == '__main__':
+    run()
