@@ -37,7 +37,7 @@ ApplicationWindow {
                 z: 2
                 style: ButtonStyle {
                     Text {
-                                font.family: "Helvetica"
+                        font.family: "Helvetica"
                         text: control.text
                     }
                 }
@@ -116,16 +116,33 @@ ApplicationWindow {
 
                 onAccepted: webView.url = text
 
+
                 ProgressBar {
-                    x: 0
-                    y: 18
-                    width: parent.width
-
-
-                    visible: webView.loading && Qt.platform.os !== "ios"
+                    id: progressBar1
+                    x: 1
+                    anchors.bottom: parent.bottom
+                    anchors.bottomMargin: -1
+                    width: parent.width - 2
+                    height: 2
+                    visible: webView.loading
                     minimumValue: 0
                     maximumValue: 100
+
                     value: webView.loadProgress > 100 ? 0 : webView.loadProgress
+                    style: ProgressBarStyle{
+
+                        background: Rectangle{
+                            border.width: 1;
+                            border.color: "grey";
+                            color:"lightgray";
+                        }
+                        progress: Rectangle{
+
+                            color: "#2c6fe2"
+                        }
+
+
+                    }
                 }
             }
 
@@ -345,13 +362,13 @@ ApplicationWindow {
 
             Text {
                 id: text1
-                x: 15
+                x: 10
                 y: 12
                 color: "#878787"
                 text: qsTr("关注")
                 font.bold: true
                 font.family: "Helvetica"
-                font.pixelSize: 14
+                font.pixelSize: 16
                 z:1
             }
 
@@ -407,7 +424,7 @@ ApplicationWindow {
                 text: qsTr("动态")
                 font.bold: true
                 font.family: "Helvetica"
-                font.pixelSize: 14
+                font.pixelSize: 16
                 z:2
             }
 
