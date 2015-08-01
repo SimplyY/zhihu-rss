@@ -218,6 +218,11 @@ ApplicationWindow {
 
                     noticers1_model.append({"name": names[i], "unread_num": unread_nums[i],"feedslist": feedslists[i]})
                 }
+                if(names.length != 0){
+                    load_feeds_list(names[0])
+                }else{
+                    feeds_list_model.clear()
+                }
 
             }
 

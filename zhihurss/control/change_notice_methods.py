@@ -34,12 +34,12 @@ def change_notice_methods(my_app, change_dialog):
 
     _set_methods(root_view, new_notice_methods, "checkBox1", 1)
     _set_methods(root_view, new_notice_methods, "checkBox2", 2)
-    _set_methods(root_view, new_notice_methods, "checkBox3", 3)
-    _set_methods(root_view, new_notice_methods, "checkBox4", 4)
-    _set_methods(root_view, new_notice_methods, "checkBox5", 5)
-    _set_methods(root_view, new_notice_methods, "checkBox6", 6)
-    _set_methods(root_view, new_notice_methods, "checkBox7", 7)
-    _set_methods(root_view, new_notice_methods, "checkBox8", 8)
+    _set_methods(root_view, new_notice_methods, "checkBox3", 4)
+    _set_methods(root_view, new_notice_methods, "checkBox4", 8)
+    _set_methods(root_view, new_notice_methods, "checkBox5", 16)
+    _set_methods(root_view, new_notice_methods, "checkBox6", 64)
+    _set_methods(root_view, new_notice_methods, "checkBox7", 32)
+    _set_methods(root_view, new_notice_methods, "checkBox8", 128)
 
     _set_noticer(my_app, new_notice_methods)
 
@@ -58,4 +58,3 @@ def show_change_dialog(my_app, qml):
     change_dialog.show()
     set_button(change_dialog.root_view, "button", lambda: change_notice_methods(my_app, change_dialog))
     set_button(change_dialog.root_view, "all_sel_button", lambda: set_notice_methods(my_app, change_dialog))
-
