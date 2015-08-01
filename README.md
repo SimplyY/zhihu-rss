@@ -4,27 +4,23 @@
 
 you can rss any zhihu's user in it
 
-## 开发者预览版
-
-![](http://img-storage.qiniudn.com/15-7-28/15352747.jpg)
-
-### 为了图片小一点的渣画质的功能演示gif, 实际画质效果如上图
-
+## 功能演示
 
 ![](http://img-storage.qiniudn.com/15-7-28/94436942.jpg)
 
 ## 功能：
 最棒的功能是：第三个
 
-1. minibrower
+1. minibrowser
 2. 在用户名的右边, 显示未读数 ，未阅读显示为加粗的标题。
 3. 自定义关注方式：用户名上右键点击，然后弹出一个对话框，让用户打勾
 4. 关注时可以选择导入动态数量，确定后弹出一个窗口，来显示爬虫进度
 5. 右键删除关注者
 6. 后台更新功能
 
-## 关于动态逆序的迷之 bug
-请点击更新动态按钮或许就好了。
+## zhihurss 推荐列表
+
+https://github.com/SimplyY/zhihu-rss/blob/master/zhihurss%20list.md
 
 ## 使用
 目前在委托[7sDream](https://github.com/7sDream/)和[CodeFalling](https://github.com/CodeFalling)在win和linux下编译，过些时日能出安装包，敬请期待。
