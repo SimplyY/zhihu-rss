@@ -100,8 +100,8 @@ Rectangle {
         y: 94
         width: 29
         height: 18
-        text: qsTr("60")
-        cursorVisible: false
+        text: qsTr("100")
+        cursorVisible: true
         font.pixelSize: 14
         echoMode: TextInput.Normal
         horizontalAlignment: Text.AlignLeft

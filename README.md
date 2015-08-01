@@ -18,6 +18,9 @@ you can rss any zhihu's user in it
 5. 右键删除关注者
 6. 后台更新功能
 
+## 关于字体
+推荐去下载'Helvetica Neue',Helvetica ，还有 Times New Roman
+
 ## zhihurss 推荐列表
 
 https://github.com/SimplyY/zhihu-rss/blob/master/zhihurss%20list.md
