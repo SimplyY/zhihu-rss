@@ -96,6 +96,7 @@ qml_dirs = [(os.path.join(QML_DIR, dirname), dirname) for dirname in qml_dirs_li
 res_files = [("zhihurss/res/qml/", "qml")]
 
 # ----- platfrom extra files -----
+
 if platform == 'win32':
     extra_files = []
 elif platform == 'darwin':
