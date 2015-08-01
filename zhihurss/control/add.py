@@ -10,6 +10,7 @@ from ..model.noticer import Noticer
 from ..model.feeds_list import FeedsList
 from . import listview
 
+
 class AddedFeeds(QObject):
 
     def __init__(self):
@@ -89,7 +90,3 @@ def show_add_dialog(my_app, qml, error_dialog):
     set_button(add_dialog.root_view, 'button_run',
                lambda: record_add_info(my_app, add_dialog, error_dialog, added_feeds))
     set_button(add_dialog.root_view, 'button_quit', lambda: quit_dialog(my_app, add_dialog, added_feeds))
-
-
-
-

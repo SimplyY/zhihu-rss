@@ -7,27 +7,46 @@ main_python_file = "entry.py"
 import sys
 import os
 import shutil
+from distutils.sysconfig import get_python_lib
 
 from cx_Freeze import setup, Executable
-import PyQt5
 
 shutil.rmtree("build", ignore_errors=True)
 
-# 非常重要：不同系统位置不同，win 用 everything 来找QtQuick.2文件最好
-QML_DIR = "/usr/local/Cellar/qt5/5.4.1/qml/"
+packages = [
+    "zhihu",
+    "lxml",
+    "PyQt5.QtQuick",
+    "PyQt5.QtCore",
+    "PyQt5.QtWidgets",
+    "PyQt5.QtQml",
+    "PyQt5.QtNetwork"
+]
 
-includes_files = [
+QML_DIR = os.path.join(get_python_lib(), "PyQt5", 'qml')
+
+print('check QML dir: {0}'.format(QML_DIR), '...')
+
+if os.path.exists(QML_DIR) is False:
+    print("Can't find PyQt5's QML dir automatically, Please set it dir in freeze.py")
+    sys.exist(0)
+
+print('Done.')
+
+include_files = [
     ("zhihurss/res/qml/", "qml"),
-    (os.path.join(QML_DIR, "QtQuick.2"), "qml/QtQuick.2"),
-    (os.path.join(QML_DIR, "QtQuick"), "qml/QtQuick"),
-    (os.path.join(QML_DIR, "QtWebKit"), "qml/QtWebKit"),
-
+    (os.path.join(QML_DIR, "QtQuick"), "QtQuick"),
+    (os.path.join(QML_DIR, "QtQuick.2"), "QtQuick.2"),
+    (os.path.join(QML_DIR, "QtWebKit"), "QtWebKit")
 ]
 
 base = None
+
 if sys.platform == "win32":
     base = "Win32GUI"
 
+with open('README.md', 'rb') as f:
+    readme = f.read().decode('utf-8')
 
 setup(
     name=application_title,
@@ -35,19 +54,12 @@ setup(
     url='https://github.com/SimplyY',
     author='SimplyY',
     description="zhihu-rss",
-    long_description=open('README.md', 'rb').read().decode('utf-8'),
-    zip_safe=False,
+    long_description=readme,
     options={
         "build_exe": {
-            "packages": {
-                "zhihu",
-                "PyQt5.QtQuick",
-                "PyQt5.QtCore",
-                "PyQt5.QtWidgets",
-                "PyQt5.QtQml",
-            },
-            "include_files": includes_files
+            "packages": packages,
+            "include_files": include_files
         }
     },
-    executables=[Executable(main_python_file, base=base), ],
+    executables=[Executable(main_python_file, base=base, targetName=application_title+'.exe')],
 )

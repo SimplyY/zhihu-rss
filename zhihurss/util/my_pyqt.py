@@ -24,7 +24,7 @@ class MyApp(QObject):
         if set_context:
             set_context(self.root_context)
 
-        self.engine.load(QUrl(qml))
+        self.engine.load(QUrl.fromLocalFile(qml))
         self.root_view = self.engine.rootObjects()[0]
 
     @staticmethod
@@ -41,11 +41,10 @@ class MyView(QQuickView):
         self.root_context = self.rootContext()
 
         if qml:
-            self.setSource(QUrl(qml))
-            self.root_view = self.rootObject()
+            self.set_qml(qml)
 
     def set_qml(self, qml):
-        self.setSource(QUrl(qml))
+        self.setSource(QUrl.fromLocalFile(qml))
         self.root_view = self.rootObject()
 
 
@@ -58,6 +57,7 @@ def set_button(parent_view, object_name, function=None):
     if function:
         button.clicked.connect(function)
 
+
 def set_menu(parent_view, object_name, function=None):
     menu = find_view(parent_view, object_name)
     if function:
@@ -68,5 +68,3 @@ def use_qml_fun(root_view, fun_parent_name, fun_name, args):
     parent_view = root_view.findChild(QObject, fun_parent_name)
     q_arg = QVariant(args)
     QMetaObject.invokeMethod(parent_view, fun_name, Qt.DirectConnection, Q_ARG(QVariant, q_arg))
-
-

@@ -11,9 +11,8 @@ else:
     QML_ROOT = os.path.join(BASE_DIR, 'res', 'qml')
 
 
-NOTICERS_FILE = '~/.config/zhihurss/noticers.json'
-FEEDS_FILE = '~/.cache/zhihurss/feeds.json'
-
+NOTICERS_JSON_PATH = os.path.join(BASE_DIR, 'config', 'noticers.json')
+FEEDS_JSON_PATH = os.path.join(BASE_DIR, 'cache', 'feeds.json')
 
 
 MAIN_QML_PATH = os.path.join(QML_ROOT, 'main.qml')
@@ -21,8 +20,5 @@ ADD_QML_PATH = os.path.join(QML_ROOT, 'add.qml')
 ERROR_QML_PATH = os.path.join(QML_ROOT, 'error.qml')
 CHANGE_QML_PATH = os.path.join(QML_ROOT, 'change.qml')
 
-
-NOTICERS_JSON_PATH = os.path.expanduser(NOTICERS_FILE)
-FEEDS_JSON_PATH = os.path.expanduser(FEEDS_FILE)
 
 CSS_GITHUB_PATH = "https://raw.githubusercontent.com/SimplyY/save/master/github-markdown.css"
