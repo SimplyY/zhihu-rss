@@ -3,11 +3,7 @@ import threading
 import json
 import os
 
-try:
-    import zhihu
-except ConnectionError:
-    print("connect error")
-#     TODO:
+import zhihu
 
 
 from ..util.error import UrlError
