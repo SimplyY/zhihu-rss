@@ -4,8 +4,8 @@
 application_title = "zhihu-rss"
 main_python_file = "entry.py"
 
-import os
 import sys
+import os
 import shutil
 from distutils.sysconfig import get_python_lib
 
@@ -23,13 +23,21 @@ packages = [
     "PyQt5.QtNetwork"
 ]
 
-PYQT5_DIR = os.path.join(get_python_lib(), "PyQt5")
+QML_DIR = os.path.join(get_python_lib(), "PyQt5", 'qml')
+
+print('check QML dir: {0}'.format(QML_DIR), '...')
+
+if os.path.exists(QML_DIR) is False:
+    print("Can't find PyQt5's QML dir automatically, Please set it dir in freeze.py")
+    sys.exist(0)
+
+print('Done.')
 
 include_files = [
     ("zhihurss/res/qml/", "qml"),
-    (os.path.join(PYQT5_DIR, "qml", "QtQuick"), "QtQuick"),
-    (os.path.join(PYQT5_DIR, "qml", "QtQuick.2"), "QtQuick.2"),
-    (os.path.join(PYQT5_DIR, "qml", "QtWebKit"), "QtWebKit")
+    (os.path.join(QML_DIR, "QtQuick"), "QtQuick"),
+    (os.path.join(QML_DIR, "QtQuick.2"), "QtQuick.2"),
+    (os.path.join(QML_DIR, "QtWebKit"), "QtWebKit")
 ]
 
 base = None

@@ -11,8 +11,8 @@ else:
     QML_ROOT = os.path.join(BASE_DIR, 'res', 'qml')
 
 
-NOTICERS_FILE = os.path.join(BASE_DIR, 'config', 'noticers.json')
-FEEDS_FILE = os.path.join(BASE_DIR, 'cache', 'feeds.json')
+NOTICERS_JSON_PATH = os.path.join(BASE_DIR, 'config', 'noticers.json')
+FEEDS_JSON_PATH = os.path.join(BASE_DIR, 'cache', 'feeds.json')
 
 
 MAIN_QML_PATH = os.path.join(QML_ROOT, 'main.qml')

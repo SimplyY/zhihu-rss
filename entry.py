@@ -15,6 +15,6 @@ if __name__ == '__main__':
 
         if sys.argv[-1] != ASADMIN:
             params = ' '.join(sys.argv[1:] + [ASADMIN])
-            win32api.ShellExecute(0, 'runas', sys.executable, params, '', 1)
+            win32api.ShellExecute(0, 'runas', sys.executable, params, os.path.abspath(os.curdir), 1)
             sys.exit(0)
     run()
