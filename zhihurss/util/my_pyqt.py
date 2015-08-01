@@ -2,6 +2,7 @@ __author__ = 'yuwei'
 
 import sys
 
+from PyQt5 import QtWebKit
 from PyQt5.QtCore import QUrl, QObject, QVariant, QMetaObject, Q_ARG, Qt
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtQuick import QQuickView
