@@ -26,7 +26,9 @@ you can rss any zhihu's user in it
 https://github.com/SimplyY/zhihu-rss/blob/master/zhihurss%20list.md
 
 ## 使用
-目前在委托[7sDream](https://github.com/7sDream/)和[CodeFalling](https://github.com/CodeFalling)在win和linux下编译，过些时日能出安装包，敬请期待。
+win 下压缩包：
+百度云盘 http://pan.baidu.com/s/1dDe0eUd
+github releases https://github.com/SimplyY/zhihu-rss/releases/tag/v1.0
 
 
 如果等不及想试用，在稳定版安装程序出来之前，请自行编译，以下是所需依赖，有任何问题可以开issue， 或者加qq群：478786205 来讨论。
