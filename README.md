@@ -35,6 +35,13 @@ github releases https://github.com/SimplyY/zhihu-rss/releases/tag/v1.0
 
 linux ，请自行编译，以下是所需依赖，有任何问题可以开issue， 或者加qq群：zhihu&github 交流群 478786205 来讨论。
 
+### Mac OS X
+
+- 安装[`homebrew`](http://brew.sh/)
+
+- 安装pyqt5：`brew install pyqt5 --with-python3`
+
+- 在程序目录下开启终端，执行`./entry.py`
 
 ## 依赖：
 
