@@ -1,6 +1,7 @@
 __author__ = 'yuwei'
 
 from .my_pyqt import MyView, find_view
+from .const import ERROR_QML_PATH
 
 class UrlError(Exception):
     pass
@@ -8,7 +9,6 @@ class UrlError(Exception):
 
 class ErrorDialog(MyView):
     def __init__(self):
-        from .const import ERROR_QML_PATH
         super().__init__(ERROR_QML_PATH)
 
     def set_error_info(self, error_info):

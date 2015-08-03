@@ -13,12 +13,16 @@ from ..util.my_pyqt import find_view
 
 
 class Noticer:
+    client = None
+
     def __init__(self, url=None, noticer_list=None):
         if not noticer_list:  # 创建一个新的Noticer
             try:
-                self.name = zhihu.Author(url).name
+                if Noticer.client:
+                    self.name = Noticer.client.Author(url).name
+                else:
+                    self.name = zhihu.Author(url).name
             except AttributeError:
-                # TODO:create dialog
                 raise UrlError
             except ValueError:
                 raise UrlError

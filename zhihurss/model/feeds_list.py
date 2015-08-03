@@ -25,12 +25,16 @@ from ..util.fs import ensure_dir
 
 
 class FeedsList:
+    client = None
+
     def __init__(self, added_feeds=100, noticer=None, list=None):
         if not list:
             self.url = noticer.url
             self.name = noticer.name
-
-            author = zhihu.Author(self.url)
+            if FeedsList.client:
+                author = FeedsList.client.Author(self.url)
+            else:
+                author = zhihu.Author(self.url)
 
             self.feeds = FeedsList.get_feeds(noticer, author, added_feeds)
 

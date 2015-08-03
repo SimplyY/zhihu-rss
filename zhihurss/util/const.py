@@ -11,10 +11,11 @@ else:
     QML_ROOT = os.path.join(BASE_DIR, 'res', 'qml')
 
 
-NOTICERS_JSON_PATH = os.path.join(BASE_DIR, 'config', 'noticers.json')
-FEEDS_JSON_PATH = os.path.join(BASE_DIR, 'cache', 'feeds.json')
-PROXY_PATH = os.path.join(BASE_DIR, 'config', 'proxy.json')
+CONFIG_PATH = os.path.join(BASE_DIR, 'config', 'config.json')
+COOKIES_PATH = os.path.join(BASE_DIR, 'config', 'cookies.json')
 
+NOTICERS_JSON_PATH = os.path.join(BASE_DIR, 'cache', 'noticers.json')
+FEEDS_JSON_PATH = os.path.join(BASE_DIR, 'cache', 'feeds.json')
 
 
 MAIN_QML_PATH = os.path.join(QML_ROOT, 'main.qml')
