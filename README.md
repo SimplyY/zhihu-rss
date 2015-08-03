@@ -26,12 +26,14 @@ you can rss any zhihu's user in it
 https://github.com/SimplyY/zhihu-rss/blob/master/zhihurss%20list.md
 
 ## 使用
+非常感谢 [7神](https://github.com/7sDream) 在 win 下的打包
+
 win 下压缩包：
 百度云盘 http://pan.baidu.com/s/1dDe0eUd
 github releases https://github.com/SimplyY/zhihu-rss/releases/tag/v1.0
 
 
-如果等不及想试用，在稳定版安装程序出来之前，请自行编译，以下是所需依赖，有任何问题可以开issue， 或者加qq群：478786205 来讨论。
+linux ，请自行编译，以下是所需依赖，有任何问题可以开issue， 或者加qq群：zhihu&github 交流群 478786205 来讨论。
 
 
 ## 依赖：
