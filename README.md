@@ -41,7 +41,7 @@ linux ，请自行编译，以下是所需依赖，有任何问题可以开issue
 
 - 安装pyqt5：`brew install pyqt5 --with-python3`
 
-- 在程序目录下开启终端，执行`./entry.py`
+- 在程序目录下开启终端，执行`./entry.py` **或者** 双击`osx-launcher`运行程序
 
 ## 依赖：
 
