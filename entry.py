@@ -14,6 +14,9 @@ from zhihurss.main import run
 
 __author__ = 'yuwei'
 
+
+
+
 if __name__ == '__main__':
 
     if hasattr(sys, 'frozen') is False:

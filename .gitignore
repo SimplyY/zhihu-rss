@@ -2,8 +2,8 @@
 __pycache__/
 *.py[cod]
 
-# json file
-*.json
+# cache file
+cache/
 
 #photo
 *.gif
