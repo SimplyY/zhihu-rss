@@ -16,6 +16,7 @@ FEEDS_JSON_PATH = os.path.join(BASE_DIR, 'cache', 'feeds.json')
 PROXY_PATH = os.path.join(BASE_DIR, 'config', 'proxy.json')
 
 
+
 MAIN_QML_PATH = os.path.join(QML_ROOT, 'main.qml')
 ADD_QML_PATH = os.path.join(QML_ROOT, 'add.qml')
 ERROR_QML_PATH = os.path.join(QML_ROOT, 'error.qml')

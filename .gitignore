@@ -72,3 +72,5 @@ target/
 #TODO *.sqlite3
 
 *.autosave
+
+zhihurss/config/test.py
