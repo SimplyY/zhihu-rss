@@ -4,22 +4,23 @@
 
 you can rss any zhihu's user in it
 
+## 功能：
+最棒的功能是：自定义关注方式
+
+1. minibrowser
+2. 自定义关注方式、删除关注者：用户名上右键
+3. 关注时可以选择导入动态的数量，并显示爬虫进度
+4. 后台更新功能
+5. 在 config 文件夹里面的 config.json文件可以设置是否登录，代理设置（一个 str）
+（ config.json example：{"is_sign": true,"proxy": "http://127.0.0.1:10025"}）
+
 ## 功能演示
 
 ![](http://img-storage.qiniudn.com/15-7-28/94436942.jpg)
 
-## 功能：
-最棒的功能是：第三个
-
-1. minibrowser
-2. 在用户名的右边, 显示未读数 ，未阅读显示为加粗的标题。
-3. 自定义关注方式：用户名上右键点击，然后弹出一个对话框，让用户打勾
-4. 关注时可以选择导入动态数量，确定后弹出一个窗口，来显示爬虫进度
-5. 右键删除关注者
-6. 后台更新功能
-
-## 关于字体
-推荐去下载'Helvetica Neue',Helvetica ，还有 Times New Roman
+## 特别提醒
+有些用户无法关注，会程序崩掉。所以需要用功能5.
+然后最好不用zhihurss 爬大量数据（上万条），不然会被封 ip，不过提供代理功能，见功能5
 
 ## zhihurss 推荐列表
 
@@ -28,12 +29,10 @@ https://github.com/SimplyY/zhihu-rss/blob/master/zhihurss%20list.md
 ## 使用
 非常感谢 [7神](https://github.com/7sDream) 在 win 下的打包
 
-win 下压缩包：
+### win 下压缩包：
 百度云盘 http://pan.baidu.com/s/1dDe0eUd
 github releases https://github.com/SimplyY/zhihu-rss/releases/tag/v1.0
 
-
-linux ，请自行编译，以下是所需依赖，有任何问题可以开issue， 或者加qq群：zhihu&github 交流群 478786205 来讨论。
 
 ### Mac OS X
 
@@ -43,8 +42,11 @@ linux ，请自行编译，以下是所需依赖，有任何问题可以开issue
 
 - 在程序目录下开启终端，执行`./entry.py` **或者** 双击`osx-launcher`运行程序
 
-## 依赖：
+### linux
 
+linux ，请自行编译，以下是所需依赖，有任何问题可以开issue， 或者加qq群：zhihu&github 交流群 478786205 来讨论。
+
+## 依赖：
 
 本项目依赖于 zhihu，requests ，BeautifulSoup4， html2text， pyqt5， qt quick的各种东西比如qt webkit（装qt即可？）
 

@@ -150,8 +150,8 @@ ApplicationWindow {
             ToolButton {
                 width: 120
                 height: 26
-                tooltip: qsTr("Coded By SimplyY")
-                text: qsTr("Coded By SimplyY")
+                tooltip: qsTr("使用文档")
+                text: qsTr("使用文档")
 //                iconSource: "images/right-32.png"
 
                 Layout.preferredWidth: 120
