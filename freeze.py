@@ -85,7 +85,6 @@ elif platform == 'darwin':
     # TODO
     qml_dirs_list = []
 elif platform == 'linux':
-    # TODO
     qml_dirs_list = [
         "QtQuick",
         "QtQuick.2",
@@ -97,7 +96,10 @@ qml_dirs = [(os.path.join(QML_DIR, dirname), dirname)
 
 # ----- res files -----
 
-res_files = [("zhihurss/res/qml/", "qml")]
+res_files = [
+    ("zhihurss/res/qml/", "qml"),
+    ('zhihurss/config/', 'config')
+]
 
 # ----- platfrom extra files -----
 
@@ -147,3 +149,4 @@ setup(
     },
     executables=[Executable(main_python_file, base=base, targetName=targetName)]
 )
+
