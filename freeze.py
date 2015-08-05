@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 application_title = "zhihu-rss"
@@ -30,7 +30,7 @@ print('check PyQt5 dir: {0}'.format(PYQT5_DIR), '...')
 
 if not os.path.exists(PYQT5_DIR):
     print("Can't find PyQt5's dir automatically, Please set it in freeze.py")
-    sys.exist(0)
+    sys.exit(0)
 
 print('Done.')
 
@@ -42,14 +42,13 @@ elif platform == 'darwin':
     # TODO
     QML_DIR = ''
 elif platform == 'linux':
-    # TODO
-    QML_DIR = ''
+    QML_DIR = '/usr/lib/x86_64-linux-gnu/qt5/qml'
 
 print('check QML dir: {0}'.format(QML_DIR), '...')
 
 if not os.path.exists(QML_DIR):
     print("Can't find PyQt5's QML dir automatically, Please set it in freeze.py")
-    sys.exist(0)
+    sys.exit(0)
 
 print('Done.')
 
@@ -68,9 +67,9 @@ if platform == 'win32':
         'Qt5PrintSupport.dll'
     ]
 elif platform == 'darwin':
-    pass
+    qt_files_list = []
 elif platform == 'linux':
-    pass
+    qt_files_list = []
 
 qt_files = [os.path.join(PYQT5_DIR, filename) for filename in qt_files_list]
 
@@ -86,14 +85,21 @@ elif platform == 'darwin':
     # TODO
     qml_dirs_list = []
 elif platform == 'linux':
-    # TODO
-    qml_dirs_list = []
+    qml_dirs_list = [
+        "QtQuick",
+        "QtQuick.2",
+        "QtWebKit"
+    ]
 
-qml_dirs = [(os.path.join(QML_DIR, dirname), dirname) for dirname in qml_dirs_list]
+qml_dirs = [(os.path.join(QML_DIR, dirname), dirname)
+            for dirname in qml_dirs_list]
 
 # ----- res files -----
 
-res_files = [("zhihurss/res/qml/", "qml")]
+res_files = [
+    ("zhihurss/res/qml/", "qml"),
+    ('zhihurss/config/', 'config')
+]
 
 # ----- platfrom extra files -----
 
@@ -115,11 +121,15 @@ packages = [
 ]
 
 base = None
+targetName = 'zhihurss'
+
 if platform == "win32":
     base = "Win32GUI"
+    targetName += '.exe'
 
 with open('README.md', 'rb') as f:
     readme = f.read().decode('utf-8')
+
 
 # ===== setup for build =====
 
@@ -137,5 +147,6 @@ setup(
             "include_msvcr": True if sys.platform == 'win32' else False
         }
     },
-    executables=[Executable(main_python_file, base=base, targetName=application_title+'.exe')],
+    executables=[Executable(main_python_file, base=base, targetName=targetName)]
 )
+
