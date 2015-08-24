@@ -29,7 +29,7 @@ Rectangle {
         y: 38
         width: 273
         height: 20
-        text: qsTr("http://www.zhihu.com/people/yuwei-80")
+        text: qsTr("http://www.zhihu.com/people/SimplyY")
         clip: false
         selectionColor: "#800000"
         opacity: 1
