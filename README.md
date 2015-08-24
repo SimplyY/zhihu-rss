@@ -19,7 +19,7 @@ you can rss any zhihu's user in it
 
 ### 设置登陆状态和代理：
 在 config 文件夹里面的 config.json文件可以设置是否登录，代理设置（一个 str）
-（ config.json example：{"is_sign": true,"proxy": "http://127.0.0.1:10025"}以及proxy那个一定别设置错了）
+（ config.json example：`{"is_sign": true,"proxy": "http://127.0.0.1:10025"}`以及proxy那个一定别设置错了）
 
 ## 功能演示
 
@@ -28,6 +28,8 @@ you can rss any zhihu's user in it
 ## 紧急bug
 
 （针对老用户，新版本 win 下24晚上就打包，其他平台直接用最新源码即可）
+
+
 1. 由于**知乎竟然可以更改自己的个性网址**：
     - (这个页面 http://www.zhihu.com/settings/profile )，引起了这个紧急 bug（老用户注意：好多大v 都改了自己的。）
     - 解决办法是取消关注，然后重新关注（输入正确的 url）,以及 添加关注的默认的url 后几个字母 yuwei-80（也就是我的)，我作死的改成了 SimplyY（知乎规定一个月改不回来。。）大家也帮忙改一下。。
