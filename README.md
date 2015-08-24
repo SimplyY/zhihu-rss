@@ -1,7 +1,7 @@
 # zhihu-rss
 
 you can rss any zhihu's user in it
-(非官方，但是很好用)
+(非官方的跨平台客户端，但是很好用)
 
 (使用帮助看功能列表和演示部分)
 
@@ -10,12 +10,12 @@ you can rss any zhihu's user in it
 
 
 ## 功能：
-最棒的功能是：自定义关注方式
+最棒的功能是：自定义关注方式(可以自己选择关注他的动态还是回答还是什么的。)
 
 1. minibrowser
 2. 自定义关注方式、删除关注者：用户名上右键
 3. 添加关注
-4. 后台更新功能
+4. 后台更新功能，点击已读（标题颜色变淡就像 rss 一样）
 
 ### 设置登陆状态和代理：
 在 config 文件夹里面的 config.json文件可以设置是否登录，代理设置（一个 str）
@@ -49,9 +49,8 @@ https://github.com/SimplyY/zhihu-rss/blob/master/zhihurss%20list.md
 非常感谢 [7神](https://github.com/7sDream) 在 win 下的打包
 
 ### win 下压缩包：
-百度云盘 http://pan.baidu.com/s/1dDe0eUd
-github releases https://github.com/SimplyY/zhihu-rss/releases/tag/v1.0
-
+百度云盘 http://pan.baidu.com/s/1bnFdD6Z
+github releases https://github.com/SimplyY/zhihu-rss/releases
 
 ### Mac OS X
 
