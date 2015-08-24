@@ -4,6 +4,8 @@
 
 you can rss any zhihu's user in it
 
+(使用帮助看功能列表和演示部分)
+
 ![image](https://cloud.githubusercontent.com/assets/8455579/8877985/1408786a-325b-11e5-8d2c-ecc35cf63ead.png)
 
 
