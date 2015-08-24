@@ -4,6 +4,9 @@
 
 you can rss any zhihu's user in it
 
+![image](https://cloud.githubusercontent.com/assets/8455579/8877985/1408786a-325b-11e5-8d2c-ecc35cf63ead.png)
+
+
 ## 紧急bug
 1. 由于知乎竟然可以更改自己的个性网址(这个页面http://www.zhihu.com/settings/profile)，引起了这个紧急 bug（好多大v 都改了自己的，，），解决办法是取消关注，然后重新关注（输入正确的 url）,以及 添加关注的默认的url 后几个字母 yuwei-80（也就是我的)，我作死的改成了 SimplyY（知乎规定一个月改不回来。。）大家也帮忙改一下。。
 2. 还有一个是早就有了的，也是那个页面，对隐私保护打了勾，造成无法添加其关注，而且无法更新所有动态，解决方法见下面的特别提醒
