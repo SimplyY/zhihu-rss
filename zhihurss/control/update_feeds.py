@@ -20,8 +20,8 @@ def update_feeds():
 class FeedUpdateThread(threading.Thread):
     def run(self):
         while True:
-            time.sleep(100)
             update_feeds()
+            time.sleep(60)
 
 
 def spawn_update_thread():
