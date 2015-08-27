@@ -22,7 +22,7 @@ you can rss any zhihu's user in it
 （ config.json example：`{"is_sign": true,"proxy": "http://127.0.0.1:10025"}`以及proxy那个一定别设置错了）
 
 ## 功能演示
-
+(为了图片小点av画质了，，实际上 retina 屏幕效果如上图)
 ![](http://img-storage.qiniudn.com/15-7-28/94436942.jpg)
 
 ## 紧急bug
