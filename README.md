@@ -1,10 +1,12 @@
 # zhihu-rss
 
 you can rss any zhihu's user in it
-(非官方的跨平台客户端，但是很好用)
+(非官方的跨平台客户端)
+**可以将知乎的 user 做成 rss，只需几步操作**，并且**定制 rss 内容**（回答 or 提问 or 文章等等）
 
 (使用帮助看功能列表和演示部分)
 
+## 效果图
 ![image](https://cloud.githubusercontent.com/assets/8455579/8877985/1408786a-325b-11e5-8d2c-ecc35cf63ead.png)
 
 
@@ -25,9 +27,9 @@ you can rss any zhihu's user in it
 (为了图片小点av画质了，，实际上 retina 屏幕效果如上图)
 ![](http://img-storage.qiniudn.com/15-7-28/94436942.jpg)
 
-## 紧急bug
+## 知乎的设置引起的bug
 
-（针对老用户，新版本 win 下24晚上就打包，其他平台直接用最新源码即可）
+（最新版已解决，但是其实是和知乎的制度有关的，最好看一看）
 
 
 1. 由于**知乎竟然可以更改自己的个性网址**：
@@ -57,7 +59,8 @@ github releases https://github.com/SimplyY/zhihu-rss/releases
 1. 安装[`homebrew`](http://brew.sh/)
 2. 安装pyqt5：`brew install pyqt5 --with-python3`
 3. git clone https://github.com/SimplyY/zhihu-rss
-4. 在程序目录（clone 的目录）下开启终端，执行`./entry.py` **或者** 在 finder 里双击`osx-launcher`运行程序
+4. pip install requirements.txt
+5. 在程序目录（clone 的目录）下开启终端，执行`./entry.py` **或者** 在 finder 里双击`osx-launcher`运行程序
 
 ### linux
 
