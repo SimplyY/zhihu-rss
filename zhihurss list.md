@@ -15,7 +15,6 @@ name  url  关注方式（zhihurss 里右键切换，可以随时切换关注方
 
 啊邦同学 http://www.zhihu.com/people/abangtongxue all（充满智慧，武大学生）
 
-mu mu http://www.zhihu.com/people/ze.ran all（编程大神、秀妻狂魔，回答充满智慧和趣味）
 
 马天翼 http://www.zhihu.com/people/fkysly all（阿里前端，武大编程聚聚）
 
