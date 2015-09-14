@@ -15,6 +15,7 @@ you can rss any zhihu's user in it
 
 ## 功能：
 最棒的功能是：自定义关注方式
+以及 zhihurss 配合 pocket 用简直神器，特别是你用了 pocket 的alfred插件后
 
 1. minibrowser
 2. 自定义关注方式、删除关注者：用户名上右键

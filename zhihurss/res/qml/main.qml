@@ -7,7 +7,7 @@ import QtQuick.Layouts 1.0
 
 ApplicationWindow {
     id: root
-    width: 1155
+    width: 1200
     height: 700
     color: "#dedede"
     maximumWidth: 1500
@@ -530,7 +530,7 @@ ApplicationWindow {
         WebView{
             id: webView
 
-            anchors.rightMargin: 5
+            anchors.rightMargin: 45
             anchors.bottomMargin: 0
             anchors.leftMargin: 0
 
@@ -538,6 +538,7 @@ ApplicationWindow {
             anchors.top: parent.top
             anchors.topMargin: url.toString().match("www.zhihu.com")=="www.zhihu.com" ? -65 : 0
             anchors.right: parent.right
+
             anchors.bottom: parent.bottom
 
 
