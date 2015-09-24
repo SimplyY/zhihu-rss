@@ -36,7 +36,14 @@ name  url  关注方式（zhihurss 里右键切换，可以随时切换关注方
 祖明 http://www.zhihu.com/people/zuming
 
 
+### 互联网
+Lydia http://www.zhihu.com/people/lydia-62
+pansz http://www.zhihu.com/people/pansz
+覃超（facebook 程序员 海龟） http://www.zhihu.com/people/qin.chao
+
+
 ### 其他
+
 
 7sDream http://www.zhihu.com/people/7sdream all(pythoner zhihu-py3 作者)
 
