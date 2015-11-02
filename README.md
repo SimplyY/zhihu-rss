@@ -57,7 +57,7 @@ github releases https://github.com/SimplyY/zhihu-rss/releases
 1. 安装[`homebrew`](http://brew.sh/)
 2. 安装pyqt5：`brew install pyqt5 --with-python3`
 3. git clone https://github.com/SimplyY/zhihu-rss
-4. pip install requirements.txt
+4. pip install $(cat requirements.txt)
 5. 在程序目录（clone 的目录）下开启终端，执行`./entry.py` **或者** 在 finder 里双击`osx-launcher`运行程序
 
 ### linux

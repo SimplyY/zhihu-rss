@@ -1,1 +1,1 @@
-zhihu-py3[lxml]
+zhihu-py3
