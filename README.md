@@ -8,6 +8,15 @@ you can rss any zhihu's user in it
 
 (使用帮助看功能列表和演示部分)
 
+## 重大提醒
+由于知乎频繁改版（前端），导致爬虫库无法稳定，对于 win 平台需要客户端经常升级。。
+
+于是win 下放弃，，，（由于 win 还是静态链接库。。维护太麻烦了）
+
+osx 和 linux 平台编译源码的老版本，如果出现 bug，请
+(sudo)pip3 install zhihu-py3 --upgrade
+就 ok 了
+
 ## 效果图
 ![image](https://cloud.githubusercontent.com/assets/8455579/8877985/1408786a-325b-11e5-8d2c-ecc35cf63ead.png)
 
