@@ -52,14 +52,7 @@ osx 和 linux 平台编译源码的老版本，如果出现 bug，请
 
 https://github.com/SimplyY/zhihu-rss/blob/master/zhihurss%20list.md
 
-## 使用
-非常感谢 [7神](https://github.com/7sDream) 在 win 下的打包
 
-### win 下压缩包：
-百度云盘 http://pan.baidu.com/s/1o68BOqm
-github releases https://github.com/SimplyY/zhihu-rss/releases
-
-下载后,解压，双击 exe 即可运行。
 
 ### Mac OS X
 
