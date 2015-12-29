@@ -12,7 +12,7 @@ from zhihurss.main import run
 
 if platform.system() == 'Darwin':
     sip_site = glob("/usr/local/Cellar/sip/*/lib/python3.[0-9]/site-packages/")[0]
-    pyqt5_site = glob("/usr/local/Cellar/pyqt5/[0-9].[0-9].[0-9]/lib/python3.[0-9]/site-packages/")[0]
+    pyqt5_site = glob("/usr/local/Cellar/pyqt5/*/lib/python3.[0-9]/site-packages/")[0]
     sys.path.insert(0, pyqt5_site)
     sys.path.insert(0, sip_site)
 
