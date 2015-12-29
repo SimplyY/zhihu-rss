@@ -62,6 +62,7 @@ https://github.com/SimplyY/zhihu-rss/blob/master/zhihurss%20list.md
 4. pip install $(cat requirements.txt)
 5. 在程序目录（clone 的目录）下开启终端，执行`./entry.py` **或者** 在 finder 里双击`osx-launcher`运行程序
 
+osx下同时安装了Python2和3的用户请使用pip3 install xxx代替（应该不用我说……）
 ### linux
 
 linux ，请自行编译，以下是所需依赖，有任何问题可以开issue， 或者加qq群：zhihu&github 交流群 478786205 来讨论。
