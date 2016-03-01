@@ -3,8 +3,10 @@
 
 (非官方的跨平台客户端， 目前只支持 linux 和 osx)
 
-
 > 使用帮助看功能列表和演示部分
+
+## 效果图
+![image](https://cloud.githubusercontent.com/assets/8455579/8877985/1408786a-325b-11e5-8d2c-ecc35cf63ead.png)
 
 ## 重大提醒（放弃对 win 的支持，如果出 bug 请更新zhihu-py3爬虫库）
 由于知乎频繁改版（前端），导致爬虫库无法稳定，对于 win 平台需要客户端经常升级。。
@@ -16,8 +18,6 @@ osx 和 linux 平台编译源码的老版本，如果出现 bug，请
 就 ok 了
 
 
-## 效果图
-![image](https://cloud.githubusercontent.com/assets/8455579/8877985/1408786a-325b-11e5-8d2c-ecc35cf63ead.png)
 
 
 
