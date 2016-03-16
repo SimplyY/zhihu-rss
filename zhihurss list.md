@@ -24,11 +24,6 @@ name  url  关注方式（zhihurss 里右键切换，可以随时切换关注方
 
 
 ### web前端
-马天翼 http://www.zhihu.com/people/fkysly
-
-张秋怡 http://www.zhihu.com/people/zhang-qiu-yi-27
-
-
 贺师俊 http://www.zhihu.com/people/he-shi-jun
 
 貘吃馍香 http://www.zhihu.com/people/tapir
@@ -37,14 +32,25 @@ name  url  关注方式（zhihurss 里右键切换，可以随时切换关注方
 
 尤雨溪 http://www.zhihu.com/people/evanyou
 
+顾轶灵 https://www.zhihu.com/people/justineo
+
+小爝 https://www.zhihu.com/people/xiao-jue-83
+
+马天翼 http://www.zhihu.com/people/fkysly
+
+张秋怡 http://www.zhihu.com/people/zhang-qiu-yi-27
+
 ### 互联网
 Lydia http://www.zhihu.com/people/lydia-62
+
 pansz http://www.zhihu.com/people/pansz
+
 覃超（facebook 程序员 海龟） http://www.zhihu.com/people/qin.chao
 
 
 ### 其他
 
+SimplyY https://www.zhihu.com/people/SimplyY
 
 7sDream http://www.zhihu.com/people/7sdream all(pythoner zhihu-py3 作者)
 
