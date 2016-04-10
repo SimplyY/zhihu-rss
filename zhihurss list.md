@@ -22,7 +22,6 @@ name  url  关注方式（zhihurss 里右键切换，可以随时切换关注方
 
 
 ### web前端
-贺师俊 http://www.zhihu.com/people/he-shi-jun
 
 貘吃馍香 http://www.zhihu.com/people/tapir
 
