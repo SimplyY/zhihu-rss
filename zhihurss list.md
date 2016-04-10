@@ -21,26 +21,15 @@ name  url  关注方式（zhihurss 里右键切换，可以随时切换关注方
 采铜 http://www.zhihu.com/people/cai-tong
 
 
-### web前端
+### web前端 
 
 貘吃馍香 http://www.zhihu.com/people/tapir
-
-祖明 http://www.zhihu.com/people/zuming
 
 尤雨溪 http://www.zhihu.com/people/evanyou
 
 顾轶灵 https://www.zhihu.com/people/justineo
 
-小爝 https://www.zhihu.com/people/xiao-jue-83
-
-马天翼 http://www.zhihu.com/people/fkysly
-
-张秋怡 http://www.zhihu.com/people/zhang-qiu-yi-27
-
 ### 互联网
-Lydia http://www.zhihu.com/people/lydia-62
-
-pansz http://www.zhihu.com/people/pansz
 
 覃超（facebook 程序员 海龟） http://www.zhihu.com/people/qin.chao
 
