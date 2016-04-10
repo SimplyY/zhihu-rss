@@ -18,8 +18,6 @@ name  url  关注方式（zhihurss 里右键切换，可以随时切换关注方
 
 肥肥猫 http://www.zhihu.com/people/feifeimao
 
-啊邦同学 http://www.zhihu.com/people/abangtongxue
-
 采铜 http://www.zhihu.com/people/cai-tong
 
 
